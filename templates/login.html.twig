@@ -1,0 +1,11 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}AoE2ita{% endblock %}
+
+{% block content %}
+  <div>Qui login Steam</div><br>
+  <a href="{{ path_for('registration') }}">Clicca qui</a>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

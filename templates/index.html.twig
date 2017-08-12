@@ -1,0 +1,14 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}AoE2ita{% endblock %}
+
+{% block content %}
+  <div>Sono loggato come {{user.username}}</div><br>
+  <a href="{{ path_for('logout') }}">Disconnetti</a>
+  <br>
+  <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
+  <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

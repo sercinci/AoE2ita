@@ -1,0 +1,11 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}AoE2ita{% endblock %}
+
+{% block content %}
+  <div>Loggato via Steam! Da qui redirect verso la home.</div><br>
+  <a href="{{ path_for('index') }}">Home</a>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+{% endblock %}

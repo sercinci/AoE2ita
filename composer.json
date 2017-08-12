@@ -1,0 +1,45 @@
+{
+    "name": "aoe2ita",
+    "description": "Age of Empires 2 Italian platform",
+    "keywords": ["Age of Empires","aoe"],
+    "homepage": "https://aoe2ita.tk",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Federico Ercole",
+            "email": "federico_ercole91@yahoo.it",
+            "homepage": "http://github.com/sercinci"
+        }
+    ],
+    "autoload" : {
+        "psr-4" : {
+             "Controller\\" : "src/Controller",
+             "Entity\\": "src/Entity",
+             "Middleware\\" : "src/Middleware"
+        },
+        "classmap" : [
+            "src/Entity",
+            "src/Controller",
+            "src/Middleware"
+        ]
+    },
+    "require": {
+        "php": ">=5.5.0",
+        "slim/slim": "^3.8",
+        "monolog/monolog": "^1.17",
+        "illuminate/database": "^5.2",
+        "tuupola/slim-jwt-auth": "^2.3",
+        "phpmailer/phpmailer": "~5.2",
+        "hybridauth/hybridauth" : "~3.0.0-beta.1",
+        "ramsey/uuid": "^3.6",
+        "dflydev/fig-cookies": "^1.0",
+        "cviebrock/eloquent-sluggable": "dev-master",
+        "slim/twig-view": "^2.2"
+    },
+    "scripts": {
+        "start": "php -S localhost:8080 -t public public/index.php"
+    },
+    "config": {
+        "process-timeout": 0
+    }
+}
