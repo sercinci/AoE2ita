@@ -16,8 +16,8 @@ class ViewCtrl extends BaseCtrl
         $user = User::find($this->userData->id);
         if ($this->checkDate($user->updated_at)) {
             $stats = SteamCtrl::stats($user->steam_id);
-            $user->mmr_dm = $stats['mmr_dm']; 
-            $user->mmr_rm = $stats['mmr_rm']; 
+            $user->mmr_dm = $stats['mmr_dm'];
+            $user->mmr_rm = $stats['mmr_rm'];
             $user->save();
         }
         return $this->view->render($res, 'index.html.twig', [

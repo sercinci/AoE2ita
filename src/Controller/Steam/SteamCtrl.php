@@ -99,7 +99,9 @@ class SteamCtrl extends BaseCtrl
         $user->slug = SlugService::createSlug(User::class, 'slug', $profile->displayName);
         $user->avatar = $profile->photoURL;
         $user->steam_id = $profile->identifier;
-        
+        $stats = $this->stats($user->steam_id);
+        $user->mmr_dm = $stats['mmr_dm'];
+        $user->mmr_rm = $stats['mmr_rm'];
         if ($user->save()) {
             $this->logger->info('Social signup successful: ' . $user->username . ' - ' . $user->email);
             return $user;
