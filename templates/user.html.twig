@@ -1,7 +1,9 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}{{user.username}} - AoE2ita{% endblock %}
+{% block meta %}
 
+{% endblock %}
 {% block content %}
   <div>{{user.username}}</div><br>
   <img src="{{ user.avatar }}"><br>

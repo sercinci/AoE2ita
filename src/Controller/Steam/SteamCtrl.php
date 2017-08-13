@@ -29,12 +29,16 @@ class SteamCtrl extends BaseCtrl
                     ->firstOrFail();
                 $this->logger->info('Steam login successful: ' . $user->username . ' - ' . $user->email);
                 $res = $this->setTokenCookie($res, $user);
-                return $this->view->render($res, 'success.html.twig');
+                return $this->view->render($res, 'success.html.twig', [
+                    'username' => $user->username
+                ]);
             } catch (ModelNotFoundException $ex) {
                 $user = $this->signupSocial($user_profile);
                 if ($user) {
                     $res = $this->setTokenCookie($res, $user);
-                    return $this->view->render($res, 'success.html.twig');
+                    return $this->view->render($res, 'success.html.twig', [
+                    'username' => $user->username
+                ]);
                 } else {
                     return $res->withStatus(500);
                 }
@@ -63,12 +67,16 @@ class SteamCtrl extends BaseCtrl
                     ->firstOrFail();
                 $this->logger->info('Facebook login successful: ' . $user->username . ' - ' . $user->email);
                 $res = $this->setTokenCookie($res, $user);
-                return $this->view->render($res, 'success.html.twig');                
+                return $this->view->render($res, 'success.html.twig', [
+                    'username' => $user->username
+                ]);                
             } catch (ModelNotFoundException $ex) {
                 $user = $this->signupSocial($user_profile);
                 if ($user) {
                     $res = $this->setTokenCookie($res, $user);
-                    return $this->view->render($res, 'success.html.twig');
+                    return $this->view->render($res, 'success.html.twig', [
+                    'username' => $user->username
+                ]);
                 } else {
                     return $res->withStatus(500);
                 }

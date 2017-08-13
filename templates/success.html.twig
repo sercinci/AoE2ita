@@ -1,11 +1,15 @@
 {% extends "layout.html.twig" %}
 
-{% block title %}AoE2ita{% endblock %}
+{% block title %}Successo - AoE2ita{% endblock %}
+{% block meta %}
+    {{ parent() }}
+    <meta name="description" content="">
+    <meta http-equiv="refresh" content="3;url=/" />
+{% endblock %}
 
 {% block content %}
-  <div>Loggato via Steam! Da qui redirect verso la home.</div><br>
-  <a href="{{ path_for('index') }}">Home</a>
+    <div>{{ username }} sei loggato via Steam! Verrai portato alla home in 3 secondi, altrimenti clicca <a href="{{ path_for('index') }}">qui</a></div><br>
 {% endblock %}
 {% block javascript %}
-  {{ parent() }}
+    {{ parent() }}
 {% endblock %}

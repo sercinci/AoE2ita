@@ -1,9 +1,11 @@
 {% extends "layout.html.twig" %}
 
 {% block title %}AoE2ita{% endblock %}
+{% block meta %}
 
+{% endblock %}
 {% block content %}
-  <div>Sono loggato come {{user.username}}</div><br>
+  <div>Sono loggato come <a href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a></div><br>
   <a href="{{ path_for('logout') }}">Disconnetti</a>
   <br>
   <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
