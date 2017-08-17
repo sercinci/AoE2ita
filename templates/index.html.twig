@@ -5,11 +5,14 @@
 
 {% endblock %}
 {% block content %}
-  <div>Sono loggato come <a href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a></div><br>
-  <a href="{{ path_for('logout') }}">Disconnetti</a>
+  <h1>Home - landing</h1>
+  <a href="{{ path_for('registration') }}"><img src="http://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png"></a>
+  <br><br>
+  <a href="{{ path_for('tournaments') }}">Tornei</a>
   <br>
-  <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
-  <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
+  <a href="{{ path_for('new_tournament') }}">Crea torneo</a>
+  <br>
+  <a href="{{ path_for('logout') }}">Disconnetti</a>
 {% endblock %}
 {% block javascript %}
   {{ parent() }}

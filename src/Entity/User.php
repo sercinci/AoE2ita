@@ -28,4 +28,20 @@ class User extends Model
             ]
         ];
     }
+
+    /**
+     * User's tournaments
+     */
+    public function tournaments()
+    {
+        return $this->hasMany('Entity\Tournament');
+    }
+
+    /**
+     * Users's teams
+     */
+    public function teams()
+    {
+        return $this->belongsToMany('Entity\Team', 'members');
+    }
 }

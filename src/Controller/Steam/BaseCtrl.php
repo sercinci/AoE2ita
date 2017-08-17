@@ -19,6 +19,7 @@ abstract class BaseCtrl
         $this->hybridConfig = $c->get('settings')['hybridauth'];
         $this->baseName = $c->get('settings')['base'];
         $this->view = $c->get('view');
+        $this->userData = $c->get('jwt') ? $c->get('jwt')->data : null;
     }
 
     protected function setTokenCookie($response, $user)
@@ -49,7 +50,7 @@ abstract class BaseCtrl
         $tokenId    = base64_encode(mcrypt_create_iv(32));
         $issuedAt   = time();
         $notBefore  = $issuedAt + 0;             // Adding 0 seconds
-        $expire     = $notBefore + 86400;        // Adding 1 day
+        $expire     = $notBefore + 86400 * 30;        // Adding 1 day
         $serverName = $this->serverName; // Retrieve the server name from config file
         
         /*

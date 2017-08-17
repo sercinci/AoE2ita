@@ -95,7 +95,7 @@ class SteamCtrl extends BaseCtrl
         $hybridauth = new Hybridauth();
         $hybridauth->disconnectAllAdapters(); //to test!
         $res = $this->removeTokenCookie($res);
-        return $res->withRedirect('/login', 200);
+        return $res->withRedirect('/', 200);
     }
 
     private function signupSocial($profile)
@@ -110,6 +110,7 @@ class SteamCtrl extends BaseCtrl
         $stats = $this->stats($user->steam_id);
         $user->mmr_dm = $stats['mmr_dm'];
         $user->mmr_rm = $stats['mmr_rm'];
+        $user->games = $stats['games'];
         if ($user->save()) {
             $this->logger->info('Social signup successful: ' . $user->username . ' - ' . $user->email);
             return $user;
@@ -135,6 +136,9 @@ class SteamCtrl extends BaseCtrl
             }
             if ($value->name == 'STAT_ELO_RM') {
                 $stats['mmr_rm'] = $value->value;
+            }
+            if ($value->name == 'STAT_GAMES_PLAYED_ONLINE') {
+                $stats['games'] = $value->value;
             }
         }
         return $stats;

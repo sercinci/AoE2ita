@@ -1,0 +1,47 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{tournament.title}} - AoE2ita{% endblock %}
+{% block meta %}
+
+{% endblock %}
+{% block content %}
+    <h1>{{tournament.title}}</h1>  
+    <pre>{{ tournament | json_encode() }}</pre>
+    <br>
+    {% if tournament.random_team %}
+      
+    {% else %}
+        {% for team in tournament.teams %}
+            {% if joined or team.members_count == tournament.team_members %}
+                <span>{{ team.title }}</span><br>
+            {% else %}
+                <a href="" onclick="joinTeam({{tournament.id}},{{team.id}})">{<span>{ team.title }}</span></a><br>
+            {% endif %}
+            {% for member in team.members %}
+                <span>- {{ member.username }} - {{ member.mmr_rm }}</span><br>
+            {% endfor %}
+        {% endfor %}
+       
+    {% endif %}
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript">
+    function joinTeam(tId, teamId) {
+      fetch('/tournaments/'+tId+'/team/'+teamId, {
+        method: 'PUT',
+        //body: new FormData(form),
+        credentials: 'same-origin'
+      }).then(function(response) {
+        console.log(response)
+        if (response.ok) {
+          location.reload();
+        } else {
+          throw new Error(response.statusText);
+        }
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+    }
+    </script>
+{% endblock %}

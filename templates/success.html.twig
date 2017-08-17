@@ -4,11 +4,11 @@
 {% block meta %}
     {{ parent() }}
     <meta name="description" content="">
-    <meta http-equiv="refresh" content="3;url=/" />
+    <meta http-equiv="refresh" content="3;url=/tournaments" />
 {% endblock %}
 
 {% block content %}
-    <div>{{ username }} sei loggato via Steam! Verrai portato alla home in 3 secondi, altrimenti clicca <a href="{{ path_for('index') }}">qui</a></div><br>
+    <div>{{ username }} sei loggato via Steam! Verrai portato alla home in 3 secondi, altrimenti clicca <a href="{{ path_for('tournaments') }}">qui</a></div><br>
 {% endblock %}
 {% block javascript %}
     {{ parent() }}

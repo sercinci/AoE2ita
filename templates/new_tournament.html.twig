@@ -1,0 +1,46 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}Crea torneo - AoE2ita{% endblock %}
+{% block meta %}
+
+{% endblock %}
+{% block content %}
+  <h1>Crea torneo</h1>  
+  <form id="createTournamentForm">
+    <label for="title">Titolo torneo</label>
+    <input type="text" name="title" required><br>
+    <label for="n_teams">Numero di squadre</label>
+    <input type="number" name="n_teams" required><br>
+    <label for="team_members">Membri per squadra</label>
+    <input type="number" name="team_members" required><br>
+    <button onclick="submitForm()">Crea</button>
+    <!--<input type="submit" value="Crea">-->
+  </form>
+{% endblock %}
+{% block javascript %}
+  {{ parent() }}
+  <script type="text/javascript">
+    var form = document.querySelector('form')
+
+    function submitForm() {
+      fetch('/tournament/new', {
+        method: 'POST',
+        body: new FormData(form),
+        credentials: 'same-origin'
+      }).then(function(response) {
+        //console.log(response)
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error(response.statusText);
+        }
+        
+      }).then(function(data) {
+        //console.log(data)
+        window.location.href = '/tournament/' + data;
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+    }
+  </script>
+{% endblock %}

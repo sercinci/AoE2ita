@@ -2,6 +2,7 @@
 // Routes
 use Controller\Steam\SteamCtrl;
 use Controller\View\ViewCtrl;
+use Controller\Tournament\TournamentCtrl;
 
 //=========================================================== REGISTRATION ROUTES =====/
 
@@ -23,6 +24,27 @@ $app->get('/registration/success',
 $app->get('/logout', 
     SteamCtrl::class . ':logout')->setName('logout');
 
+//=========================================================== TOURNAMENTS ROUTES =====/
+
+/**
+ * POST /tournament/new
+ */
+$app->post('/tournaments/new', 
+    TournamentCtrl::class . ':create');
+
+/**
+ * PUT /tournament/{id}/team/{teamid}
+ */
+$app->put('/tournaments/{id}/team/{teamid}', 
+    TournamentCtrl::class . ':joinTeam');
+
+/**
+ * PUT /tournament/{id}/randomteam
+ */
+$app->put('/tournaments/{id}/randomteam', 
+    TournamentCtrl::class . ':joinRandomTeam');
+
+
 //=========================================================== VIEWS ROUTES =====/
 
 /**
@@ -38,7 +60,25 @@ $app->get('/login',
     ViewCtrl::class . ':showLogin')->setName('login');
 
 /**
+ * GET /tournament/{id}
+ */
+$app->get('/tournaments', 
+    ViewCtrl::class . ':showTournaments')->setName('tournaments');
+
+/**
  * GET /{slug}
  */
 $app->get('/{slug}', 
     ViewCtrl::class . ':showUser')->setName('user');
+
+/**
+ * GET /tournament/new
+ */
+$app->get('/tournaments/new', 
+    ViewCtrl::class . ':showNewTournament')->setName('new_tournament');
+
+/**
+ * GET /tournament/{id}
+ */
+$app->get('/tournaments/{id}', 
+    ViewCtrl::class . ':showTournament')->setName('tournament');

@@ -2,8 +2,8 @@
 // Application middleware
 
 $app->add(new \Slim\Middleware\JwtAuthentication([
-    "path" => ["/"],
-    "passthrough" => ["/registration", "/login"],
+    "path" => ["/tournaments"],
+    "passthrough" => [],
     "secure" => false,
     "secret" => $app->getContainer()['settings']['key'],
     "logger" => $app->getContainer()['logger'],
@@ -11,7 +11,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
         $container["jwt"] = $arg["decoded"];
     },
     "error" => function($req, $res, $arg) {
-        return $res->withRedirect('/login', 401);
+        return $res->withRedirect('/', 401);
         //return $res->withJson(array('message' => 'Token expired'));
     },
     /*"rules" => [
