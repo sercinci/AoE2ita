@@ -8,21 +8,37 @@
     <h1>{{tournament.title}}</h1>  
     <pre>{{ tournament | json_encode() }}</pre>
     <br>
-    {% if tournament.random_team %}
-      
-    {% else %}
-        {% for team in tournament.teams %}
-            {% if joined or team.members_count == tournament.team_members %}
-                <span>{{ team.title }}</span><br>
-            {% else %}
-                <a href="" onclick="joinTeam({{tournament.id}},{{team.id}})">{<span>{ team.title }}</span></a><br>
-            {% endif %}
-            {% for member in team.members %}
-                <span>- {{ member.username }} - {{ member.mmr_rm }}</span><br>
+    {% if api.state == 'pending' %}
+        {% if ready %}
+            <button onclick="startTournament({{tournament.id}})">Avvia torneo</button>
+        {% endif %}
+        {% if tournament.random_team %}
+          
+        {% else %}
+            {% for team in tournament.teams %}
+                {% if joined or team.members_count == tournament.team_members %}
+                    <span>{{ team.title }}</span><br>
+                {% else %}
+                    <a href="" onclick="joinTeam({{tournament.id}},{{team.id}})">{<span>{ team.title }}</span></a><br>
+                {% endif %}
+                {% for member in team.members %}
+                    <span>- {{ member.username }} - {{ member.mmr_rm }}</span><br>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-       
+           
+        {% endif %}
     {% endif %}
+
+    {% if api.state == 'underway' %}
+        <object type="image/svg+xml" data="{{api.live_image_url}}"></object>
+    {% endif %}
+    <br>
+    <pre>{{ api | json_encode() }}</pre>
+    <p>State: pending (preparazione), underway (in corso)</p>
+    <br>
+    <!-- da nascondere -->
+    <object type="image/svg+xml" data="{{api.live_image_url}}"></object>
+    
 {% endblock %}
 {% block javascript %}
     {{ parent() }}
@@ -30,6 +46,23 @@
     function joinTeam(tId, teamId) {
       fetch('/tournaments/'+tId+'/team/'+teamId, {
         method: 'PUT',
+        //body: new FormData(form),
+        credentials: 'same-origin'
+      }).then(function(response) {
+        console.log(response)
+        if (response.ok) {
+          location.reload();
+        } else {
+          throw new Error(response.statusText);
+        }
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+    }
+
+    function startTournament(tId) {
+      fetch('/tournaments/'+tId+'/start', {
+        method: 'POST',
         //body: new FormData(form),
         credentials: 'same-origin'
       }).then(function(response) {

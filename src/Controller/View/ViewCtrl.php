@@ -6,6 +6,7 @@ use Entity\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Controller\Steam\SteamCtrl;
 use Entity\Tournament;
+use Controller\Tournament\TournamentCtrl;
 
 /**
 * Template render
@@ -88,9 +89,19 @@ class ViewCtrl extends BaseCtrl
                     $query->withCount('members');
                 }])
                 ->findOrFail($arg['id']);
+            $api = TournamentCtrl::tournamentDetail($arg['id']);
+            $ready = true;
+            foreach ($tournament->teams as $key => $value) {
+                if ($value->members_count < $tournament->team_members) {
+                    $ready = false;
+                    break;
+                }
+            }
             return $this->view->render($res, 'tournament.html.twig', [
                 'tournament' => $tournament,
-                'joined' => !!$user
+                'joined' => !!$user,
+                'api' => $api,
+                'ready' => $ready
             ]);
         } catch (ModelNotFoundException $ex) {
             $resData = array(

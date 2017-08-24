@@ -44,6 +44,11 @@ $app->put('/tournaments/{id}/team/{teamid}',
 $app->put('/tournaments/{id}/randomteam', 
     TournamentCtrl::class . ':joinRandomTeam');
 
+/**
+ * POST /tournament/{id}/start
+ */
+$app->post('/tournaments/{id}/start', 
+    TournamentCtrl::class . ':startTournament');
 
 //=========================================================== VIEWS ROUTES =====/
 

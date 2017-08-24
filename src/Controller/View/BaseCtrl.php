@@ -13,6 +13,8 @@ abstract class BaseCtrl
         $this->userData = $c->get('jwt') ? $c->get('jwt')->data : null;
         $this->view = $c->get('view');
         $this->hybridConfig = $c->get('settings')['hybridauth'];
+        $this->challongeKey = $c->get('settings')['challongeKey'];
+        $this->challongeApi = $c->get('settings')['challongeApi'];
     }
 
     protected function checkDate($date)

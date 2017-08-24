@@ -82,7 +82,7 @@ class TournamentCtrl extends BaseCtrl
             curl_close($curl);
 
             $team = new Team;
-            $this->logger->info($respParticipants->participant->name);
+            //$this->logger->info($respParticipants->participant->name);
             $team->id = $respParticipants->participant->id;
             $team->title = $respParticipants->participant->name;
             $tournament->teams()->save($team);
@@ -94,8 +94,81 @@ class TournamentCtrl extends BaseCtrl
     public function joinTeam($req, $res, $arg)
     {
         $user = User::find($this->userData->id);
-        //$team = Team::find($arg['teamid']);
         $user->teams()->attach($arg['teamid']);
+        /*$team = Team::withCount('members')
+            ->with(['tournament' => function($query) {
+                $query->select('id', 'team_members');
+            }])
+            ->find($arg['teamid']);
+        if ($team->members_count == $team->tournament->team_members) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => true,
+                //CURLOPT_SSL_VERIFYHOST => 2,
+                //CURLOPT_SSL_VERIFYPEER => 2,
+                CURLOPT_URL => $this->challongeApi . 'tournaments/' . $team->tournament->id . '/participants/' . $team->id . '/check_in.json',
+                CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
+                CURLOPT_HTTPHEADER => array(
+                    "cache-control: no-cache",
+                    "content-type: application/x-www-form-urlencoded",
+                )
+            ));
+            $resp = json_decode(curl_exec($curl));
+            $err = curl_error($curl);
+            if ($err) {
+                $this->logger->error($err);
+                return $res->withStatus(500);
+            }
+            curl_close($curl);
+        }*/ //da verificare se necessario
         return $res->withStatus(200);
+    }
+
+    public function startTournament($req, $res, $arg)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => true,
+            //CURLOPT_SSL_VERIFYHOST => 2,
+            //CURLOPT_SSL_VERIFYPEER => 2,
+            CURLOPT_URL => $this->challongeApi . 'tournaments/' . $id . '/start.json?',
+            CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+            )
+        ));
+        $resp = json_decode(curl_exec($curl));
+        $err = curl_error($curl);
+        if ($err) {
+             $this->logger->error($err);
+            return $res->withStatus(500);
+        }
+        curl_close($curl);
+        return $res->withStatus(200);
+    }
+    
+    public function tournamentDetail($id)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => true,
+            //CURLOPT_SSL_VERIFYHOST => 2,
+            //CURLOPT_SSL_VERIFYPEER => 2,
+            CURLOPT_URL => $this->challongeApi . 'tournaments/' . $id . '.json?api_key=' . $this->challongeKey,
+            //CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+            )
+        ));
+        $resp = json_decode(curl_exec($curl));
+        $err = curl_error($curl);
+        if ($err) {
+             $this->logger->error($err);
+            return false;
+        }
+        curl_close($curl);
+        return $resp->tournament;
     }
 }
