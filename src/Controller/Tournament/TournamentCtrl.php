@@ -148,14 +148,14 @@ class TournamentCtrl extends BaseCtrl
         return $res->withStatus(200);
     }
     
-    public function tournamentDetail($id)
+    public function tournamentDetail($id, $secret, $api)
     {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => true,
             //CURLOPT_SSL_VERIFYHOST => 2,
             //CURLOPT_SSL_VERIFYPEER => 2,
-            CURLOPT_URL => $this->challongeApi . 'tournaments/' . $id . '.json?api_key=' . $this->challongeKey,
+            CURLOPT_URL => $api . 'tournaments/' . $id . '.json?api_key=' . $secret,
             //CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
             CURLOPT_HTTPHEADER => array(
                 "cache-control: no-cache",

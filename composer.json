@@ -14,13 +14,11 @@
     "autoload" : {
         "psr-4" : {
              "Controller\\" : "src/Controller",
-             "Entity\\": "src/Entity",
-             "Middleware\\" : "src/Middleware"
+             "Entity\\": "src/Entity"
         },
         "classmap" : [
             "src/Entity",
-            "src/Controller",
-            "src/Middleware"
+            "src/Controller"
         ]
     },
     "require": {

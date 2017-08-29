@@ -30,7 +30,7 @@ class ViewCtrl extends BaseCtrl
         $user = User::where('slug', $arg['slug'])->first();
         if ($user) { //first or fail!
             if ($this->checkDate($user->updated_at)) {
-                $stats = SteamCtrl::stats($user->steam_id);
+                $stats = SteamCtrl::stats($user->steam_id, $this->hybridConfig['Steam']['keys']['secret']);
                 $user->mmr_dm = $stats['mmr_dm']; 
                 $user->mmr_rm = $stats['mmr_rm']; 
                 $user->games = $stats['games'];
@@ -48,7 +48,9 @@ class ViewCtrl extends BaseCtrl
     {
         $user = User::find($this->userData->id);
         if ($this->checkDate($user->updated_at)) {
-            $stats = SteamCtrl::stats($user->steam_id);
+            $stats = SteamCtrl::stats($user->steam_id, $this->hybridConfig['Steam']['keys']['secret']);
+            //$steam = new SteamCtrl;
+            //$stats = $steam->stats($user->steam_id);
             $user->mmr_dm = $stats['mmr_dm'];
             $user->mmr_rm = $stats['mmr_rm'];
             $user->save();
@@ -89,7 +91,7 @@ class ViewCtrl extends BaseCtrl
                     $query->withCount('members');
                 }])
                 ->findOrFail($arg['id']);
-            $api = TournamentCtrl::tournamentDetail($arg['id']);
+            $api = TournamentCtrl::tournamentDetail($arg['id'], $this->challongeKey, $this->challongeApi);
             $ready = true;
             foreach ($tournament->teams as $key => $value) {
                 if ($value->members_count < $tournament->team_members) {

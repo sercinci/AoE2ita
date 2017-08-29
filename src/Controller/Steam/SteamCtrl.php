@@ -107,7 +107,7 @@ class SteamCtrl extends BaseCtrl
         $user->slug = SlugService::createSlug(User::class, 'slug', $profile->displayName);
         $user->avatar = $profile->photoURL;
         $user->steam_id = $profile->identifier;
-        $stats = $this->stats($user->steam_id);
+        $stats = $this->stats($user->steam_id, $this->hybridConfig['Steam']['keys']['secret']);
         $user->mmr_dm = $stats['mmr_dm'];
         $user->mmr_rm = $stats['mmr_rm'];
         $user->games = $stats['games'];
@@ -120,12 +120,12 @@ class SteamCtrl extends BaseCtrl
         }
     }
 
-    public function stats($steam_id)
+    public function stats($steam_id, $secret)
     {
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=221380&key=' . $this->hybridConfig['Steam']['keys']['secret'] . '&steamid=' . $steam_id
+            CURLOPT_URL => 'http://api.steampowered.com/ISteamUserStats/GetUserStatsForGame/v0002/?appid=221380&key=' . $secret . '&steamid=' . $steam_id
         ));
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
