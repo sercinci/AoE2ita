@@ -5,14 +5,106 @@
 
 {% endblock %}
 {% block content %}
-  <h1>Home - landing</h1>
-  <a href="{{ path_for('registration') }}"><img src="http://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png"></a>
+    {% include 'menu.html.twig' %}
+    <header class="pure-g">
+        <div class="pure-u-md-1-4 headerTiles">
+            <div class="firstTile">
+            </div>
+        </div>
+        <div class="pure-u-md-1-4 headerTiles">
+            <div class="secondTile">
+            </div>
+        </div>
+        <div class="pure-u-md-1-4 headerTiles">
+            <div class="thirdTile">
+            </div>
+        </div>
+        <div class="pure-u-md-1-4 headerTiles">
+            <div class="fourthTile">
+            </div>
+        </div>
+        <div class="pure-u-1">
+            <div class="headerImage">
+
+            </div>
+            <div class="headerTitle">
+                <h1>Search tournament online</h1>
+            </div>
+        </div>
+    </header>
+    <section class="pure-g container main">
+        <div class="pure-u-1 pure-u-md-3-4">
+            <div class="pure-u-md-1-2">
+                graph
+            </div><!-- deleting inline whitespaces
+            --><div class="pure-u pure-u-md-1-2">
+                <p>Who is the king?</p>
+            </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-1-4">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+        </div>
+    </section>
+    <div class="spacer"></div>
+    <section class="pure-g container articles">
+        <article class="pure-u-md-1-4">
+            <div class="articleTile">
+                <h3>Guide o articoli</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </article>
+        <article class="pure-u-md-1-4">
+            <div class="articleTile">
+                <h3>Guide o articoli</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </article>
+        <article class="pure-u-md-1-4">
+            <div class="articleTile">
+                <h3>Guide o articoli</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </article>
+        <article class="pure-u-md-1-4">
+            <div class="articleTile">
+                <h3>Guide o articoli</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
+        </article>
+    </section>
+  <!--
   <br><br>
   <a href="{{ path_for('tournaments') }}">Tornei</a>
   <br>
   <a href="{{ path_for('new_tournament') }}">Crea torneo</a>
   <br>
-  <a href="{{ path_for('logout') }}">Disconnetti</a>
+  <a href="{{ path_for('logout') }}">Disconnetti</a>-->
+  {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
   {{ parent() }}

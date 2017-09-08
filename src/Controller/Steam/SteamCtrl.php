@@ -65,7 +65,7 @@ class SteamCtrl extends BaseCtrl
             try {
                 $user = User::where('steam_id', $user_profile->identifier)
                     ->firstOrFail();
-                $this->logger->info('Facebook login successful: ' . $user->username . ' - ' . $user->email);
+                $this->logger->info('Steam login successful: ' . $user->username . ' - ' . $user->email);
                 $res = $this->setTokenCookie($res, $user);
                 return $this->view->render($res, 'success.html.twig', [
                     'username' => $user->username

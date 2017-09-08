@@ -1,3 +1,134 @@
+/*====================== AoE2ita CSS */
+/*========== Global */
+html, body {
+    background-color: #232323;
+    color: #FFFFFF;
+}
+
+footer, section.main {
+    background-color: #000000;
+}
+
 a:hover, button:hover {
     cursor: url('aoe2hand_1_37x37.png'), pointer;
+}
+
+h1 {
+    color: #FFFFFF;
+    text-transform: uppercase;
+}
+
+h3 {
+    color: #E8BA03;
+}
+
+section.container {
+    border: 1px solid #8a7522;
+}
+
+div.spacer {
+    height: 20px;
+} 
+
+/**
+ * giallo #E8BA03
+ * chiaro #95989A
+ * scuro #232323
+ */
+
+/*========== Navbar */
+nav.mainNav {
+    text-align: center;
+    position: relative;
+}
+
+nav.mainNav .icon {
+    position: relative;
+    width: 100px;
+    display: flex;
+    height: 90px;
+}
+
+nav.mainNav .icon > img {
+    position: absolute;
+    height: 110px;
+}
+
+nav .steamLogin {
+    display: inline-block;
+    position: absolute;
+    right: 20px;
+    bottom: 10px;
+}
+
+.pure-menu-item {
+     margin: 0 10px;
+}
+
+.pure-menu-link {
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.pure-menu-active>.pure-menu-link, .pure-menu-link:focus, .pure-menu-link:hover {
+    background-color: transparent;
+}
+
+/*========== Home */
+.headerTiles {
+    height: 300px;
+}
+
+.firstTile, .secondTile, .thirdTile, .fourthTile {
+    border: 1px solid #8a7522;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-x: -25px;
+}
+
+.firstTile {
+    background-image: url("images/aoe1.png");
+}
+
+.secondTile {
+    background-image: url("images/aoe2.jpg");
+}
+
+.thirdTile {
+    background-image: url("images/aoe3.jpg");
+}
+
+.fourthTile {
+    background-image: url("images/aoe4.jpg");
+}
+
+.headerImage {
+    height: 240px;
+    background-image: url("images/header.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -480px;
+}
+
+.headerTitle {
+    border: 1px solid #8a7522;
+    text-align: center;
+}
+
+section.articles {
+    padding: 0 5%;
+    background-image: url("images/articles.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position-y: -280px;
+}
+
+.articleTile {
+    margin: 40px;
+    padding: 0 25px;
+    border: 1px solid #95989A;
+    background-color: #232323;
 }

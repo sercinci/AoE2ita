@@ -5,15 +5,15 @@
 
 {% endblock %}
 {% block content %}
-  <div>Sono loggato come <a href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a></div><br>
-  
-  <br>
-  <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
-  <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
-  <p>Partite: <strong>{{ user.games }}</strong></p>
-  <a href="{{ path_for('index') }}">Home</a>
-  <br><br>
-  {{ tournaments | json_encode() }}
+    {% include 'menu.html.twig' %}
+    <div>Sono loggato come <a href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a></div><br>
+      
+    <br>
+    <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
+    <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
+    <p>Partite: <strong>{{ user.games }}</strong></p>
+    <br><br>
+    {{ tournaments | json_encode() }}
 {% endblock %}
 {% block javascript %}
   {{ parent() }}
