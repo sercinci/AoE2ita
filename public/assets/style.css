@@ -18,7 +18,7 @@ h1 {
     text-transform: uppercase;
 }
 
-h3 {
+h3, h2 {
     color: #E8BA03;
 }
 
@@ -28,7 +28,16 @@ section.container {
 
 div.spacer {
     height: 20px;
-} 
+}
+
+.pure-button {
+    background-color: #232323;
+    color: #95989A;
+    border: 1px solid #95989A;
+    border-radius: 8px;
+    text-transform: uppercase;
+    padding: 0.5em 1.5em;
+}
 
 /**
  * giallo #E8BA03
@@ -116,6 +125,31 @@ nav .steamLogin {
 .headerTitle {
     border: 1px solid #8a7522;
     text-align: center;
+}
+
+section.main {
+    padding: 70px 7%;
+    background-image: url("images/busto.png");
+    background-repeat: no-repeat;
+    background-position: left bottom;
+}
+
+section.main .graph {
+    background-image: url("images/torneo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+section.main .cta {
+    text-align: center;
+    padding: 15px 50px;
+}
+
+section.main .text {
+    margin-left: 40%;
+    border-left: 1px solid #95989A;
+    padding: 3px 0px 3px 40px;
+    height: 100%;
 }
 
 section.articles {
