@@ -27,7 +27,7 @@ h3, h2 {
     color: #E8BA03;
 }
 
-section.container, thead {
+thead {
     border: 1px solid #8a7522;
 }
 
@@ -75,6 +75,29 @@ label, .dataTable-info {
     color: #95989A;
 }
 
+.modalTheme {
+    border-radius: 10px;
+    background-color:#232323;
+    width:500px;
+    height:auto;
+    padding:25px;
+    border: 1px solid #95989A;
+}
+
+.modalTheme > div {
+    text-align: center;
+}
+
+.modalTheme > span {
+    display: block;
+    margin-bottom: 25px;
+    text-align: justify;
+}
+
+.modalTheme > p {
+    text-align: right;
+}
+
 /**
  * giallo #E8BA03
  * chiaro #95989A
@@ -101,7 +124,7 @@ nav.mainNav .icon > img {
     height: 110px;
 }
 
-nav .steamLogin {
+nav #steamLogin {
     display: inline-block;
     position: absolute;
     right: 20px;
@@ -124,6 +147,11 @@ nav .steamLogin {
 }
 
 /*========== Home */
+section.container {
+    border-top: 1px solid #8a7522;
+    border-bottom: 1px solid #8a7522;
+}
+
 .headerTiles {
     height: 300px;
 }
@@ -207,7 +235,7 @@ section.articles {
 
 /*========== Tournaments */
 section.tournaments {
-    border: 1px solid  #95989A;
+    border-top: 1px solid  #95989A;
     border-bottom: 1px solid #8a7522;
     padding: 10% 8%; 
     background-image: url("images/tournaments.jpg");

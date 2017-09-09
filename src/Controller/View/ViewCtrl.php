@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Controller\Steam\SteamCtrl;
 use Entity\Tournament;
 use Controller\Tournament\TournamentCtrl;
+use Dflydev\FigCookies\FigRequestCookies;
 
 /**
 * Template render
@@ -15,8 +16,9 @@ class ViewCtrl extends BaseCtrl
 {
     public function showIndex($req, $res, $arg)
     {
+        $cookie = FigRequestCookies::get($req, 'token');
         return $this->view->render($res, 'index.html.twig', [
-           
+            'user' => !!$cookie->getValue()
         ]);
     }
 

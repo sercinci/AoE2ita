@@ -37,7 +37,7 @@
         <div class="pure-u-1 pure-u-md-1-3">
             <div class="cta">
                 <h2>Who is the king?</h2>
-                <a class="pure-button" href="{{ path_for('registration') }}">Join</a>
+                <a class="pure-button" href="{{ path_for('tournaments') }}">Join</a>
                 <div class="spacer"></div>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
                 tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -105,8 +105,26 @@
             </div>
         </article>
     </section>
+    <div id="loginPop" style="display: none;">
+        <span>Per utilizzare la piattaforma e partecipare ai tornei è necessario autenticarsi con il proprio account di STEAM<sup>&reg;</sup>. L'autenticazione è gestita completamente dal sito di STEAM<sup>&reg;</sup> che accerta la vostra identità al posto nostro, per cui noi non salviamo alcun dato personale sensibile del vostro profilo e su questo sito non verrà richiesta alcuna password.<br>L'autenticazione permette ai giocatori del torneo di conoscersi e contattarsi, creare e partecipare ai tornei, visualizzare le statistiche di gioco personali e degli altri partecipanti.<br>Questo sito è stato pensato per aiutare i giocatori a conoscersi e creare tornei di questo gioco immortale.</span>
+        <div>
+            <a href="{{ path_for('registration') }}"><img src="http://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png" alt="login"></a>
+        </div>
+        <p>Lo staff di AoE2ita</p>
+    </div>
     {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
   {{ parent() }}
+  <script type="text/javascript">
+    document.addEventListener('DOMContentLoaded', function() {
+        var params = (new URL(document.location)).searchParams;
+        if (params.get("auth") === 'false') {
+            uglipop({
+                class:'modalTheme',
+                source:'div',
+                content:'loginPop'});
+        }
+    }, false);
+  </script>
 {% endblock %}

@@ -5,12 +5,14 @@
 
 {% endblock %}
 {% block content %}
-  <div>{{user.username}}</div><br>
-  <img src="{{ user.avatar }}"><br>
-  <a href="{{ path_for('index') }}">Home</a>
-  <br>
-  <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
-  <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
+    {% include 'menu.html.twig' %}
+    <div>{{user.username}}</div><br>
+    <img src="{{ user.avatar }}"><br>
+    <a href="{{ path_for('index') }}">Home</a>
+    <br>
+    <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
+    <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
+    {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
   {{ parent() }}

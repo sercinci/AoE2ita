@@ -11,7 +11,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
         $container["jwt"] = $arg["decoded"];
     },
     "error" => function($req, $res, $arg) {
-        return $res->withRedirect('/', 401);
+        return $res->withRedirect('/?auth=false', 401);
         //return $res->withJson(array('message' => 'Token expired'));
     },
     /*"rules" => [
