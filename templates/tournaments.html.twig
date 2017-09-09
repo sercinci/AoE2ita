@@ -6,15 +6,117 @@
 {% endblock %}
 {% block content %}
     {% include 'menu.html.twig' %}
-    <div>Sono loggato come <a href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a></div><br>
-      
-    <br>
-    <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
-    <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
-    <p>Partite: <strong>{{ user.games }}</strong></p>
-    <br><br>
-    {{ tournaments | json_encode() }}
+    <section class="pure-g tournaments">
+        <div class="pure-u-1 pure-u-md-1-5">
+            <div class="sidebar">
+                <div class="bigButton">
+                    <a href="{{ path_for('new_tournament') }}">Crea torneo</a>
+                </div>
+                <div class="text">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+                <div class="profile">
+                    <div class="pure-u-3-5">
+                        <div class="pure-u-2-5">
+                            <div class="avatar">
+                                <a class="username" href="{{ path_for('user', { 'slug': user.slug }) }}">
+                                    <img src="{{ user.avatar }}" alt="{{user.username}}">
+                                </a>
+                            </div>
+                        </div><!--
+                        --><div class="pure-u-3-5">
+                                <div class="user">
+                                    <a class="username" href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a><br>
+                                    <a class="logout" href="{{ path_for('logout') }}">disconnetti</a>
+                                </div>
+                        </div>
+                        <div class="pure-u-1">
+                            <div class="rank">
+                                <span>DM: {{ user.mmr_dm }}</span>
+                                <span>RM: {{ user.mmr_rm }}</span>
+                            </div>
+                        </div>
+                    </div><!--
+                    --><div class="pure-u-2-5">
+                        <div class="score">
+                            <span>0</span>
+                            <img src="/assets/images/cup.png" alt="score">
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="title">
+                        Eventi in corso
+                    </div>
+                    <div class="content">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-4-5">
+            <div class="tournamentTable">
+                <table id="tournamentsTable">
+                    <thead>
+                        <th>Torneo</th>
+                        <th>Tipo</th>
+                        <th>Rank</th>
+                        <th>Host</th>
+                        <th>Partecipanti</th>
+                    </thead>
+                    <tbody>
+                        {% for t in tournaments %}
+                            <tr onclick="loadTorunament({{ t.id }})">
+                                <td>{{ t.title }}</td>
+                                <td>{{ t.type }}</td>
+                                <td>1600 - 1700</td>
+                                <td>EU</td>
+                                <td>{{ t.joined }}/{{ t.team_members * t.n_teams }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                                <td>lala</td>
+                                <td>lalal</td>
+                                <td>1600 - 1700</td>
+                                <td>EU</td>
+                                <td>lalal</td>
+                            </tr>
+                    </tbody>
+                </table>
+                <!--{{ tournaments | json_encode() }}-->
+            </div>
+        </div>
+    </section>
+    {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
-  {{ parent() }}
+    {{ parent() }}
+    <script type="text/javascript">
+        var dataTable = new DataTable("#tournamentsTable", {
+            labels: {
+                placeholder: "Cerca tornei",
+                perPage: "{select} tornei per pagina",
+                noRows: "Nessun torneo trovato",
+                info: "Visualizzati {start} su {end} di {rows} tornei",
+            },
+            layout: {
+                top: "{search}",
+                bottom: "{info}{pager}"
+            }
+        });
+
+        function loadTorunament(id){
+            window.location.href = '/tournaments/' + id;
+        }
+    </script>
 {% endblock %}

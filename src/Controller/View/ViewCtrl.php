@@ -63,6 +63,12 @@ class ViewCtrl extends BaseCtrl
                 }])
                 ->withCount('teams')
                 ->get();
+        foreach ($tournaments as $key => $tournament) {
+            $tournament->joined = 0;
+            foreach ($tournament->teams as $key => $team) {
+                $tournament->joined += $team->members_count;
+            }
+        }
         return $this->view->render($res, 'tournaments.html.twig', [
             'user' => $user,
             'tournaments' => $tournaments
@@ -71,7 +77,10 @@ class ViewCtrl extends BaseCtrl
 
     public function showNewTournament($req, $res, $arg)
     {
-        return $this->view->render($res, 'new_tournament.html.twig');
+        //$user = User::find($this->userData->id);
+        return $this->view->render($res, 'new_tournament.html.twig', [
+            'user' => true
+        ]);
     }
 
     public function showTournament($req, $res, $arg)
@@ -103,7 +112,8 @@ class ViewCtrl extends BaseCtrl
                 'tournament' => $tournament,
                 'joined' => !!$user,
                 'api' => $api,
-                'ready' => $ready
+                'ready' => $ready,
+                'user' => true
             ]);
         } catch (ModelNotFoundException $ex) {
             $resData = array(

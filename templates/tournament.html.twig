@@ -5,6 +5,7 @@
 
 {% endblock %}
 {% block content %}
+    {% include 'menu.html.twig' %}
     <h1>{{tournament.title}}</h1>  
     <pre>{{ tournament | json_encode() }}</pre>
     <br>
@@ -38,7 +39,7 @@
     <br>
     <!-- da nascondere -->
     <object type="image/svg+xml" data="{{api.live_image_url}}"></object>
-    
+    {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
     {{ parent() }}

@@ -5,7 +5,9 @@
         <li class="pure-menu-item"><a href="{{ path_for('tournaments') }}" class="pure-menu-link">Tornei</a></li>
         <!--<li class="pure-menu-item"><a href="{{ path_for('registration') }}"><img src="http://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png" alt="login"></a></li>--> <!--Mobile version-->
     </ul>
-    <div class="steamLogin"> <!-- hide when logged in ? -->
-        <a href="{{ path_for('registration') }}"><img src="http://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png" alt="login"></a>
-    </div>
+    {% if user == false %}
+        <div class="steamLogin">
+            <a href="{{ path_for('registration') }}"><img src="http://steamcommunity-a.akamaihd.net/public/images/signinthroughsteam/sits_02.png" alt="login"></a>
+        </div>
+    {% endif %}
 </nav>

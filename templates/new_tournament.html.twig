@@ -5,6 +5,7 @@
 
 {% endblock %}
 {% block content %}
+  {% include 'menu.html.twig' %}
   <h1>Crea torneo</h1>  
   <form id="createTournamentForm">
     <label for="title">Titolo torneo</label>
@@ -16,6 +17,7 @@
     <button onclick="submitForm()">Crea</button>
     <!--<input type="submit" value="Crea">-->
   </form>
+  {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
   {{ parent() }}

@@ -9,7 +9,12 @@ footer, section.main {
     background-color: #000000;
 }
 
-a:hover, button:hover {
+a {
+    text-decoration: none;
+    color: #95989A;
+}
+
+a:hover, button:hover, .tournamentTable tbody > tr {
     cursor: url('aoe2hand_1_37x37.png'), pointer;
 }
 
@@ -22,7 +27,7 @@ h3, h2 {
     color: #E8BA03;
 }
 
-section.container {
+section.container, thead {
     border: 1px solid #8a7522;
 }
 
@@ -39,10 +44,43 @@ div.spacer {
     padding: 0.5em 1.5em;
 }
 
+table {
+    background-color: #232323;
+    color: #95989A;
+    border: 1px solid rgba(84, 84, 84, 0.44);
+    /*border-collapse: separate;
+    border-spacing: 0 5px !important;*/
+}
+
+th {
+    border-bottom: none !important;
+}
+
+tbody > tr {
+    background-color: #545454;
+    opacity: 0.44;
+    /*border-bottom: 2px solid #232323;*/
+}
+
+th:not(:last-child), td:not(:last-child) {
+    border-right: 1px solid #95989A;
+}
+
+select {
+    background-color: #232323;
+    color: #95989A;
+}
+
+label, .dataTable-info {
+    color: #95989A;
+}
+
 /**
  * giallo #E8BA03
  * chiaro #95989A
  * scuro #232323
+ * rossastro #7A5040
+ * marroncino #8E764C
  */
 
 /*========== Navbar */
@@ -120,10 +158,10 @@ nav .steamLogin {
     background-repeat: no-repeat;
     background-size: cover;
     background-position-y: -480px;
+    border-bottom: 1px solid #8a7522;
 }
 
 .headerTitle {
-    border: 1px solid #8a7522;
     text-align: center;
 }
 
@@ -165,4 +203,114 @@ section.articles {
     padding: 0 25px;
     border: 1px solid #95989A;
     background-color: #232323;
+}
+
+/*========== Tournaments */
+section.tournaments {
+    border: 1px solid  #95989A;
+    border-bottom: 1px solid #8a7522;
+    padding: 10% 8%; 
+    background-image: url("images/tournaments.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.sidebar, .tournamentTable {
+    border: 1px solid #95989A;
+    padding: 10px;
+    background-color: rgba(35, 35, 35, 0.58);
+}
+
+.tournamentTable {
+    margin-left: 30px;
+}
+
+.dataTable-container {
+    border-bottom: none !important;
+}
+
+.sidebar .text, .sidebar .profile, .sidebar .details {
+    border: 1px solid #7A5040;
+    background-color: rgba(0, 0, 0, 0.66);
+    margin-top: 20px;
+}
+
+.dataTable-sorter::after {
+    border-bottom-color: #95989A !important;
+}
+
+.dataTable-sorter::before {
+    border-top-color: #95989A !important;
+}
+
+.sidebar .bigButton {
+    border: 1px solid #95989A;
+    background-color: #232323;
+    padding: 8px;
+}
+
+.bigButton > a {
+    display: block;
+    text-transform: uppercase;
+    background-color: #8E764C;
+    border: 1px solid #7A5040;
+    padding: 15px;
+    text-align: center;
+    color: #232323;
+    text-decoration: none;
+}
+
+.sidebar .text, .details .content {
+    padding: 20px;
+}
+
+.avatar {
+    padding: 5px;
+}
+
+.avatar img {
+    width: 100%;
+    border: 1px solid #95989A;
+}
+
+.profile {
+    min-height: 115px;
+}
+
+.profile .user {
+    text-align: center;
+    padding-top: 30px;
+}
+
+.user .logout {
+    font-size: 8pt;
+}
+
+.profile .score {
+    border-left: 1px solid #7A5040;
+    min-height: 115px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile .rank {
+    margin: 0 5px 5px;
+    padding: 5px;
+    border-top: 1px solid #7A5040;
+    display: flex;
+    justify-content: space-between;
+}
+
+.score > img {
+    width: 18px;
+    margin-left: 2px;
+}
+
+.details .title {
+    text-align: center;
+    border-bottom: 1px solid #7A5040;
+    padding: 5px 0;
+    text-transform: uppercase;
 }
