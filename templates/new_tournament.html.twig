@@ -96,7 +96,7 @@
         });
 
         var form = document.querySelector('form')
-
+        form.addEventListener('‌​submit', function(event){event.preventDefault();});
         function submitForm() {
             tinymce.get("desc").save();
             fetch('/tournaments/new', {
