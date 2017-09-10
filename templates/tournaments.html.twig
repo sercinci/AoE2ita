@@ -71,7 +71,9 @@
                         <th>Torneo</th>
                         <th>Tipo</th>
                         <th>Rank</th>
+                        <th>Classifica</th>
                         <th>Host</th>
+                        <th>Squadre casuali</th>
                         <th>Partecipanti</th>
                     </thead>
                     <tbody>
@@ -79,8 +81,10 @@
                             <tr onclick="loadTorunament({{ t.id }})">
                                 <td>{{ t.title }}</td>
                                 <td>{{ t.type }}</td>
-                                <td>1600 - 1700</td>
-                                <td>EU</td>
+                                <td>{{ t.rank_min }} - {{ t.rank_max }}</td>
+                                <td>{{ t.rank }}</td>
+                                <td>{{ t.host }}</td>
+                                <td>{{ t.random_team }}</td>
                                 <td>{{ t.joined }}/{{ t.team_members * t.n_teams }}</td>
                             </tr>
                         {% endfor %}
@@ -88,8 +92,10 @@
                                 <td>lala</td>
                                 <td>lalal</td>
                                 <td>1600 - 1700</td>
-                                <td>EU</td>
-                                <td>lalal</td>
+                                <td>-</td>
+                                <td>ANY</td>
+                                <td>1</td>
+                                <td>0/15</td>
                             </tr>
                     </tbody>
                 </table>

@@ -87,8 +87,8 @@ class ViewCtrl extends BaseCtrl
 
     public function showTournament($req, $res, $arg)
     {
-        //$user = User::find($this->userData->id);
-        $user = User::whereHas('teams', function ($query) use ($arg) {
+        $user = User::find($this->userData->id);
+        $member = User::whereHas('teams', function ($query) use ($arg) {
                 $query->where('tournament_id', $arg['id']);
             })
             ->where('id', $this->userData->id)
@@ -112,10 +112,10 @@ class ViewCtrl extends BaseCtrl
             }
             return $this->view->render($res, 'tournament.html.twig', [
                 'tournament' => $tournament,
-                'joined' => !!$user,
+                'joined' => !!$member,
                 'api' => $api,
                 'ready' => $ready,
-                'user' => true
+                'user' => $user
             ]);
         } catch (ModelNotFoundException $ex) {
             $resData = array(

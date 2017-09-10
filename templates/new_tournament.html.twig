@@ -4,45 +4,118 @@
 {% block meta %}
 
 {% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/assets/nouislider.min.css">
+{% endblock %}
 {% block content %}
-  {% include 'menu.html.twig' %}
-  <h1>Crea torneo</h1>  
-  <form id="createTournamentForm">
-    <label for="title">Titolo torneo</label>
-    <input type="text" name="title" required><br>
-    <label for="n_teams">Numero di squadre</label>
-    <input type="number" name="n_teams" required><br>
-    <label for="team_members">Membri per squadra</label>
-    <input type="number" name="team_members" required><br>
-    <button onclick="submitForm()">Crea</button>
-    <!--<input type="submit" value="Crea">-->
-  </form>
-  {% include 'footer.html.twig' %}
+    {% include 'menu.html.twig' %}
+    <h1>Crea torneo</h1>
+    <form id="createTournamentForm">
+        <label for="title">Titolo torneo</label>
+        <input type="text" name="title" required><br><br><br>
+        <label for="n_teams">Numero di squadre</label>
+        <input type="range" name="n_teams" min="2" max="32" step="1" onchange="teamvalue.value=value" value="2" required> <output id="teamvalue">2</output><br>
+        
+        <label for="team_members">Membri per squadra</label>
+        <input type="range" name="team_members" min="1" max="4" step="1" list="membermarks" onchange="membervalue.value=value" value="1" required> <output id="membervalue">1</output><br>
+        <datalist id="membermarks">
+            <option value="1" label="1">
+            <option value="2" label="2">
+            <option value="3" label="3">
+            <option value="4" label="4">
+        </datalist>
+        <label for="tournament_type">Tipologia torneo</label>
+        <select name="tournament_type" required>
+            <option value="single elimination">Single elimination</option>
+            <!-- altre -->
+        </select><br>
+        <label for="rank_type">Classifica</label>
+        <select name="rank_type" required>
+            <option value="DM">DM</option>
+            <option value="RM">RM</option>
+            <option value="">Nessuna</option>
+        </select><br><br><br>
+        <label for="rank_value">Rank</label>
+        <div id="mmr_slider" style="width: 600px;"></div><br>
+        <input type="hidden" name="rank_min" value="">
+        <input type="hidden" name="rank_max" value="">
+        <label for="host">Host</label>
+        <input type="radio" name="host" value="EU" checked> EU
+        <input type="radio" name="host" value="ANY"> ANY<br>
+        <label for="random">Squadre casuali</label>
+        <input type="checkbox" name="random" value="true"><br>
+        <label for="description">Descrizione</label>
+        <textarea name="description"></textarea><br>
+        <button onclick="submitForm()" class="pure-button">Crea</button>
+        <!--<input type="submit" value="Crea">-->
+    </form>
+    {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
-  {{ parent() }}
-  <script type="text/javascript">
-    var form = document.querySelector('form')
+    {{ parent() }}
+    <script type="text/javascript" src="/assets/nouislider.min.js"></script>
+    <script type="text/javascript" src="/assets/tinymce/tinymce.min.js"></script>
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function() {
+            tinymce.init({
+                selector: 'textarea',  // change this value according to your HTML
+                plugins: 'lists',
+                toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table',
+                menubar: false,
+                statusbar: false,
+                branding: false,
+                width: 600
+            });
 
-    function submitForm() {
-      fetch('/tournament/new', {
-        method: 'POST',
-        body: new FormData(form),
-        credentials: 'same-origin'
-      }).then(function(response) {
-        //console.log(response)
-        if (response.ok) {
-          return response.json();
-        } else {
-          throw new Error(response.statusText);
+            var slider = document.getElementById('mmr_slider');
+            noUiSlider.create(slider, {
+                start: [ 1400, 1700 ],
+                step: 50,
+                margin: 50,
+                tooltips: true,
+                range: {
+                    'min': [ 1200 ],
+                    'max': [ 2400 ]
+                },
+                format: {
+                    to: function ( value ) {
+                        return parseInt(value);
+                    },
+                    from: function ( value ) {
+                        return parseInt(value);
+                    }
+                }
+            });
+            var rank_min = document.getElementsByName('rank_min')[0];
+            var rank_max = document.getElementsByName('rank_max')[0];
+            slider.noUiSlider.on('update', function(values, handle) {
+                rank_min.value = parseInt(values[0]);
+                rank_max.value = parseInt(values[1]);
+            });
+        });
+
+        var form = document.querySelector('form')
+
+        function submitForm() {
+            tinymce.triggerSave();
+            fetch('/tournaments/new', {
+                method: 'POST',
+                body: new FormData(form),
+                credentials: 'same-origin'
+            }).then(function(response) {
+                //console.log(response)
+                if (response.ok) {
+                  return response.json();
+                } else {
+                  throw new Error(response.statusText);
+                }
+            }).then(function(data) {
+                //console.log(data)
+                window.location.href = '/tournaments/' + data;
+            }).catch(function(error) {
+                console.log('request failed', error)
+            });
         }
-        
-      }).then(function(data) {
-        //console.log(data)
-        window.location.href = '/tournament/' + data;
-      }).catch(function(error) {
-        console.log('request failed', error)
-      })
-    }
   </script>
 {% endblock %}

@@ -50,6 +50,12 @@ $app->put('/tournaments/{id}/randomteam',
 $app->post('/tournaments/{id}/start', 
     TournamentCtrl::class . ':startTournament');
 
+/**
+ * DELETE /tournament/{id}/start
+ */
+$app->delete('/tournaments/{id}/delete', 
+    TournamentCtrl::class . ':deleteTournament');
+
 //=========================================================== VIEWS ROUTES =====/
 
 /**

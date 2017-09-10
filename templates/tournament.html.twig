@@ -9,8 +9,12 @@
     <h1>{{tournament.title}}</h1>  
     <pre>{{ tournament | json_encode() }}</pre>
     <br>
+    <div>
+        {{ tournament.description | raw }}
+    </div>
+    <br>
     {% if api.state == 'pending' %}
-        {% if ready %}
+        {% if ready and tournament.user_id == user.id %}
             <button onclick="startTournament({{tournament.id}})">Avvia torneo</button>
         {% endif %}
         {% if tournament.random_team %}
@@ -38,7 +42,10 @@
     <p>State: pending (preparazione), underway (in corso)</p>
     <br>
     <!-- da nascondere -->
-    <object type="image/svg+xml" data="{{api.live_image_url}}"></object>
+    <object type="image/svg+xml" data="{{api.live_image_url}}"></object><br>
+    {% if tournament.user_id == user.id %}
+        <button onclick="deleteTournament({{tournament.id}})" class="pure-button">Elimina torneo</button>
+    {% endif %}
     {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
@@ -70,6 +77,23 @@
         console.log(response)
         if (response.ok) {
           location.reload();
+        } else {
+          throw new Error(response.statusText);
+        }
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+    }
+
+    function deleteTournament(tId) {
+      fetch('/tournaments/'+tId+'/delete', {
+        method: 'DELETE',
+        //body: new FormData(form),
+        credentials: 'same-origin'
+      }).then(function(response) {
+        console.log(response)
+        if (response.ok) {
+          window.location.href = '/tournaments';
         } else {
           throw new Error(response.statusText);
         }
