@@ -112,7 +112,7 @@
                 }
             }).then(function(data) {
                 //console.log(data)
-                window.location.href = '/tournaments/' + data;
+                location.href = '/tournaments/' + data;
             }).catch(function(error) {
                 console.log('request failed', error)
             });
