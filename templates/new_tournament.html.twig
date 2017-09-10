@@ -46,7 +46,7 @@
         <label for="random">Squadre casuali</label>
         <input type="checkbox" name="random" value="true"><br>
         <label for="description">Descrizione</label>
-        <textarea name="description"></textarea><br>
+        <textarea id="desc" name="description"></textarea><br>
         <button onclick="submitForm()" class="pure-button">Crea</button>
         <!--<input type="submit" value="Crea">-->
     </form>
@@ -59,7 +59,7 @@
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
             tinymce.init({
-                selector: 'textarea',  // change this value according to your HTML
+                selector: 'textarea#desc',  // change this value according to your HTML
                 plugins: 'lists',
                 toolbar: 'undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table',
                 menubar: false,
@@ -98,7 +98,7 @@
         var form = document.querySelector('form')
 
         function submitForm() {
-            tinymce.triggerSave();
+            tinymce.get("desc").save();
             fetch('/tournaments/new', {
                 method: 'POST',
                 body: new FormData(form),
