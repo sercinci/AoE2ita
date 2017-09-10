@@ -47,7 +47,7 @@
         <input type="checkbox" name="random" value="true"><br>
         <label for="description">Descrizione</label>
         <textarea id="desc" name="description"></textarea><br>
-        <button onclick="submitForm()" class="pure-button">Crea</button>
+        <button onclick="submitForm()" type="button" class="pure-button">Crea</button>
         <!--<input type="submit" value="Crea">-->
     </form>
     {% include 'footer.html.twig' %}
@@ -96,7 +96,7 @@
         });
 
         var form = document.querySelector('form')
-        form.addEventListener('‌​submit', function(event){event.preventDefault();});
+        //form.addEventListener('‌​submit', function(event){event.preventDefault();});
         function submitForm() {
             tinymce.get("desc").save();
             fetch('/tournaments/new', {
