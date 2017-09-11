@@ -104,8 +104,8 @@ class ViewCtrl extends BaseCtrl
                 ->findOrFail($arg['id']);
             $api = TournamentCtrl::tournamentDetail($arg['id'], $this->challongeKey, $this->challongeApi);
             $ready = true;
-            foreach ($tournament->teams as $key => $value) {
-                if ($value->members_count < $tournament->team_members) {
+            foreach ($tournament->teams as $team) {
+                if ($team->members_count < $tournament->team_members) {
                     $ready = false;
                     break;
                 }

@@ -54,6 +54,8 @@ table {
 
 th {
     border-bottom: none !important;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
 }
 
 tbody > tr {

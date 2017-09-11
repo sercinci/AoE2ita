@@ -128,6 +128,37 @@ class TournamentCtrl extends BaseCtrl
         return $res->withStatus(200);
     }
 
+    public function joinRandomTeam($req, $res, $arg)
+    {
+        $user = User::find($this->userData->id);
+        $tournament = Tournament::with(['teams' => function($query) {
+                $query->withCount('members');
+            }])
+            ->findOrFail($arg['id']);
+        $teamsAverage = array();
+        foreach ($tournament->teams as $team) {
+            if ($team->members_count == 0) {
+                $user->teams()->attach($team->id);
+                $team->average = $tournament->rank == 'DM' ? $user->mmr_dm + ($user->games * 1) : $user->mmr_rm + ($user->games * 1);
+                $team->save();
+                return $res->withStatus(200);
+            }
+            $teamsAverage[$team->id] = $team->average;
+            if ($team->members_count == $tournament->team_members) {
+                $fullTeams[$team->id] = true;
+            }
+        }
+        $average = array_sum($teamsAverage) / count($teamsAverage);
+        $teamsAverage = array_diff_key($teamsAverage, $fullTeams); //rimuovo i team pieni
+        $mmr = $tournament->rank == 'DM' ? $user->mmr_dm : $user->mmr_rm; 
+        $teamId = $mmr > $average ? array_search(min($teamsAverage), $teamsAverage) : array_search(max($teamsAverage), $teamsAverage);
+        $user->teams()->attach($teamId);
+        $team = Team::find($teamId);
+        $team->average = ($team->average + $mmr) / 2;
+        $team->save(); 
+        return $res->withStatus(200);
+    }
+
     public function startTournament($req, $res, $arg)
     {
         $curl = curl_init();

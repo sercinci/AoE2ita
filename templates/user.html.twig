@@ -10,8 +10,9 @@
     <img src="{{ user.avatar }}"><br>
     <a href="{{ path_for('index') }}">Home</a>
     <br>
-    <p>MMR DM: <strong>{{ user.mmr_dm }}</strong></p>
-    <p>MMR RM: <strong>{{ user.mmr_rm }}</strong></p>
+    <p>DM: <strong>{{ user.mmr_dm }}</strong></p>
+    <p>RM: <strong>{{ user.mmr_rm }}</strong></p>
+    <p>Partite: <strong>{{ user.games }}</strong></p>
     {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}

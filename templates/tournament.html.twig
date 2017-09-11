@@ -16,19 +16,19 @@
     <br>
     {% if api.state == 'pending' %}
         {% if ready and tournament.user_id == user.id %}
-            <button onclick="startTournament({{tournament.id}})">Avvia torneo</button>
+            <button onclick="startTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Avviando...';">Avvia torneo</button>
         {% endif %}
-        {% if tournament.random_team %}
-          
+        {% if tournament.random_team == 1 and joined == false %}
+            <button onclick="joinRandomTeam({{tournament.id}}); this.disabled=true; this.innerHTML='Entrando...';"><span>Partecipa</span></button>
         {% else %}
             {% for team in tournament.teams %}
                 {% if joined or team.members_count == tournament.team_members %}
                     <span>{{ team.title }}</span><br>
                 {% else %}
-                    <a href="" onclick="joinTeam({{tournament.id}},{{team.id}})"><span>{{ team.title }}</span></a><br>
+                    <button onclick="joinTeam({{tournament.id}},{{team.id}}); this.disabled=true; this.innerHTML='Entrando in {{ team.title }}';"><span>{{ team.title }}</span></button><br>
                 {% endif %}
                 {% for member in team.members %}
-                    <span>- {{ member.username }} - {{ member.mmr_rm }}</span><br>
+                    <span>- {{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
                 {% endfor %}
             {% endfor %}
            
@@ -37,6 +37,7 @@
 
     {% if api.state == 'underway' %}
         <object type="image/svg+xml" data="{{api.live_image_url}}"></object>
+        Lo facciamo noi
     {% endif %}
     <br>
     <pre>{{ api | json_encode() }}</pre>
@@ -45,7 +46,7 @@
     <!-- da nascondere -->
     <object type="image/svg+xml" data="{{api.live_image_url}}"></object><br>
     {% if tournament.user_id == user.id %}
-        <button onclick="deleteTournament({{tournament.id}})" class="pure-button">Elimina torneo</button>
+        <button onclick="deleteTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Eliminando...';" class="pure-button">Elimina torneo</button>
     {% endif %}
     {% include 'footer.html.twig' %}
 {% endblock %}
@@ -53,7 +54,28 @@
     {{ parent() }}
     <script type="text/javascript">
     function joinTeam(tId, teamId) {
+        var buttons = document.getElementsByTagName('button');
+        for (var i = 0; i < buttons.length; i++) {
+            buttons[i].disabled = true; //da vedere quando grafichiamo se rimane un button
+        }
       fetch('/tournaments/'+tId+'/team/'+teamId, {
+        method: 'PUT',
+        //body: new FormData(form),
+        credentials: 'same-origin'
+      }).then(function(response) {
+        console.log(response)
+        if (response.ok) {
+          location.reload();
+        } else {
+          throw new Error(response.statusText);
+        }
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+    }
+
+    function joinRandomTeam(tId) {
+      fetch('/tournaments/'+tId+'/randomteam', {
         method: 'PUT',
         //body: new FormData(form),
         credentials: 'same-origin'

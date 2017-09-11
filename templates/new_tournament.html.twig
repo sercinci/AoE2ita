@@ -47,7 +47,7 @@
         <input type="checkbox" name="random" value="true"><br>
         <label for="description">Descrizione</label>
         <textarea id="desc" name="description"></textarea><br>
-        <button onclick="submitForm()" type="button" class="pure-button">Crea</button>
+        <button onclick="submitForm(); this.disabled=true; this.innerHTML='Creando...';" type="button" class="pure-button">Crea</button>
         <!--<input type="submit" value="Crea">-->
     </form>
     {% include 'footer.html.twig' %}
