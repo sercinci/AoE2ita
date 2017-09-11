@@ -112,7 +112,7 @@ class ViewCtrl extends BaseCtrl
             }
             return $this->view->render($res, 'tournament.html.twig', [
                 'tournament' => $tournament,
-                'joined' => !!$member,
+                'joined' => !!$member[0],
                 'api' => $api,
                 'ready' => $ready,
                 'user' => $user

@@ -9,6 +9,7 @@
     <h1>{{tournament.title}}</h1>  
     <pre>{{ tournament | json_encode() }}</pre>
     <br>
+    <pre>{{ joined | json_encode() }}</pre>
     <div>
         {{ tournament.description | raw }}
     </div>
@@ -24,7 +25,7 @@
                 {% if joined or team.members_count == tournament.team_members %}
                     <span>{{ team.title }}</span><br>
                 {% else %}
-                    <a href="" onclick="joinTeam({{tournament.id}},{{team.id}})">{<span>{ team.title }}</span></a><br>
+                    <a href="" onclick="joinTeam({{tournament.id}},{{team.id}})"><span>{{ team.title }}</span></a><br>
                 {% endif %}
                 {% for member in team.members %}
                     <span>- {{ member.username }} - {{ member.mmr_rm }}</span><br>
@@ -91,7 +92,7 @@
         //body: new FormData(form),
         credentials: 'same-origin'
       }).then(function(response) {
-        console.log(response)
+        //console.log(response)
         if (response.ok) {
           location.href = '/tournaments';
         } else {

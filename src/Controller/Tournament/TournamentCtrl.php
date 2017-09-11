@@ -198,7 +198,12 @@ class TournamentCtrl extends BaseCtrl
              $this->logger->error($err);
             return $res->withStatus(500);
         }
-        Tournament::destroy($arg['id']);
+        $tournament = Tournament::with('teams')
+            ->find($arg['id']);
+        foreach ($tournament->teams as $team) {
+            $team->delete();
+        }
+        $tournament->delete();
         return $res->withStatus(200);
     }
 }
