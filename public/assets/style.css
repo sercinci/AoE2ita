@@ -14,7 +14,7 @@ a {
     color: #95989A;
 }
 
-a:hover, button:hover, .tournamentTable tbody > tr {
+a:hover, button:hover, .tournamentTable tbody > tr, .noUi-handle:hover, select:hover, input[type='checkbox']:hover, input[type='radio']:hover {
     cursor: url('aoe2hand_1_37x37.png'), pointer;
 }
 
@@ -25,6 +25,10 @@ h1 {
 
 h3, h2 {
     color: #E8BA03;
+}
+
+h4 {
+    text-transform: uppercase;
 }
 
 thead {
@@ -71,9 +75,17 @@ th:not(:last-child), td:not(:last-child) {
 select, input, textarea {
     background-color: #232323;
     color: #95989A;
+    border-color: #95989A;
+    border-width: 1px;
+    border-style: solid;
 }
 
-label, .dataTable-info {
+label {
+    color: #E8BA03;
+    margin-right: 15px;
+}
+
+.dataTable-info {
     color: #95989A;
 }
 
@@ -98,6 +110,42 @@ label, .dataTable-info {
 
 .modalTheme > p {
     text-align: right;
+}
+
+/**
+ * SLIDER
+ * .noUi-target     This class is added to the element you call .noUiSlider() on. Has border, background and other styling properties to establish the slider design and background.
+ * .noUi-base  The slider bar. Serves as the calculating point for the slider handles, and has no visible styling.
+ * .noUi-origin    The elements connected to the base, defining the handle locations.
+ * .noUi-handle    The actual, visible handles. Style these any way you like!
+ * .noUi-connect   Styling class for setting properties related to the slider connect segment.
+ * .noUi-state-tap This class is added when the slider bar is tapped or clicked. A slider with this call will reject any user input. noUiSlider will remove this class after 300ms, leaving that timespan to perform visual animations.
+ */
+
+.noUi-target {
+    background: #95989A;
+    height: 2px;
+    border: none;
+    box-shadow: none;
+    display: inline-block;
+    width: 290px;
+    float: right;
+    top: 9px;
+}
+
+.noUi-horizontal .noUi-handle {
+    border: 2px solid #95989A;
+    border-radius: 10px;
+    background: #232323;
+    box-shadow: none;
+    width: 18px;
+    height: 18px;
+    left: -9px;
+    top: -9px;
+}
+
+.noUi-handle:before, .noUi-handle:after {
+    display: none;
 }
 
 /**
@@ -343,4 +391,52 @@ section.tournaments {
     border-bottom: 1px solid #7A5040;
     padding: 5px 0;
     text-transform: uppercase;
+}
+
+/*========== New tournament */
+.tournamentTitle {
+    border: 1px solid #8a7522;
+    background-color: #000000;
+    color: #95989A;
+    text-align: center;
+}
+
+.tournamentForm {
+    margin-top: 10px;
+    background-color: #232323;
+    color: #95989A;
+    border: 1px solid #95989A;
+}
+
+.formHead {
+    padding: 10px 20px;
+    background-color: #545454;
+    border-top: 1px solid #95989A;
+    border-bottom: 1px solid #95989A;
+    margin-top: 30px;
+    text-transform: uppercase;
+}
+
+.formContainer {
+    margin: 50px;
+    background-color: #545454;
+    border: 1px solid #000000;
+    padding: 20px 50px;
+}
+
+.formText {
+    border-left: 1px solid #95989A;
+    height: 100%;
+    margin: 100px 0;
+    padding: 70px;
+    text-align: center;
+}
+
+button.create {
+    background-color: #545454;
+    color: #E8BA03;
+}
+
+#createTournamentForm > div {
+    margin-bottom: 15px;
 }
