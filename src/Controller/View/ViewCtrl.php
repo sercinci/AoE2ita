@@ -48,13 +48,21 @@ class ViewCtrl extends BaseCtrl
 
     public function showTournaments($req, $res, $arg)
     {
-        $user = User::find($this->userData->id);
+        $user = User::with(['teams' => function($query) {
+                $query->with(['tournament' => function($query) {
+                    $query->where('status', 'underway')
+                        ->select('id', 'title')
+                        ->get();
+                }]);
+            }])
+            ->find($this->userData->id);
         if ($this->checkDate($user->updated_at)) {
             $stats = SteamCtrl::stats($user->steam_id, $this->hybridConfig['Steam']['keys']['secret']);
             //$steam = new SteamCtrl;
             //$stats = $steam->stats($user->steam_id);
             $user->mmr_dm = $stats['mmr_dm'];
             $user->mmr_rm = $stats['mmr_rm'];
+            $user->games = $stats['games'];
             $user->save();
         }
         $tournaments = Tournament::with(['teams' => function($query) {
@@ -64,10 +72,14 @@ class ViewCtrl extends BaseCtrl
                     $query->withCount('members');
                 }])
                 ->withCount('teams')
+                ->where('status', 'pending')
                 ->get();
-        foreach ($tournaments as $key => $tournament) {
+        foreach ($tournaments as $tournament) {
             $tournament->joined = 0;
-            foreach ($tournament->teams as $key => $team) {
+            foreach ($user->teams as $t) {
+                $tournament->subscribed = $t->tournament_id == $tournament->id ? true : false;
+            }
+            foreach ($tournament->teams as $team) {
                 $tournament->joined += $team->members_count;
             }
         }
@@ -102,7 +114,7 @@ class ViewCtrl extends BaseCtrl
                     $query->withCount('members');
                 }])
                 ->findOrFail($arg['id']);
-            $api = TournamentCtrl::tournamentDetail($arg['id'], $this->challongeKey, $this->challongeApi);
+            $api = TournamentCtrl::tournamentDetail($arg['id'], $this->challongeKey, $this->challongeApi); //forse non serve
             $ready = true;
             foreach ($tournament->teams as $team) {
                 if ($team->members_count < $tournament->team_members) {
@@ -110,12 +122,16 @@ class ViewCtrl extends BaseCtrl
                     break;
                 }
             }
+            if ($tournament->status == 'underway') {
+                $matches = TournamentCtrl::tournamentMatches($arg['id'], $this->challongeKey, $this->challongeApi);
+            }
             return $this->view->render($res, 'tournament.html.twig', [
                 'tournament' => $tournament,
                 'joined' => !!$member[0],
                 'api' => $api,
                 'ready' => $ready,
-                'user' => $user
+                'user' => $user,
+                'matches' => $matches
             ]);
         } catch (ModelNotFoundException $ex) {
             $resData = array(

@@ -130,7 +130,7 @@ class SteamCtrl extends BaseCtrl
         $resp = json_decode(curl_exec($curl));
         curl_close($curl);
         $stats = array();
-        foreach ($resp->playerstats->stats as $key => $value) {
+        foreach ($resp->playerstats->stats as $value) {
             if ($value->name == 'STAT_ELO_DM') {
                 $stats['mmr_dm'] = $value->value;
             }

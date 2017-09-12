@@ -51,15 +51,14 @@
                 </div>
                 <div class="details">
                     <div class="title">
-                        Eventi in corso
+                        Tornei in corso
                     </div>
                     <div class="content">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                        quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                        consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                        cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                        proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                        {% for ut in user.teams %}
+                            {% if ut.tournament %}
+                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">{{ ut.tournament.title }}</a><br>
+                            {% endif %}
+                        {% endfor %}
                     </div>
                 </div>
             </div>
@@ -85,24 +84,15 @@
                                 <td>{{ t.rank }}</td>
                                 <td>{{ t.host }}</td>
                                 <td>{{ t.random_team }}</td>
-                                <td>{{ t.joined }}/{{ t.team_members * t.n_teams }}</td>
+                                <td>{{ t.joined }}/{{ t.team_members * t.n_teams }} {% if t.subscribed %}&check;{% endif %}</td>
                             </tr>
                         {% endfor %}
-                        <tr>
-                                <td>lala</td>
-                                <td>lalal</td>
-                                <td>1600 - 1700</td>
-                                <td>-</td>
-                                <td>ANY</td>
-                                <td>1</td>
-                                <td>0/15</td>
-                            </tr>
                     </tbody>
                 </table>
-                <!--{{ tournaments | json_encode() }}-->
             </div>
         </div>
     </section>
+    <!--{{ tournaments | json_encode() }}-->
     {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}
@@ -113,7 +103,7 @@
                 placeholder: "Cerca tornei",
                 perPage: "{select} tornei per pagina",
                 noRows: "Nessun torneo trovato",
-                info: "Visualizzati {start} su {end} di {rows} tornei",
+                info: "Visualizzati {start} di {end} su {rows} tornei",
                 perPage: 30
             },
             layout: {

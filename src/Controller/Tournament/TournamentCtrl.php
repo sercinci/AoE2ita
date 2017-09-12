@@ -180,6 +180,9 @@ class TournamentCtrl extends BaseCtrl
              $this->logger->error($err);
             return $res->withStatus(500);
         }
+        $tournament = Tournament::find($arg['id']);
+        $tournament->status = 'underway';
+        $tournament->save();
         return $res->withStatus(200);
     }
     
@@ -205,6 +208,30 @@ class TournamentCtrl extends BaseCtrl
             return false;
         }
         return $resp->tournament;
+    }
+
+    public function tournamentMatches($id, $secret, $api)
+    {
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => true,
+            //CURLOPT_SSL_VERIFYHOST => 2,
+            //CURLOPT_SSL_VERIFYPEER => 2,
+            CURLOPT_URL => $api . 'tournaments/' . $id . '/matches.json?api_key=' . $secret,
+            //CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+            )
+        ));
+        $resp = json_decode(curl_exec($curl));
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+             $this->logger->error($err);
+            return false;
+        }
+        return $resp;
     }
 
     public function deleteTournament($req, $res, $arg)
