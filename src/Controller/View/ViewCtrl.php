@@ -124,14 +124,23 @@ class ViewCtrl extends BaseCtrl
                 ->findOrFail($arg['id']);
             $api = TournamentCtrl::tournamentDetail($arg['id'], $this->challongeKey, $this->challongeApi); //forse non serve
             $ready = true;
+            $teams = array();
             foreach ($tournament->teams as $team) {
-                if ($team->members_count < $tournament->team_members) {
+                /*if ($team->members_count < $tournament->team_members) {
                     $ready = false;
                     break;
-                }
+                }*/
+                $teams[$team->id] = $team;
             }
+            $matches = array();
             if ($tournament->status == 'underway') {
-                $matches = TournamentCtrl::tournamentMatches($arg['id'], $this->challongeKey, $this->challongeApi);
+                $apiMatches = TournamentCtrl::tournamentMatches($arg['id'], $this->challongeKey, $this->challongeApi);
+                foreach ($apiMatches as $key => $match) {
+                    //$matches = new StdClass();
+                    $matches[$key] = $match->match;
+                    $matches[$key]->player1 = $teams[$matches[$key]->player1_id];
+                    $matches[$key]->player2 = $teams[$matches[$key]->player2_id];
+                }
             }
             return $this->view->render($res, 'tournament.html.twig', [
                 'tournament' => $tournament,

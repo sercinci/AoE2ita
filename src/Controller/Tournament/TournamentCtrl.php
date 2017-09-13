@@ -99,6 +99,11 @@ class TournamentCtrl extends BaseCtrl
     {
         $user = User::find($this->userData->id);
         $user->teams()->attach($arg['teamid']);
+        $team = Team::with('tournament')
+            ->find($arg['teamid']);
+        $mmr = $team->tournament->rank == 'DM' ? $user->mmr_dm + ($user->games * 1) : $user->mmr_rm + ($user->games * 1); 
+        $team->average = $team->average ? ($team->average + $mmr) / 2 : $mmr;
+        $team->save();
         /*$team = Team::withCount('members')
             ->with(['tournament' => function($query) {
                 $query->select('id', 'team_members');
@@ -166,7 +171,7 @@ class TournamentCtrl extends BaseCtrl
             CURLOPT_RETURNTRANSFER => true,
             //CURLOPT_SSL_VERIFYHOST => 2,
             //CURLOPT_SSL_VERIFYPEER => 2,
-            CURLOPT_URL => $this->challongeApi . 'tournaments/' . $arg['id'] . '/start.json?',
+            CURLOPT_URL => $this->challongeApi . 'tournaments/' . $arg['id'] . '/start.json',
             CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
             CURLOPT_HTTPHEADER => array(
                 "cache-control: no-cache",
@@ -232,6 +237,37 @@ class TournamentCtrl extends BaseCtrl
             return false;
         }
         return $resp;
+    }
+
+    public function matchScore($req, $res, $arg)
+    {
+        $body = $req->getParsedBody();
+        $matchData = [
+            'api_key' => $this->challongeKey,
+            '_method' => 'PUT',
+            'match[winner_id]' => $body['teamId'],
+            'match[scores_csv]' => $body['one'] . '-' . $body['two'] //da fare fronte "1-0" o "0-1"
+        ];
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => true,
+            //CURLOPT_SSL_VERIFYHOST => 2,
+            //CURLOPT_SSL_VERIFYPEER => 2,
+            CURLOPT_URL => $this->challongeApi . 'tournaments/' . $arg['id'] . '/matches/'. $arg['match_id'] . '.json',
+            CURLOPT_POSTFIELDS => http_build_query($matchData),
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+            )
+        ));
+        $resp = json_decode(curl_exec($curl));
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+             $this->logger->error($err);
+            return $res->withStatus(500);
+        }
+        return $res->withStatus(200);
     }
 
     public function deleteTournament($req, $res, $arg)

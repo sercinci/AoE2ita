@@ -51,6 +51,12 @@ $app->post('/tournaments/{id}/start',
     TournamentCtrl::class . ':startTournament');
 
 /**
+ * POST /tournament/{id}/match/{match_id}
+ */
+$app->post('/tournaments/{id}/match/{match_id}', 
+    TournamentCtrl::class . ':matchScore');
+
+/**
  * DELETE /tournament/{id}/start
  */
 $app->delete('/tournaments/{id}/delete', 

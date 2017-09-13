@@ -9,7 +9,6 @@
     <h1>{{tournament.title}}</h1>  
     <pre>{{ tournament | json_encode() }}</pre>
     <br>
-    <pre>{{ joined | json_encode() }}</pre>
     <div>
         {{ tournament.description | raw }}
     </div>
@@ -40,13 +39,47 @@
     {% endif %}
 
     {% if tournament.status == 'underway' %}
-        {% for team in tournament.teams %}
+        <!--{% for team in tournament.teams %}
             <span>{{ team.title }}</span><br>
             {% for member in team.members %}
                 <span>- {{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
             {% endfor %}
-        {% endfor %}
+        {% endfor %}-->
         <pre>{{ matches | json_encode() }}</pre>
+        {% for m in matches %}
+            <div class="pure-g">
+                <div class="pure-u-1-2">
+                    <h3>{{ m.player1.title }}</h3>
+                    <p>{{ m.player1.average }}</p>
+                    {% for member in m.player1.members %}
+                        <span>{{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
+                    {% endfor %}
+                    {% if tournament.user_id == user.id and m.state == 'open' %}
+                        <button onclick="matchScore({{tournament.id}},{{m.id}},{{m.player1_id}},1,0); this.disabled=true; this.innerHTML='Aggiornando...';">Vince {{ m.player1.title }}</button>
+                    {% endif %}
+                </div>
+                <div class="pure-u-1-2">
+                    <h3>{{ m.player2.title }}</h3>
+                    <p>{{ m.player2.average }}</p>
+                    {% for member in m.player2.members %}
+                        <span>{{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
+                    {% endfor %}
+                    {% if tournament.user_id == user.id and m.state == 'open' %}
+                        <button onclick="matchScore({{tournament.id}},{{m.id}},{{m.player2_id}},0,1); this.disabled=true; this.innerHTML='Aggiornando...';">Vince {{ m.player2.title }}</button>
+                    {% endif %}
+                </div>
+                <div class="pure-u-1">
+                    {% if m.state == 'complete' %}
+                        <span>Vince il match </span>
+                        {% if m.winner_id == m.player1.id %}
+                            <h3>{{ m.player1.title }}</h3>
+                        {% else %}
+                            <h3>{{ m.player2.title }}</h3>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
     {% endif %}
     <br>
     <pre>{{ api | json_encode() }}</pre>
@@ -70,7 +103,7 @@
         //body: new FormData(form),
         credentials: 'same-origin'
       }).then(function(response) {
-        console.log(response)
+        //console.log(response)
         if (response.ok) {
           location.reload();
         } else {
@@ -87,7 +120,7 @@
         //body: new FormData(form),
         credentials: 'same-origin'
       }).then(function(response) {
-        console.log(response)
+        //console.log(response)
         if (response.ok) {
           location.reload();
         } else {
@@ -104,7 +137,28 @@
         //body: new FormData(form),
         credentials: 'same-origin'
       }).then(function(response) {
-        console.log(response)
+        //console.log(response)
+        if (response.ok) {
+          location.reload();
+        } else {
+          throw new Error(response.statusText);
+        }
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+    }
+
+    function matchScore(tId, matchId, winnerId, scoreOne, scoreTwo) {
+        var data = new FormData();
+        data.append('teamId', winnerId);
+        data.append('one', scoreOne);
+        data.append('two', scoreTwo);
+      fetch('/tournaments/'+tId+'/match/'+matchId, {
+        method: 'POST',
+        body: data,
+        credentials: 'same-origin'
+      }).then(function(response) {
+        //console.log(response)
         if (response.ok) {
           location.reload();
         } else {
