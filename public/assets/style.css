@@ -80,7 +80,7 @@ select, input, textarea {
     border-style: solid;
 }
 
-input[type="checkbox"] {
+input[type="checkbox"], input[type="radio"] {
     display: none;
 }
 
@@ -100,6 +100,30 @@ input[type="checkbox"]:checked + label span:before {
     position: relative;
     top: -2px;
     left: 1px;
+}
+
+input[type="radio"] + label {
+    color: #95989A;
+}
+
+input[type="radio"] + label span {
+    display:inline-block;
+    width:15px;
+    height:15px;
+    border-radius: 10px;
+    margin:-1px 0 0 0;
+    vertical-align:middle;
+    background-color: #232323;
+    border: 1px solid #95989A;
+    cursor: url('aoe2hand_1_37x37.png'), pointer;
+}
+
+input[type="radio"]:checked + label span:before {
+    content: "\25CF";
+    position: relative;
+    top: -9px;
+    left: 0px;
+    font-size: 25px
 }
 
 label {
@@ -132,6 +156,28 @@ label {
 
 .modalTheme > p {
     text-align: right;
+}
+
+.textArea {
+    color: #95989A;
+}
+
+.mce-container, .mce-container-body {
+    display: inline-block !important;
+}
+
+.mce-edit-area {
+    display: block !important;
+}
+
+.mce-panel, .mce-btn {
+    background-color: #95989A !important;
+}
+
+.mce-btn-group:not(:first-child) {
+    border-left: none !important;
+    margin-left: 0 !important;
+    padding-left: 0 !important;
 }
 
 /**
