@@ -133,7 +133,7 @@ class ViewCtrl extends BaseCtrl
                 $teams[$team->id] = $team;
             }
             $matches = array();
-            if ($tournament->status == 'underway') {
+            if ($tournament->status == 'underway' || $tournament->status == 'complete') {
                 $apiMatches = TournamentCtrl::tournamentMatches($arg['id'], $this->challongeKey, $this->challongeApi);
                 foreach ($apiMatches as $key => $match) {
                     $matches[$key] = $match->match;

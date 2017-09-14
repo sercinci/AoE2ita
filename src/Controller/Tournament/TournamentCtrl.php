@@ -22,6 +22,7 @@ class TournamentCtrl extends BaseCtrl
             'tournament[private]' => true,
             "tournament[tournament_type]" => $body['tournament_type'],
             "tournament[url]" => "aoe2ita_" . time(), //randomizzare l'url
+            "tournament[hold_third_place_match]" => true
         ];
         $curl = curl_init();
         curl_setopt_array($curl, array(
@@ -101,7 +102,7 @@ class TournamentCtrl extends BaseCtrl
         $user->teams()->attach($arg['teamid']);
         $team = Team::with('tournament')
             ->find($arg['teamid']);
-        $mmr = $team->tournament->rank == 'DM' ? $user->mmr_dm + ($user->games * 1) : $user->mmr_rm + ($user->games * 1); 
+        $mmr = $team->tournament->rank == 'DM' ? $user->mmr_dm + ($user->games * 0) : $user->mmr_rm + ($user->games * 0); //da pensare costante
         $team->average = $team->average ? ($team->average + $mmr) / 2 : $mmr;
         $team->save();
         /*$team = Team::withCount('members')
@@ -144,7 +145,7 @@ class TournamentCtrl extends BaseCtrl
         foreach ($tournament->teams as $team) {
             if ($team->members_count == 0) {
                 $user->teams()->attach($team->id);
-                $team->average = $tournament->rank == 'DM' ? $user->mmr_dm + ($user->games * 1) : $user->mmr_rm + ($user->games * 1);
+                $team->average = $tournament->rank == 'DM' ? $user->mmr_dm + ($user->games * 0) : $user->mmr_rm + ($user->games * 0); //da pensare costante
                 $team->save();
                 return $res->withStatus(200);
             }
@@ -298,6 +299,48 @@ class TournamentCtrl extends BaseCtrl
             $team->delete();
         }
         $tournament->delete();
+        return $res->withStatus(200);
+    }
+
+    public function closeTournament($req, $res, $arg)
+    {
+        $body = $req->getParsedBody();
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => true,
+            //CURLOPT_SSL_VERIFYHOST => 2,
+            //CURLOPT_SSL_VERIFYPEER => 2,
+            CURLOPT_URL => $this->challongeApi . 'tournaments/' . $arg['id'] . '/finalize.json',
+            CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
+            CURLOPT_HTTPHEADER => array(
+                "cache-control: no-cache",
+                "content-type: application/x-www-form-urlencoded",
+            )
+        ));
+        $resp = json_decode(curl_exec($curl));
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+             $this->logger->error($err);
+            return $res->withStatus(500);
+        }
+        $tournament = Tournament::find($arg['id']);
+        $tournament->status = 'complete';
+        $tournament->save();
+        //assegnare punti ai membri team
+        $teams = Team::with('members')
+            ->find([$body['first'], $body['second'], $body['third']]);
+        $this->logger->info($teams[0]->id);
+        for ($i=0; $i < $tournament->team_members; $i++) { 
+            $teams[0]->members[$i]->first_position++;
+            $this->logger->info($teams[0]->members[$i]->first_position);
+            $teams[0]->members[$i]->save();
+            $teams[1]->members[$i]->second_position++;
+            $teams[1]->members[$i]->save();
+            $teams[2]->members[$i]->third_position++;
+            $teams[2]->members[$i]->save();
+        }
+        
         return $res->withStatus(200);
     }
 }

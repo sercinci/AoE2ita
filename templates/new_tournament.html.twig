@@ -166,7 +166,8 @@
                 branding: false,
                 width: 400,
                 body_class: 'textArea',
-                content_css : '/assets/style.css'
+                content_css : '/assets/style.css',
+                init_instance_callback: function(){this.setContent('<span>Ciao provo un testo di default</span>')}
             });
 
             var mmr_slider = document.getElementById('mmr_slider');

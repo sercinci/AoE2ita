@@ -162,7 +162,7 @@ label {
     color: #95989A;
 }
 
-.mce-container, .mce-container-body {
+label + .mce-container, .mce-container-body {
     display: inline-block !important;
 }
 

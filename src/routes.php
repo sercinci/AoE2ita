@@ -62,6 +62,13 @@ $app->post('/tournaments/{id}/match/{match_id}',
 $app->delete('/tournaments/{id}/delete', 
     TournamentCtrl::class . ':deleteTournament');
 
+/**
+ * POST /tournament/{id}/close
+ */
+$app->post('/tournaments/{id}/close', 
+    TournamentCtrl::class . ':closeTournament');
+
+
 //=========================================================== VIEWS ROUTES =====/
 
 /**

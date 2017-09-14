@@ -46,7 +46,7 @@
             {% endfor %}
         {% endfor %}-->
         <pre>{{ matches | json_encode() }}</pre>
-        {% for m in matches %}
+        {% for m in matches %} <!-- state: pending, open, complete -->
             <div class="pure-g">
                 <div class="pure-u-1-2">
                     <h3>{{ m.player1.title }}</h3>
@@ -80,6 +80,16 @@
                 </div>
             </div>
         {% endfor %}
+        <!-- "identifier":"3P" and state == 'open' match per il terzo posto -->
+        {% set lastMatch = matches|last %}
+        {% set finalMatch = matches[matches|length - 2] %}
+        {% if lastMatch.state == 'complete' %}
+            <button onclick="closeTournament({{tournament.id}}, {{finalMatch.winner_id}}, {{finalMatch.loser_id}}, {{lastMatch.winner_id}}); this.disabled=true; this.innerHTML='Concludendo...';">Concludi torneo</button>
+            <!-- da inviare i team id del primo, secondo e terzo posto per assegnazione punteggio -->
+        {% endif %}
+    {% endif %}
+    {% if tournament.status == 'complete' %}
+        <pre>{{ matches | json_encode() }}</pre>
     {% endif %}
     <br>
     <pre>{{ api | json_encode() }}</pre>
@@ -178,6 +188,27 @@
         //console.log(response)
         if (response.ok) {
           location.href = '/tournaments';
+        } else {
+          throw new Error(response.statusText);
+        }
+      }).catch(function(error) {
+        console.log('request failed', error)
+      })
+    }
+
+    function closeTournament(tId, firstId, secondId, thirdId) {
+        var data = new FormData();
+        data.append('first', firstId);
+        data.append('second', secondId);
+        data.append('third', thirdId);
+      fetch('/tournaments/'+tId+'/close', {
+        method: 'POST',
+        body: data,
+        credentials: 'same-origin'
+      }).then(function(response) {
+        //console.log(response)
+        if (response.ok) {
+          location.reload();
         } else {
           throw new Error(response.statusText);
         }
