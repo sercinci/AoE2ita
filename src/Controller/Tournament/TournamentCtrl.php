@@ -327,20 +327,16 @@ class TournamentCtrl extends BaseCtrl
         $tournament = Tournament::find($arg['id']);
         $tournament->status = 'complete';
         $tournament->save();
-        //assegnare punti ai membri team
         $teams = Team::with('members')
             ->find([$body['first'], $body['second'], $body['third']]);
-        $this->logger->info($teams[0]->id);
         for ($i=0; $i < $tournament->team_members; $i++) { 
             $teams[0]->members[$i]->first_position++;
-            $this->logger->info($teams[0]->members[$i]->first_position);
             $teams[0]->members[$i]->save();
             $teams[1]->members[$i]->second_position++;
             $teams[1]->members[$i]->save();
             $teams[2]->members[$i]->third_position++;
             $teams[2]->members[$i]->save();
         }
-        
         return $res->withStatus(200);
     }
 }
