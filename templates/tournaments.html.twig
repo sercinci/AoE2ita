@@ -56,7 +56,12 @@
                     <div class="content">
                         {% for ut in user.teams %}
                             {% if ut.tournament %}
-                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">{{ ut.tournament.title }}</a><br>
+                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
+                                    {{ ut.tournament.title }} 
+                                    {% if ut.tournament.status == 'complete' %}
+                                        <span>&#128081;</span>
+                                    {% endif %}
+                                </a><br>
                             {% endif %}
                         {% endfor %}
                     </div>

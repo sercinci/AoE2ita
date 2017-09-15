@@ -82,7 +82,8 @@ class ViewCtrl extends BaseCtrl
         $user = User::with(['teams' => function($query) {
                 $query->with(['tournament' => function($query) {
                     $query->where('status', 'underway')
-                        ->select('id', 'title')
+                        ->orWhere('status', 'complete')
+                        ->select('id', 'title', 'status')
                         ->get();
                 }]);
             }])
