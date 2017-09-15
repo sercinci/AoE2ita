@@ -6,98 +6,202 @@
 {% endblock %}
 {% block content %}
     {% include 'menu.html.twig' %}
-    <h1>{{tournament.title}}</h1>  
-    <pre>{{ tournament | json_encode() }}</pre>
-    <br>
-    <div>
-        {{ tournament.description | raw }}
-    </div>
-    <br>
-    {% if tournament.status == 'pending' %}
-        {% if ready and tournament.user_id == user.id %}
-            <button onclick="startTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Avviando...';">Avvia torneo</button>
-        {% endif %}
-        {% if tournament.random_team == 1 %}
-            {% if joined %}
-                <span>Sei iscritto a questo torneo</span>
-            {% else %}
-                <button onclick="joinRandomTeam({{tournament.id}}); this.disabled=true; this.innerHTML='Entrando...';"><span>Partecipa</span></button>
-            {% endif %}
-        {% else %}
-            {% for team in tournament.teams %}
-                {% if joined or team.members_count == tournament.team_members %}
-                    <span>{{ team.title }}</span><br>
-                {% else %}
-                    <button onclick="joinTeam({{tournament.id}},{{team.id}}); this.disabled=true; this.innerHTML='Entrando in {{ team.title }}';"><span>{{ team.title }}</span></button><br>
-                {% endif %}
-                {% for member in team.members %}
-                    <span>- {{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
-                {% endfor %}
-            {% endfor %}
-           
-        {% endif %}
-    {% endif %}
-
-    {% if tournament.status == 'underway' %}
-        <!--{% for team in tournament.teams %}
-            <span>{{ team.title }}</span><br>
-            {% for member in team.members %}
-                <span>- {{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
-            {% endfor %}
-        {% endfor %}-->
-        <pre>{{ matches | json_encode() }}</pre>
-        {% for m in matches %} <!-- state: pending, open, complete -->
-            <div class="pure-g">
-                <div class="pure-u-1-2">
-                    <h3>{{ m.player1.title }}</h3>
-                    <p>{{ m.player1.average }}</p>
-                    {% for member in m.player1.members %}
-                        <span>{{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
-                    {% endfor %}
-                    {% if tournament.user_id == user.id and m.state == 'open' %}
-                        <button onclick="matchScore({{tournament.id}},{{m.id}},{{m.player1_id}},1,0); this.disabled=true; this.innerHTML='Aggiornando...';">Vince {{ m.player1.title }}</button>
-                    {% endif %}
+    <section class="pure-g tournaments">
+        <div class="pure-u-1 pure-u-md-1-5">
+            <div class="sidebar">
+                <div class="bigButton">
+                    <a href="{{ path_for('new_tournament') }}">Crea torneo</a>
                 </div>
-                <div class="pure-u-1-2">
-                    <h3>{{ m.player2.title }}</h3>
-                    <p>{{ m.player2.average }}</p>
-                    {% for member in m.player2.members %}
-                        <span>{{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
-                    {% endfor %}
-                    {% if tournament.user_id == user.id and m.state == 'open' %}
-                        <button onclick="matchScore({{tournament.id}},{{m.id}},{{m.player2_id}},0,1); this.disabled=true; this.innerHTML='Aggiornando...';">Vince {{ m.player2.title }}</button>
-                    {% endif %}
+                <div class="text">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 </div>
-                <div class="pure-u-1">
-                    {% if m.state == 'complete' %}
-                        <span>Vince il match </span>
-                        {% if m.winner_id == m.player1.id %}
-                            <h3>{{ m.player1.title }}</h3>
+                <div class="profile">
+                    <div class="pure-u-3-5">
+                        <div class="pure-u-2-5">
+                            <div class="avatar">
+                                <a class="username" href="{{ path_for('user', { 'slug': user.slug }) }}">
+                                    <img src="{{ user.avatar }}" alt="{{user.username}}">
+                                </a>
+                            </div>
+                        </div><!--
+                        --><div class="pure-u-3-5">
+                                <div class="user">
+                                    <a class="username" href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a><br>
+                                    <a class="logout" href="{{ path_for('logout') }}">disconnetti</a>
+                                </div>
+                        </div>
+                        <div class="pure-u-1">
+                            <div class="rank">
+                                <span>DM: {{ user.mmr_dm }}</span>
+                                <span>RM: {{ user.mmr_rm }}</span>
+                            </div>
+                        </div>
+                    </div><!--
+                    --><div class="pure-u-2-5">
+                        <div class="score">
+                            <span>{{ user.first_position * 3 + user.second_position * 2 + user.third_position * 1 }}</span>
+                            <img src="/assets/images/cup.png" alt="score">
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="title">
+                        Tornei in corso
+                    </div>
+                    <div class="content">
+                        {% for ut in user.teams if ut.tournament %}
+                            <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
+                                {{ ut.tournament.title }} 
+                                {% if ut.tournament.status == 'complete' %}
+                                    <span>&#128081;</span>
+                                {% endif %}
+                            </a><br>
                         {% else %}
-                            <h3>{{ m.player2.title }}</h3>
-                        {% endif %}
-                    {% endif %}
+                            <span>Non hai tornei in corso</span>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
-        {% endfor %}
-        <!-- "identifier":"3P" and state == 'open' match per il terzo posto -->
-        {% set lastMatch = matches|last %}
-        {% set finalMatch = matches[matches|length - 2] %}
-        {% if lastMatch.state == 'complete' %}
-            <button onclick="closeTournament({{tournament.id}}, {{finalMatch.winner_id}}, {{finalMatch.loser_id}}, {{lastMatch.winner_id}}); this.disabled=true; this.innerHTML='Concludendo...';">Concludi torneo</button>
-            <!-- da inviare i team id del primo, secondo e terzo posto per assegnazione punteggio -->
-        {% endif %}
-    {% endif %}
-    {% if tournament.status == 'complete' %}
-        <pre>{{ matches | json_encode() }}</pre>
-    {% endif %}
-    <br>
-    <pre>{{ api | json_encode() }}</pre>
-    <p>State: pending (preparazione), underway (in corso)</p>
-    <br>
-    {% if tournament.user_id == user.id %}
-        <button onclick="deleteTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Eliminando...';" class="pure-button">Elimina torneo</button>
-    {% endif %}
+        </div>
+        <div class="pure-u-1 pure-u-md-4-5">
+            <div class="tournamentTable">
+                <div class="tournamentDetailTitle">
+                    <h2>{{tournament.title}}</h2>
+                </div>
+                <div class="tournamentDetailContainer">
+                    {% if tournament.user_id == user.id %}
+                        <div class="formHead editBar">
+                            <span>Amministra torneo</span>
+                        </div>
+                    {% endif %}
+                    <div class="pure-u-1 pure-u-md-1-4">
+                        <div class="description">
+                            {% if tournament.user_id == user.id %}
+                                <div class="spacer"></div>
+                                <div class="spacer"></div>
+                                <div class="spacer"></div>
+                            {% endif %}
+                            <h4>Descrizione</h4>
+                            <div class="descriptionText">
+                                {{ tournament.description | raw }}
+                            </div>
+                        </div>
+                    </div><!--
+                    --><div class="pure-u-1 pure-u-md-3-4">
+                        <div class="tournamentDetail">
+                            {% if tournament.user_id == user.id %}
+                                <div class="spacer"></div>
+                                <div class="spacer"></div>
+                                <div class="spacer"></div>
+                            {% endif %}
+                            {% if tournament.status == 'pending' %}
+                                {% if tournament.random_team == 1 %}
+                                    {% if joined %}
+                                        <span>Sei iscritto a questo torneo</span>
+                                    {% else %}
+                                        <button onclick="joinRandomTeam({{tournament.id}}); this.disabled=true; this.innerHTML='Entrando...';"><span>Partecipa</span></button>
+                                    {% endif %}
+                                {% else %}
+                                    {% for team in tournament.teams %}<div class="pure-u-1 pure-u-md-1-2">
+                                        {% set teamTitle = team.title|split(' ') %}
+                                        <div class="pure-u-1-3">
+                                            <span class="teamName">{{ teamTitle[0] }}</span> <span class="teamNumber">{{ teamTitle[1] }}</span>
+                                        </div><!--
+                                        --><div class="pure-u-2-3">
+                                            <table>
+                                                {% for i in 0..tournament.team_members - 1 %}
+                                                    {% if team.members[i] %}
+                                                        <tr>
+                                                            <td>{{ team.members[i].username }}</td> <!-- user tooltip -->
+                                                            <td>1</td> <!-- metodo di uscita? -->
+                                                        </tr>
+                                                    {% else %}
+                                                        {% if joined %}
+                                                            <tr class="notClick">
+                                                                <td>Slot libero</td>
+                                                                <td></td>
+                                                            </tr>
+                                                        {% else %}
+                                                            <tr onclick="joinTeam({{tournament.id}},{{team.id}});">
+                                                                <td>Slot libero</td>
+                                                                <td>0</td>
+                                                            </tr>
+                                                        {% endif %}
+                                                        
+                                                    {% endif %}
+                                                {% endfor %}
+                                            </table>
+                                            <div class="spacer"></div>
+                                        </div>
+                                    </div>{% endfor %}
+                                {% endif %}
+                                {% if ready and tournament.user_id == user.id %}
+                                    <button onclick="startTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Avviando...';">Avvia torneo</button>
+                                {% endif %}
+                            {% endif %}
+
+                            {% if tournament.status == 'underway' %}
+                                <!--<pre>{{ matches | json_encode() }}</pre>-->
+                                {% for m in matches %} <!-- state: pending, open, complete -->
+                                    <div class="pure-g">
+                                        <div class="pure-u-1-2">
+                                            <h3>{{ m.player1.title }}</h3>
+                                            <p>{{ m.player1.average }}</p>
+                                            {% for member in m.player1.members %}
+                                                <span>{{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
+                                            {% endfor %}
+                                            {% if tournament.user_id == user.id and m.state == 'open' %}
+                                                <button onclick="matchScore({{tournament.id}},{{m.id}},{{m.player1_id}},1,0); this.disabled=true; this.innerHTML='Aggiornando...';">Vince {{ m.player1.title }}</button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="pure-u-1-2">
+                                            <h3>{{ m.player2.title }}</h3>
+                                            <p>{{ m.player2.average }}</p>
+                                            {% for member in m.player2.members %}
+                                                <span>{{ member.username }} - {% if tournament.rank == 'RM' %}{{ member.mmr_rm }}{% endif %}{% if tournament.rank == 'DM' %}{{ member.mmr_dm }}{% endif %}</span><br>
+                                            {% endfor %}
+                                            {% if tournament.user_id == user.id and m.state == 'open' %}
+                                                <button onclick="matchScore({{tournament.id}},{{m.id}},{{m.player2_id}},0,1); this.disabled=true; this.innerHTML='Aggiornando...';">Vince {{ m.player2.title }}</button>
+                                            {% endif %}
+                                        </div>
+                                        <div class="pure-u-1">
+                                            {% if m.state == 'complete' %}
+                                                <span>Vince il match </span>
+                                                {% if m.winner_id == m.player1.id %}
+                                                    <h3>{{ m.player1.title }}</h3>
+                                                {% else %}
+                                                    <h3>{{ m.player2.title }}</h3>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                                <!-- "identifier":"3P" and state == 'open' match per il terzo posto -->
+                                {% set lastMatch = matches|last %}
+                                {% set finalMatch = matches[matches|length - 2] %}
+                                {% if lastMatch.state == 'complete' %}
+                                    <button onclick="closeTournament({{tournament.id}}, {{finalMatch.winner_id}}, {{finalMatch.loser_id}}, {{lastMatch.winner_id}}); this.disabled=true; this.innerHTML='Concludendo...';">Concludi torneo</button>
+                                    <!-- da inviare i team id del primo, secondo e terzo posto per assegnazione punteggio -->
+                                {% endif %}
+                            {% endif %}
+                            {% if tournament.status == 'complete' %}
+                                <pre>{{ matches | json_encode() }}</pre>
+                            {% endif %}
+                            {% if tournament.user_id == user.id %}
+                                <button onclick="deleteTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Eliminando...';" class="pure-button">Elimina torneo</button>
+                            {% endif %}
+                        </div>
+                    </div>
+                 <img src="/assets/images/profilo.png" alt="Dettaglio torneo">
+                </div>
+            </div>
+        </div>
+    </section>
     {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}

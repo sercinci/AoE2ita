@@ -510,3 +510,82 @@ button.create {
 }
 
 /*========== Detail tournament */
+.tournamentDetailTitle {
+    background-color: #191919;
+    border: 1px solid #8a7522;
+    text-align: center;
+    text-transform: uppercase;
+    padding: 10px 0;
+}
+
+.tournamentDetailContainer {
+    margin-top: 10px;
+    background-color: #232323;
+    color: #95989A;
+    position: relative;
+}
+
+.editBar {
+    position: absolute;
+    width: 98%;
+    padding-right: 0px;
+    padding-left: 2%;
+}
+
+.description {
+    background-color: #000000;
+    border: 1px solid #95989A;
+    border-bottom: none;
+    padding: 20px 20px;
+}
+
+.description > h4 {
+    border-bottom: 1px solid  #95989A;
+    padding-bottom: 20px;
+}
+
+.descriptionText {
+    margin-bottom: 250px;
+}
+
+.tournamentDetail {
+    padding: 80px 50px 20px 50px;
+}
+
+.teamName {
+    text-transform: uppercase;
+    margin-right: 10px;
+}
+
+.teamNumber {
+    display: inline-block;
+    border: 1px solid  #95989A;
+    padding: 5px 10px;
+    width: 8px;
+}
+
+.tournamentDetail table {
+    border: none;
+    border-collapse: collapse;
+}
+
+.tournamentDetail table tr {
+    background-color: transparent;
+    opacity: 1;
+}
+
+.tournamentDetail table td {
+    border: 1px solid #95989A;
+    padding: 5px 10px;
+}
+
+.tournamentTable tbody > tr.notClick {
+    cursor: default;
+}
+
+.tournamentDetailContainer > img {
+    width: 350px;
+    position: absolute;
+    left: 0;
+    bottom: -1px;
+}

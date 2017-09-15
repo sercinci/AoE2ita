@@ -108,7 +108,7 @@ class ViewCtrl extends BaseCtrl
 
     public function showTournament($req, $res, $arg)
     {
-        $user = User::find($this->userData->id);
+        $user = $this->getUserTournaments();
         $member = User::whereHas('teams', function ($query) use ($arg) {
                 $query->where('tournament_id', $arg['id']);
             })

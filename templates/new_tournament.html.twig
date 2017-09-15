@@ -48,7 +48,7 @@
                     </div><!--
                     --><div class="pure-u-2-5">
                         <div class="score">
-                            <span>0</span>
+                            <span>{{ user.first_position * 3 + user.second_position * 2 + user.third_position * 1 }}</span>
                             <img src="/assets/images/cup.png" alt="score">
                         </div>
                     </div>
@@ -58,10 +58,15 @@
                         Tornei in corso
                     </div>
                     <div class="content">
-                        {% for ut in user.teams %}
-                            {% if ut.tournament %}
-                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">{{ ut.tournament.title }}</a><br>
-                            {% endif %}
+                        {% for ut in user.teams if ut.tournament %}
+                            <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
+                                {{ ut.tournament.title }} 
+                                {% if ut.tournament.status == 'complete' %}
+                                    <span>&#128081;</span>
+                                {% endif %}
+                            </a><br>
+                        {% else %}
+                            <span>Non hai tornei in corso</span>
                         {% endfor %}
                     </div>
                 </div>
@@ -159,10 +164,10 @@
         var defaultText = "<h3>Descrivi il tuo torneo</h3>"
             + "<span>Utilizza questo spazio per illustrare le regole e le impostazioni di gioco.<span><br>"
             + "<span>Per esempio ti consigliamo di specificare:<span><br>"
-            + "<ul><li>Condizioni di vittoria (<i>standard, conquista, ...</i>)</li>"
-            + "<li>Terreno di gioco (<i>mappa casuale di terra, foresta nera, ...</i>)</li>"
-            + "<li>Limite di popolazione, risorse, difficoltà</li>"
-            + "<li>Altre regole dettagliate (<i>popolazioni bandite, tempi di pace, ...</i>)</li></ul>"
+            + "<ul><li>Condizioni di vittoria (<i>standard, conquista, ...</i>);</li>"
+            + "<li>Terreno di gioco (<i>mappa casuale di terra, foresta nera, ...</i>);</li>"
+            + "<li>Limite di popolazione, risorse, difficoltà;</li>"
+            + "<li>Altre regole dettagliate (<i>popolazioni bandite, tempi di pace, ...</i>).</li></ul>"
             + "<p style='text-align: right;'>Buon divertimento dallo staff di AoE2ita.</p>";
         document.addEventListener('DOMContentLoaded', function() {
             tinymce.init({

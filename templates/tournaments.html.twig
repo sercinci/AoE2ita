@@ -54,15 +54,15 @@
                         Tornei in corso
                     </div>
                     <div class="content">
-                        {% for ut in user.teams %}
-                            {% if ut.tournament %}
-                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
-                                    {{ ut.tournament.title }} 
-                                    {% if ut.tournament.status == 'complete' %}
-                                        <span>&#128081;</span>
-                                    {% endif %}
-                                </a><br>
-                            {% endif %}
+                        {% for ut in user.teams if ut.tournament %}
+                            <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
+                                {{ ut.tournament.title }} 
+                                {% if ut.tournament.status == 'complete' %}
+                                    <span>&#128081;</span>
+                                {% endif %}
+                            </a><br>
+                        {% else %}
+                            <span>Non hai tornei in corso</span>
                         {% endfor %}
                     </div>
                 </div>
