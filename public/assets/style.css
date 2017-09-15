@@ -162,9 +162,9 @@ label {
     color: #95989A;
 }
 
-label + .mce-container, .mce-container-body {
+/*label + .mce-container, .mce-container-body {
     display: inline-block !important;
-}
+}*/
 
 .mce-edit-area {
     display: block !important;
@@ -495,7 +495,7 @@ section.tournaments {
 .formText {
     border-left: 1px solid #95989A;
     height: 100%;
-    margin: 100px 0;
+    margin: 130px 0;
     padding: 70px;
     text-align: center;
 }
@@ -508,3 +508,5 @@ button.create {
 #createTournamentForm > div {
     margin-bottom: 15px;
 }
+
+/*========== Detail tournament */

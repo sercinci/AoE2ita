@@ -27,47 +27,52 @@ $app->get('/logout',
 //=========================================================== TOURNAMENTS ROUTES =====/
 
 /**
- * POST /tournament/new
+ * POST /tournaments/new
  */
 $app->post('/tournaments/new', 
     TournamentCtrl::class . ':create');
 
 /**
- * PUT /tournament/{id}/team/{teamid}
+ * PUT /tournaments/{id}/team/{teamid}
  */
 $app->put('/tournaments/{id}/team/{teamid}', 
     TournamentCtrl::class . ':joinTeam');
 
 /**
- * PUT /tournament/{id}/randomteam
+ * PUT /tournaments/{id}/randomteam
  */
 $app->put('/tournaments/{id}/randomteam', 
     TournamentCtrl::class . ':joinRandomTeam');
 
 /**
- * POST /tournament/{id}/start
+ * POST /tournaments/{id}/start
  */
 $app->post('/tournaments/{id}/start', 
     TournamentCtrl::class . ':startTournament');
 
 /**
- * POST /tournament/{id}/match/{match_id}
+ * POST /tournaments/{id}/match/{match_id}
  */
 $app->post('/tournaments/{id}/match/{match_id}', 
     TournamentCtrl::class . ':matchScore');
 
 /**
- * DELETE /tournament/{id}/start
+ * DELETE /tournaments/{id}/start
  */
 $app->delete('/tournaments/{id}/delete', 
     TournamentCtrl::class . ':deleteTournament');
 
 /**
- * POST /tournament/{id}/close
+ * POST /tournaments/{id}/close
  */
 $app->post('/tournaments/{id}/close', 
     TournamentCtrl::class . ':closeTournament');
 
+/**
+ * DELETE /tournaments/crondelete
+ */
+$app->delete('/tournaments/crondelete', 
+    TournamentCtrl::class . ':deleteCompleteTournaments');
 
 //=========================================================== VIEWS ROUTES =====/
 
@@ -84,7 +89,7 @@ $app->get('/login',
     ViewCtrl::class . ':showLogin')->setName('login');
 
 /**
- * GET /tournament/{id}
+ * GET /tournaments/{id}
  */
 $app->get('/tournaments', 
     ViewCtrl::class . ':showTournaments')->setName('tournaments');
@@ -96,13 +101,13 @@ $app->get('/{slug}',
     ViewCtrl::class . ':showUser')->setName('user');
 
 /**
- * GET /tournament/new
+ * GET /tournaments/new
  */
 $app->get('/tournaments/new', 
     ViewCtrl::class . ':showNewTournament')->setName('new_tournament');
 
 /**
- * GET /tournament/{id}
+ * GET /tournaments/{id}
  */
 $app->get('/tournaments/{id}', 
     ViewCtrl::class . ':showTournament')->setName('tournament');

@@ -324,9 +324,18 @@ class TournamentCtrl extends BaseCtrl
              $this->logger->error($err);
             return $res->withStatus(500);
         }
-        $tournament = Tournament::find($arg['id']);
+        $tournament = Tournament::with(['teams' => function($query) {
+                    $query->with('members');
+                }])
+            ->find($arg['id']);
         $tournament->status = 'complete';
         $tournament->save();
+        foreach ($tournament->teams as $team) {
+            foreach ($team->members as $member) {
+                $member->t_completed++;
+                $member->save();
+            }
+        }
         $teams = Team::with('members')
             ->find([$body['first'], $body['second'], $body['third']]);
         for ($i=0; $i < $tournament->team_members; $i++) { 
@@ -336,6 +345,44 @@ class TournamentCtrl extends BaseCtrl
             $teams[1]->members[$i]->save();
             $teams[2]->members[$i]->third_position++;
             $teams[2]->members[$i]->save();
+        }
+        return $res->withStatus(200);
+    }
+
+    public function deleteCompleteTournaments($req, $res, $arg)
+    {
+        $tournaments = Tournament::with('teams')
+            ->where('status', 'complete')
+            ->whereDate('updated_at', '<=', (new DateTime())->modify('-3 days')->format('Y-m-d'))
+            ->get();
+        foreach ($tournaments as $tournament) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => true,
+                //CURLOPT_SSL_VERIFYHOST => 2,
+                //CURLOPT_SSL_VERIFYPEER => 2,
+                CURLOPT_URL => $this->challongeApi . 'tournaments/' . $tournament->id . '.json',
+                CURLOPT_CUSTOMREQUEST => "DELETE",
+                CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
+                CURLOPT_HTTPHEADER => array(
+                    "cache-control: no-cache",
+                    "content-type: application/x-www-form-urlencoded",
+                )
+            ));
+            curl_exec($curl);
+            $err = curl_error($curl);
+            curl_close($curl);
+            if ($err) {
+                $this->logger->error($err);
+                return $res->withStatus(500);
+            }
+            foreach ($tournament->teams as $team) {
+                $team->delete();
+            }
+            $user = User::find($tournament->user_id);
+            $user->t_created++;
+            $user->save();
+            $tournament->delete();
         }
         return $res->withStatus(200);
     }

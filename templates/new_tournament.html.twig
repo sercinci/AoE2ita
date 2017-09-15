@@ -81,7 +81,7 @@
                             <form id="createTournamentForm">
                                 <div>
                                     <label for="title">Titolo torneo:</label>
-                                    <input type="text" name="title" onchange="updateTitle(this.value)" value="" required>
+                                    <input type="text" name="title" onchange="updateTitle(this.value)" value="" style="width: 78%;" required>
                                 </div>
                                 <div>
                                     <label for="n_teams">Numero di squadre:</label> <span id="teamvalue"></span>
@@ -172,8 +172,8 @@
                 menubar: false,
                 statusbar: false,
                 branding: false,
-                width: 400,
-                height: 300,
+                //width: 400,
+                height: 250,
                 body_class: 'textArea',
                 content_css : '/assets/style.css',
                 init_instance_callback: function(){this.setContent(defaultText)}
