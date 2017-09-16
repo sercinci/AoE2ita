@@ -532,6 +532,12 @@ button.create {
     padding-left: 2%;
 }
 
+.editBar > a {
+    text-transform: capitalize;
+    float: right;
+    margin-right: 20px;
+}
+
 .description {
     background-color: #000000;
     border: 1px solid #95989A;
@@ -545,11 +551,11 @@ button.create {
 }
 
 .descriptionText {
-    margin-bottom: 250px;
+    margin-bottom: 420px;
 }
 
 .tournamentDetail {
-    padding: 80px 50px 20px 50px;
+    padding: 80px 0px 20px 70px;
 }
 
 .teamName {
@@ -584,8 +590,39 @@ button.create {
 }
 
 .tournamentDetailContainer > img {
-    width: 350px;
+    width: 470px;
     position: absolute;
     left: 0;
     bottom: -1px;
+}
+
+button.tournamentButton {
+    background-color: #000000;
+    border: 1px solid #7A5040;
+    color: #E8BA03;
+    text-transform: uppercase;
+    padding: 10px 30px;
+    font-weight: 600;
+}
+
+.tournamentDetailAdminFooter {
+    text-align: center;
+}
+
+table.adminList, .tournamentDetailAdminFooter {
+    margin-top: 60px;
+}
+
+table.adminList td {
+    border: 1px solid #7A5040;
+    padding: 10px 30px;
+}
+
+table.adminList td:first-child {
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+table.adminList tr {
+    cursor: default;
 }

@@ -105,32 +105,6 @@ class TournamentCtrl extends BaseCtrl
         $mmr = $team->tournament->rank == 'DM' ? $user->mmr_dm + ($user->games * 0) : $user->mmr_rm + ($user->games * 0); //da pensare costante
         $team->average = $team->average ? ($team->average + $mmr) / 2 : $mmr;
         $team->save();
-        /*$team = Team::withCount('members')
-            ->with(['tournament' => function($query) {
-                $query->select('id', 'team_members');
-            }])
-            ->find($arg['teamid']);
-        if ($team->members_count == $team->tournament->team_members) {
-            $curl = curl_init();
-            curl_setopt_array($curl, array(
-                CURLOPT_RETURNTRANSFER => true,
-                //CURLOPT_SSL_VERIFYHOST => 2,
-                //CURLOPT_SSL_VERIFYPEER => 2,
-                CURLOPT_URL => $this->challongeApi . 'tournaments/' . $team->tournament->id . '/participants/' . $team->id . '/check_in.json',
-                CURLOPT_POSTFIELDS => http_build_query(['api_key' => $this->challongeKey]),
-                CURLOPT_HTTPHEADER => array(
-                    "cache-control: no-cache",
-                    "content-type: application/x-www-form-urlencoded",
-                )
-            ));
-            $resp = json_decode(curl_exec($curl));
-            $err = curl_error($curl);
-            if ($err) {
-                $this->logger->error($err);
-                return $res->withStatus(500);
-            }
-            curl_close($curl);
-        }*/ //da verificare se necessario
         return $res->withStatus(200);
     }
 
@@ -162,6 +136,20 @@ class TournamentCtrl extends BaseCtrl
         $team = Team::find($teamId);
         $team->average = ($team->average + $mmr) / 2;
         $team->save(); 
+        return $res->withStatus(200);
+    }
+
+    public function leaveTeam($req, $res, $arg)
+    {
+        $team = Team::withCount('members')
+            ->find($arg['id']);
+        if ($team->members_count == 1) {
+            $team->average = 0;
+        } else {
+            $team->average = $team->average * 2 - $arg['mmr'];
+        }
+        $team->save();
+        $team->members()->detach($this->userData->id);
         return $res->withStatus(200);
     }
 

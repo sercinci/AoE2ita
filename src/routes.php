@@ -45,6 +45,12 @@ $app->put('/tournaments/{id}/randomteam',
     TournamentCtrl::class . ':joinRandomTeam');
 
 /**
+ * POST /tournaments/leave/{id}/{mmr}
+ */
+$app->post('/tournaments/leave/{id}/{mmr}', 
+    TournamentCtrl::class . ':leaveTeam');
+
+/**
  * POST /tournaments/{id}/start
  */
 $app->post('/tournaments/{id}/start', 
