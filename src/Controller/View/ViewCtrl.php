@@ -117,9 +117,7 @@ class ViewCtrl extends BaseCtrl
         
         try {
             $tournament = Tournament::with(['teams' => function($query) {
-                    $query->with(['members' => function($query) {
-                        $query->select('id', 'username', 'slug', 'avatar', 'profileurl', 'mmr_dm', 'mmr_rm', 'games');
-                    }]);
+                    $query->with('members');
                     $query->withCount('members');
                 }])
                 ->findOrFail($arg['id']);

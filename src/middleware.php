@@ -2,7 +2,7 @@
 // Application middleware
 
 $app->add(new \Slim\Middleware\JwtAuthentication([
-    "path" => ["/tournaments"],
+    "path" => ["/tournaments", "/steam"],
     "passthrough" => [],
     "secure" => false,
     "secret" => $app->getContainer()['settings']['key'],

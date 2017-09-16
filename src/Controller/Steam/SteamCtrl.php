@@ -143,4 +143,22 @@ class SteamCtrl extends BaseCtrl
         }
         return $stats;
     }
+
+    public function steamStatus($req, $res, $arg)
+    {
+        $this->logger->info('mi ha chiamato');
+        $curl = curl_init();
+        curl_setopt_array($curl, array(
+            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_URL => 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $this->hybridConfig['Steam']['keys']['secret'] . '&steamids=' . $arg['id']
+        ));
+        $resp = json_decode(curl_exec($curl));
+        $err = curl_error($curl);
+        curl_close($curl);
+        if ($err) {
+            $this->logger->error($err);
+            return $res->withStatus(500);
+        }
+        return $res->withJson($resp->response->players[0]->personastate);
+    }
 }

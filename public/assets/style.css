@@ -216,6 +216,17 @@ label {
     display: none;
 }
 
+/* Drooltip */
+.drooltip {
+    padding: 5px;
+    border: 1px solid #7A5040;
+}
+
+.drooltip > .bg {
+    background-color: #191919 !important;
+    border-radius: 0px;
+}
+
 /**
  * giallo #E8BA03
  * chiaro #95989A
@@ -414,7 +425,7 @@ section.tournaments {
     padding: 5px;
 }
 
-.avatar img {
+.avatar img, .avatarTip img {
     width: 100%;
     border: 1px solid #95989A;
 }
@@ -566,8 +577,17 @@ button.create {
 .teamNumber {
     display: inline-block;
     border: 1px solid  #95989A;
-    padding: 5px 10px;
-    width: 8px;
+    width: 30px;
+    height: 30px;
+    top: 10px;
+    position: relative;
+}
+
+.teamNumber > span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .tournamentDetail table {
@@ -625,4 +645,62 @@ table.adminList td:first-child {
 
 table.adminList tr {
     cursor: default;
+}
+
+/*========== User card */
+.userCard {
+    color: #95989A;
+}
+
+.userCard label {
+    margin-right: 0px;
+}
+
+.nameScoreTip {
+    padding: 20px 10px;
+    text-align: center;
+}
+
+.userCard .score {
+    border-left: 1px solid #7A5040;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 40px;
+}
+
+.userCard .steamStatus {
+    font-size: 10px;
+}
+
+.userCard .score, .userCard .name {
+    margin-bottom: 20px;
+}
+
+.userCard .card {
+    border-bottom: 1px solid #7A5040;
+}
+
+.userCard .data {
+    padding: 5px;
+}
+
+.userCard .data div:last-child {
+    padding-top: 5px;
+    text-align: right;
+}
+
+.userCard .data span {
+    display: block;
+    margin-top: 3px;
+}
+
+.userCard .data a {
+    text-transform: lowercase;
+    font-size: 14px;
+}
+
+.userCard .data h4 {
+    margin: 5px;
 }

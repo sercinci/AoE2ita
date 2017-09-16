@@ -24,6 +24,14 @@ $app->get('/registration/success',
 $app->get('/logout', 
     SteamCtrl::class . ':logout')->setName('logout');
 
+//=========================================================== STEAM ROUTES =====/
+
+/**
+ * GET /steam/status/{id}
+ */
+$app->get('/steam/status/{id}', 
+    SteamCtrl::class . ':steamStatus');
+
 //=========================================================== TOURNAMENTS ROUTES =====/
 
 /**

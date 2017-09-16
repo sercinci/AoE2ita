@@ -24,14 +24,14 @@
                     <div class="pure-u-3-5">
                         <div class="pure-u-2-5">
                             <div class="avatar">
-                                <a class="username" href="{{ path_for('user', { 'slug': user.slug }) }}">
+                                <a class="username" href='{{ user.profileurl }}' target='_blank'>
                                     <img src="{{ user.avatar }}" alt="{{user.username}}">
                                 </a>
                             </div>
                         </div><!--
                         --><div class="pure-u-3-5">
                                 <div class="user">
-                                    <a class="username" href="{{ path_for('user', { 'slug': user.slug }) }}">{{user.username}}</a><br>
+                                    <a class="username" href='{{ user.profileurl }}' target='_blank'>{{user.username}}</a><br>
                                     <a class="logout" href="{{ path_for('logout') }}">disconnetti</a>
                                 </div>
                         </div>
