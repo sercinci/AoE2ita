@@ -349,7 +349,6 @@
     }
 
     function steamStatus(el) {
-        console.log(el.getElementsByClassName('userCard')[0].getAttribute('data-steam'));
         var id = el.getElementsByClassName('userCard')[0].getAttribute('data-steam');
         fetch('/steam/status/'+id, {
             method: 'GET',
@@ -366,7 +365,7 @@
                   throw new Error(response.statusText);
                 }
             }).then(function(data) {
-                console.log(data)
+                console.log(data) //proseguo una volta stabilito che la cache funziona
           }).catch(function(error) {
             console.log('request failed', error)
           })

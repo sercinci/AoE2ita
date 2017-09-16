@@ -43,3 +43,7 @@ $container['view'] = function ($container) {
 
     return $view;*/
 };
+
+$container['cache'] = function () {
+    return new \Slim\HttpCache\CacheProvider();
+};

@@ -146,7 +146,7 @@ class SteamCtrl extends BaseCtrl
 
     public function steamStatus($req, $res, $arg)
     {
-        $this->logger->info('mi ha chiamato');
+        $this->logger->info('cache test');
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -159,6 +159,7 @@ class SteamCtrl extends BaseCtrl
             $this->logger->error($err);
             return $res->withStatus(500);
         }
-        return $res->withJson($resp->response->players[0]->personastate);
+        $newRes = $res->withJson($resp->response->players[0]->personastate);
+        return $this->cache->withExpires($newRes, time() + 1200); //da testare
     }
 }

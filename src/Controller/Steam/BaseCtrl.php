@@ -20,6 +20,7 @@ abstract class BaseCtrl
         $this->baseName = $c->get('settings')['base'];
         $this->view = $c->get('view');
         $this->userData = $c->get('jwt') ? $c->get('jwt')->data : null;
+        $this->cache = $c->get('cache');
     }
 
     protected function setTokenCookie($response, $user)
