@@ -354,9 +354,10 @@
             method: 'GET',
             credentials: 'same-origin',
             cache: 'default',
-            headers: new Headers({
-                "Cache-Control": "max-age=1200"
-            })
+            /*headers: new Headers({
+                "Cache-Control": "max-age=1200",
+                "Content-Length": 1
+            })*/
           }).then(function(response) {
             console.log(response)
             if (response.ok) {

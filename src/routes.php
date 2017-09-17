@@ -31,6 +31,7 @@ $app->get('/logout',
  */
 $app->get('/steam/status/{id}', 
     SteamCtrl::class . ':steamStatus');
+    //->add(new \Slim\HttpCache\Cache('public', 1200));
 
 //=========================================================== TOURNAMENTS ROUTES =====/
 

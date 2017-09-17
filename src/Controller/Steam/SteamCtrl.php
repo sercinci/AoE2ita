@@ -159,7 +159,9 @@ class SteamCtrl extends BaseCtrl
             $this->logger->error($err);
             return $res->withStatus(500);
         }
-        $newRes = $res->withJson($resp->response->players[0]->personastate);
-        return $this->cache->withExpires($newRes, time() + 1200); //da testare
+        return $res->withJson($resp->response->players[0]->personastate)->withHeader('Cache-Control', "public, max-age=1200");
+        //return $this->cache->withExpires($newRes, time() + 1200); //da testare
+        //$newRes = $res->withJson($resp->response->players[0]->personastate);
+        //return $this->cache->withEtag($newRes, 'abc')->withHeader('Content-Length', $newRes->getBody()->getSize());
     }
 }
