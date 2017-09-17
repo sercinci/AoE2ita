@@ -593,6 +593,7 @@ button.create {
 .tournamentDetail table {
     border: none;
     border-collapse: collapse;
+    width: 80%;
 }
 
 .tournamentDetail table tr {
@@ -605,7 +606,11 @@ button.create {
     padding: 5px 10px;
 }
 
-.tournamentTable tbody > tr.notClick {
+.tournamentDetail table td.fixLength {
+    width: 15px;
+}
+
+.tournamentTable tbody > tr.notClick, .tournamentTable tbody td.notClick {
     cursor: default;
 }
 
@@ -661,8 +666,16 @@ table.adminList tr {
     text-align: center;
 }
 
+.nameScoreTip .name {
+    border-right: 1px solid #7A5040;
+    padding-bottom: 10px;
+}
+
+.nameScoreTip .name a {
+    word-break: break-all;
+}
+
 .userCard .score {
-    border-left: 1px solid #7A5040;
     height: 100%;
     display: flex;
     justify-content: center;
