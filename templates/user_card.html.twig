@@ -13,7 +13,7 @@
                     <div class='name'>
                         <a href='{{ user.profileurl }}' target='_blank'>{{ user.username }}</a>
                         <div class='steamStatus'>
-                            <span>stato: online</span>
+                            <span>stato: <span id='light-{{ user.steam_id }}'>&#9679;</span> <span id='stText-{{ user.steam_id }}'>offline</span></span>
                         </div>
                     </div>
                 </div><!--

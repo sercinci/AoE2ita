@@ -146,7 +146,6 @@ class SteamCtrl extends BaseCtrl
 
     public function steamStatus($req, $res, $arg)
     {
-        $this->logger->info('cache test');
         $curl = curl_init();
         curl_setopt_array($curl, array(
             CURLOPT_RETURNTRANSFER => 1,
@@ -159,9 +158,8 @@ class SteamCtrl extends BaseCtrl
             $this->logger->error($err);
             return $res->withStatus(500);
         }
-        return $res->withJson($resp->response->players[0]->personastate)->withHeader('Cache-Control', "public, max-age=1200");
-        //return $this->cache->withExpires($newRes, time() + 1200); //da testare
-        //$newRes = $res->withJson($resp->response->players[0]->personastate);
-        //return $this->cache->withEtag($newRes, 'abc')->withHeader('Content-Length', $newRes->getBody()->getSize());
+        //implementare uno storage su db se ci sono richieste eccessive.
+        $this->logger->info('State requested: ' . $arg['id']);
+        return $res->withJson($resp->response->players[0]->personastate);
     }
 }

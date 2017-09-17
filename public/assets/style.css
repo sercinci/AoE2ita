@@ -704,3 +704,12 @@ table.adminList tr {
 .userCard .data h4 {
     margin: 5px;
 }
+
+.steamStatus span[id^='light-'] {
+    font-size: 14px;
+    color: #4A4A4A;
+}
+
+.steamStatus span[id^='light-'].on {
+    color: #00B84C;
+}
