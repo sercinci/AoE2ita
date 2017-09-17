@@ -119,7 +119,11 @@
                                                     {% if team.members[i] %}
                                                         <tr>
                                                             <td class="userTooltip" title="{% include 'user_card.html.twig' with {'user': team.members[i]} only %}" data-options="callback:steamStatus;" data-steam="{{team.members[i].steam_id}}">{{ team.members[i].username }}</td>
-                                                            <td onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? team.members[i].mmr_dm : team.members[i].mmr_rm }});">&#10060;</td>
+                                                            {% if team.members[i].id == user.id %}
+                                                                <td onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? team.members[i].mmr_dm : team.members[i].mmr_rm }});">&#10060;</td>
+                                                            {% else %}
+                                                                <td>&#9940;</td>
+                                                            {% endif %}
                                                         </tr>
                                                     {% else %}
                                                         {% if joined %}
