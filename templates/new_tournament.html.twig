@@ -261,7 +261,7 @@
             document.getElementById('tTitle').innerHTML = v ? v : "Titolo torneo";
         }
 
-        var form = document.querySelector('form');
+        var form = document.getElementById('createTournamentForm');
         function submitForm() {
             if(form['title'].value == ""){
                 alert('Il titolo deve essere inserito!');

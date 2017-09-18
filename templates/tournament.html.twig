@@ -361,6 +361,22 @@
 
     function steamStatus(el) {
         var expTime = 300; //5 min
+        var name = el.querySelector('.name a');
+        var nameLength = name.innerHTML.length;
+        if (nameLength > 24) {
+            name.style.breaKAll = 'break-all';
+        } else if (nameLength > 21) {
+            name.style.fontSize = '50%';
+        } else if (nameLength > 18) {
+            name.style.fontSize = '55%';
+        } else if (nameLength > 15) {
+            name.style.fontSize = '60%';
+        } else if (nameLength > 12) {
+            name.style.fontSize = '70%';
+        } else if (nameLength > 9) {
+            name.style.fontSize = '80%';
+        } 
+
         var id = el.getElementsByClassName('userCard')[0].getAttribute('data-steam');
         var cached = localStorage.getItem(id);
         var tsCached = localStorage.getItem(id + ':ts');

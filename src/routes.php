@@ -3,6 +3,7 @@
 use Controller\Steam\SteamCtrl;
 use Controller\View\ViewCtrl;
 use Controller\Tournament\TournamentCtrl;
+use Controller\Services\FeedbackCtrl;
 
 //=========================================================== REGISTRATION ROUTES =====/
 
@@ -125,3 +126,11 @@ $app->get('/tournaments/new',
  */
 $app->get('/tournaments/{id}', 
     ViewCtrl::class . ':showTournament')->setName('tournament');
+
+//=========================================================== SERVICES ROUTES =====/
+
+/**
+ * POST /feedback
+ */
+$app->post('/feedback', 
+    FeedbackCtrl::class . ':feedbackText');

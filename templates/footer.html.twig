@@ -1,1 +1,14 @@
-<footer>Footer</footer>
+<footer>
+    <div>Footer</div>
+    <a onclick="feedbackModal()">Feedback</a>
+    <div id="feedbackModal" style="display: none;">
+        <form id="feedbackForm" name="feedbackForm" autofocus>
+            <p>Il tuo feedback ci aiuta a migliorare la piattaforma e ad offrire un'esperienza sempre più soddisfacente.</p>
+            <div class="spacer"></div>
+            <textarea id="feedbackText" name="feedbackText"></textarea>
+            <div class="feedbackModalFooter">
+                <button id="feedbackModalButton" type="button" onclick="submitFeedback()" class="pure-button">Invia</button>
+            </div>
+        </form>
+    </div>
+</footer>
