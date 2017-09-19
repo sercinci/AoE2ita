@@ -102,11 +102,32 @@
                             {% endif %}
                             {% if tournament.status == 'pending' %}
                                 {% if tournament.random_team == 1 %}
-                                    {% if joined %}
-                                        <span>Sei iscritto a questo torneo</span>
-                                    {% else %}
-                                        <button onclick="joinRandomTeam({{tournament.id}}); this.disabled=true; this.innerHTML='Entrando...';"><span>Partecipa</span></button>
-                                    {% endif %}
+                                    <div class="pure-u-1">
+                                        <div class="randomTournamentHead">
+                                            <p>Le squadre di questo torneo saranno composte da <span class="teamNumber"><span>{{ tournament.team_members }}</span></span> giocatori casuali.</p>
+                                            {% if joined %}
+                                                <span>Sei iscritto a questo torneo, attendi l'inizio per conoscere i tuoi compagni di squadra.</span>
+                                            {% else %}
+                                                <button onclick="joinRandomTeam({{tournament.id}}); this.disabled=true; this.innerHTML='Entrando...';" class="pure-button"><span>Partecipa</span></button>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <table>
+                                            {% for team in tournament.teams|shuffle %}
+                                                {% for member in team.members|shuffle %}
+                                                    <tr>
+                                                        <td class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}" data-options="callback:steamStatus;" data-steam="{{member.steam_id}}">{{ member.username }}</td>
+                                                        {% if member.id == user.id %}
+                                                            <td class="fixLength" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? member.mmr_dm : member.mmr_rm }});">&#10060;</td>
+                                                        {% else %}
+                                                            <td class="fixLength notClick">&#9940;</td>
+                                                        {% endif %}
+                                                    </tr>
+                                                {% endfor %}
+                                            {% endfor %}
+                                        </table>
+                                    </div>
                                 {% else %}
                                     {% for team in tournament.teams %}<div class="pure-u-1 pure-u-md-1-2">
                                         {% set teamTitle = team.title|split(' ') %}
@@ -134,7 +155,7 @@
                                                         {% else %}
                                                             <tr onclick="joinTeam({{tournament.id}},{{team.id}});">
                                                                 <td>Slot libero</td>
-                                                                <td class="fixLength">&#9094;</td>
+                                                                <td class="fixLength joinable">&#9094;</td>
                                                             </tr>
                                                         {% endif %}
                                                         
@@ -155,9 +176,13 @@
                                 </div><!--
                                 --><div class="pure-u-1 pure-u-md-1-2">
                                     {% if ready and tournament.user_id == user.id %}
-                                    <div class="tournamentDetailAdminFooter">
-                                        <button onclick="startTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Avviando...';" class="tournamentButton">Avvia torneo</button>
-                                    </div>
+                                        <div class="tournamentDetailAdminFooter">
+                                            <button onclick="startTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Avviando...';" class="tournamentButton">Avvia torneo</button>
+                                        </div>
+                                    {% else %}
+                                        <div class="tournamentDetailAdminFooter">
+                                            <span class="teamName">Slot liberi</span> <span class="teamNumber"><span>{{ tournament.team_members * tournament.n_teams - tournament.joined }} </span></span>
+                                        </div>
                                     {% endif %}
                                 </div>
                             {% endif %}

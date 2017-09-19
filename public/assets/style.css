@@ -644,7 +644,7 @@ button.tournamentButton {
     font-weight: 600;
 }
 
-.tournamentDetailAdminFooter {
+.tournamentDetailAdminFooter, .randomTournamentHead {
     text-align: center;
 }
 
@@ -664,6 +664,10 @@ table.adminList td:first-child {
 
 table.adminList tr {
     cursor: default;
+}
+
+.joinable {
+    background-color: rgba(35, 107, 27, 0.47);
 }
 
 /*========== User card */

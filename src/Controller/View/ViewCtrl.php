@@ -125,9 +125,10 @@ class ViewCtrl extends BaseCtrl
             $ready = true;
             $teams = array();
             foreach ($tournament->teams as $team) {
+                $tournament->joined += $team->members_count;
                 if ($team->members_count < $tournament->team_members) {
                     $ready = false;
-                    break;
+                    //break;
                 }
                 $teams[$team->id] = $team;
             }
