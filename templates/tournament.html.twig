@@ -114,8 +114,8 @@
                                     </div>
                                     <div>
                                         <table>
-                                            {% for team in tournament.teams|shuffle %}
-                                                {% for member in team.members|shuffle %}
+                                            {% for team in tournament.teams %}
+                                                {% for member in team.members %}
                                                     <tr>
                                                         <td class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}" data-options="callback:steamStatus;" data-steam="{{member.steam_id}}">{{ member.username }}</td>
                                                         {% if member.id == user.id %}
