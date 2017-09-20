@@ -711,6 +711,7 @@ table.adminList tr {
 .alignBottom {
     position: absolute;
     bottom: 20px;
+    left: 70px;
 }
 
 /*========== User card */
