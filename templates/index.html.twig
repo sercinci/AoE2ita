@@ -112,6 +112,18 @@
         </div>
         <p>Lo staff di AoE2ita</p>
     </div>
+    <div id="detailPop" style="display: none;">
+        <h3>Termini & Condizioni</h3>
+        <span>Lo staff di AoE2ita si riserva il diritto in qualsiasi momento di interrompere il servizio o escludere utenti dalla piattaforma.</span>
+        <h3>Privacy Policy</h3>
+        <span>Nessun vostro dato personale sensibile viene utilizzato o salvato in questa piattaforma. Le uniche informazioni che raccogliamo sono limitate al vostro <i>username</i> pubblico di STEAM<sup>&reg;</sup>, il vostro <i>avatar</i> pubblico e i dati di gioco pubblici relativi solamente a <i>Age of Empires 2</i>. In questo momento non viene né richiesta né salvata la vostra <i>email</i> associata al vostro profilo STEAM<sup>&reg;</sup>, ma in futuro potrebbero sorgere esigenze di comunicazione o di newsletter alternative alla pagina Facebook. Eventuali modifiche dei dati raccolti verranno annunciate con largo preavviso e richiederanno nuovamente l'accettazione di queste policy, con la possibilità di chiedere chiarimenti ed eventualmente rifiutando di autenticarsi nuovamente sulla piattaforma.</span>
+        <h3>Cookie Policy</h3>
+        <span>I cookie salvati sul vostro browser servono strettamente come sistema di sicurezza e garanzia per accertare che siate realmente voi gli utilizzatori in seguito al vostro primo login.</span>
+        <div><button onclick="closeModal()" class="pure-button">Correctus</button></div>
+    </div>
+    <div id='cookiePolicyBar' style="display: none;">
+        <span>Effettuando il login si dichiara di aver letto ed accettato i <a onclick="detailsModal()">Termini e le Condizioni</a> di utilizzo, la <a onclick="detailsModal()">Cookie Policy</a> e la <a onclick="detailsModal()">Privacy Policy</a>.</span> <button onclick="closePolicyBar()" class="pure-button">à la bataille!</button>
+    </div>
     {% include 'footer.html.twig' %}
 {% endblock %}
 {% block javascript %}

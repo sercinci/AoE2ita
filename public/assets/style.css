@@ -240,6 +240,26 @@ textarea {
     border-radius: 0px;
 }
 
+#cookiePolicyBar {
+    width: 100%;
+    z-index: 10;
+    background-color: #232323;
+    border-top: 1px solid #E8BA03;
+    color: #FFFFFF;
+    position: fixed;
+    bottom: 0px;
+    padding: 20px 30px;
+    text-align: center;
+}
+
+#cookiePolicyBar a {
+    color: #E8BA03;
+}
+
+#cookiePolicyBar button {
+    margin-left: 20px;
+}
+
 /**
  * giallo #E8BA03
  * chiaro #95989A
@@ -286,6 +306,19 @@ nav #steamLogin {
 
 .pure-menu-active>.pure-menu-link, .pure-menu-link:focus, .pure-menu-link:hover {
     background-color: transparent;
+}
+
+/*========== Success */
+.successText {
+    text-align: center;
+    border: 1px solid #7A5040;
+    background-color: rgba(0, 0, 0, 0.66);
+    margin-top: 20px;
+    width: 100%;
+}
+
+section.fullHeight {
+    height: 60vh;
 }
 
 /*========== Home */
@@ -575,7 +608,7 @@ button.create {
 }
 
 .descriptionText {
-    margin-bottom: 420px;
+    margin-bottom: 500px;
 }
 
 .tournamentDetail {
@@ -668,6 +701,16 @@ table.adminList tr {
 
 .joinable {
     background-color: rgba(35, 107, 27, 0.47);
+}
+
+.fullHeight {
+    position: absolute;
+    height: 100%;
+}
+
+.alignBottom {
+    position: absolute;
+    bottom: 20px;
 }
 
 /*========== User card */

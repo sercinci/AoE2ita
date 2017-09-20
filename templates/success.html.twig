@@ -3,12 +3,15 @@
 {% block title %}Successo - AoE2ita{% endblock %}
 {% block meta %}
     {{ parent() }}
-    <meta name="description" content="">
     <meta http-equiv="refresh" content="3;url=/tournaments" />
 {% endblock %}
-
 {% block content %}
-    <div>{{ username }} sei loggato via Steam! Verrai portato alla home in 3 secondi, altrimenti clicca <a href="{{ path_for('tournaments') }}">qui</a></div><br>
+    <section class="tournaments fullHeight">
+        <div class="successText">
+            <h4>{{ username }} sei loggato via Steam! Fra qualche istante il carretto ti condurrà ai tornei.</h4>
+            <p>Se non dovesse passare e non sai dove andare c'è un sentiero <a href="{{ path_for('tournaments') }}">qui</a></p>
+        </div>
+    </section>
 {% endblock %}
 {% block javascript %}
     {{ parent() }}

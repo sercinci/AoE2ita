@@ -7,6 +7,11 @@
                 content:'loginPop'
             });
         }
+
+        if (!document.cookie.match(/^(.*;)?\s*ackPolicy\s*=\s*[^;]+(.*)?$/)) {
+            var policyBar = document.getElementById('cookiePolicyBar');
+            policyBar.style.display = 'block';
+        }
 }, false);
 
 function feedbackModal() {
@@ -46,4 +51,26 @@ function submitFeedback() {
 
 function loadTorunament(id){
     window.location.href = '/tournaments/' + id;
+}
+
+function closePolicyBar(){
+    var d = new Date();
+    d.setTime(d.getTime() + (3600 * 1000 * 24 * 365));
+    document.cookie = "ackPolicy=true; expires=" + d.toGMTString();
+    var policyBar = document.getElementById('cookiePolicyBar');
+    policyBar.style.display = 'none';
+}
+
+function detailsModal(){
+    uglipop({
+        class:'modalTheme',
+        source:'div',
+        content:'detailPop'
+    });
+}
+
+function closeModal(){
+    document.getElementById('uglipop_overlay_wrapper').style.display = 'none';
+    document.getElementById('uglipop_overlay').style.display = 'none';
+    document.getElementById('uglipop_content_fixed').style.display = 'none';
 }
