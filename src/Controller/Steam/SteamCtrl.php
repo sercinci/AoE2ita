@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Hybridauth\Provider\Steam;
 use Hybridauth\Hybridauth;
 use Ramsey\Uuid\Uuid;
-use Cviebrock\EloquentSluggable\Services\SlugService;
+//use Cviebrock\EloquentSluggable\Services\SlugService;
 
 /**
 * Manage platform steam login and APIs
@@ -104,7 +104,7 @@ class SteamCtrl extends BaseCtrl
         $user->id = Uuid::uuid4();
         $user->username = $profile->displayName;
         $user->profileurl = $profile->profileURL;
-        $user->slug = SlugService::createSlug(User::class, 'slug', $profile->displayName);
+        //$user->slug = SlugService::createSlug(User::class, 'slug', $profile->displayName);
         $user->avatar = $profile->photoURL;
         $user->steam_id = $profile->identifier;
         $stats = $this->stats($user->steam_id, $this->hybridConfig['Steam']['keys']['secret']);

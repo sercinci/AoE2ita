@@ -112,8 +112,8 @@ $app->get('/tournaments',
 /**
  * GET /{slug}
  */
-$app->get('/{slug}', 
-    ViewCtrl::class . ':showUser')->setName('user');
+/*$app->get('/{slug}', 
+    ViewCtrl::class . ':showUser')->setName('user');*/
 
 /**
  * GET /tournaments/new
