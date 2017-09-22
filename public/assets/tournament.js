@@ -99,7 +99,7 @@ function deleteTournament(tId) {
   }).then(function(response) {
     //console.log(response)
     if (response.ok) {
-      location.href = '/tournaments';
+      window.location = '/tournaments';
     } else {
       throw new Error(response.statusText);
     }

@@ -125,7 +125,7 @@ function submitForm() {
         }
     }).then(function(data) {
         //console.log(data)
-        location.href = '/tournaments/' + data;
+        window.location = '/tournaments/' + data;
     }).catch(function(error) {
         console.log('request failed', error)
     });
