@@ -1,0 +1,116 @@
+<div class="pure-u-1 pure-u-md-1-3">
+    <div class="description">
+        {% if tournament.user_id == user.id or user.role == 'admin' %}
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+        {% endif %}
+        <h4>Descrizione</h4>
+        <div class="descriptionText">
+            {{ tournament.description | raw }}
+        </div>
+    </div>
+</div><!--
+--><div class="pure-u-1 pure-u-md-2-3">
+    <div class="tournamentDetail fullHeight">
+        {% if tournament.user_id == user.id or user.role == 'admin' %}
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+        {% endif %}
+        
+        {% if tournament.random_team == 1 %}
+            <div class="pure-u-1">
+                <div class="randomTournamentHead">
+                    <p>Le squadre di questo torneo saranno composte da <span class="teamNumber"><span>{{ tournament.team_members }}</span></span> giocatori casuali.</p>
+                    {% if joined %}
+                        <span>Sei iscritto a questo torneo, attendi l'inizio per conoscere i tuoi compagni di squadra.</span>
+                    {% else %}
+                        <div class="spacer"></div>
+                        <button onclick="joinRandomTeam({{tournament.id}}); this.disabled=true; this.innerHTML='Entrando...';" class="pure-button"><span>Partecipa</span></button>
+                    {% endif %}
+                    <div class="spacer"></div>
+                </div>
+            </div>
+            <div>
+                <table>
+                    {% for team in tournament.teams %}
+                        {% for member in team.members %}
+                            <tr>
+                                <td class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}" data-options="callback:steamStatus;" data-steam="{{member.steam_id}}">{{ member.username }}</td>
+                                {% if member.id == user.id %}
+                                    <td class="fixLength" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? member.mmr_dm : member.mmr_rm }});">&#10060;</td>
+                                {% else %}
+                                    <td class="fixLength notClick">&#9940;</td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            {% for team in tournament.teams %}<div class="pure-u-1 pure-u-md-1-2">
+                {% set teamTitle = team.title|split(' ') %}
+                <div class="pure-u-1-3">
+                    <span class="teamName">{{ teamTitle[0] }}</span> <span class="teamNumber"><span>{{ teamTitle[1] }}</span></span>
+                </div><!--
+                --><div class="pure-u-2-3">
+                    <table>
+                        {% for i in 0..tournament.team_members - 1 %}
+                            {% if team.members[i] %}
+                                <tr>
+                                    <td class="userTooltip" title="{% include 'user_card.html.twig' with {'user': team.members[i]} only %}" data-options="callback:steamStatus;" data-steam="{{team.members[i].steam_id}}">{{ team.members[i].username }}</td>
+                                    {% if team.members[i].id == user.id %}
+                                        <td class="fixLength" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? team.members[i].mmr_dm : team.members[i].mmr_rm }});">&#10060;</td>
+                                    {% else %}
+                                        <td class="fixLength notClick">&#9940;</td>
+                                    {% endif %}
+                                </tr>
+                            {% else %}
+                                {% if joined %}
+                                    <tr class="notClick">
+                                        <td>Slot libero</td>
+                                        <td class="fixLength">&#9940;</td>
+                                    </tr>
+                                {% else %}
+                                    <tr onclick="joinTeam({{tournament.id}},{{team.id}});">
+                                        <td>Slot libero</td>
+                                        <td class="fixLength joinable">&#9094;</td>
+                                    </tr>
+                                {% endif %}
+                                
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                    <div class="spacer"></div>
+                </div>
+            </div>{% endfor %}
+        {% endif %}
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+        <div class="pure-u-1 alignBottom">
+            <div class="pure-u-1 pure-u-md-1-2">
+                <table class="adminList">
+                    <tr>
+                        <td>organizzatori</td>
+                        <td class="userTooltip pointer" title="{% include 'user_card.html.twig' with {'user': tournament.user} only %}">{{ tournament.user.username }}</td>
+                    </tr>
+                </table>
+            </div><!--
+            --><div class="pure-u-1 pure-u-md-1-2">
+                {% if ready and tournament.user_id == user.id %}
+                    <div class="tournamentDetailAdminFooter">
+                        <button onclick="startTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Avviando...';" class="tournamentButton">Avvia torneo</button>
+                    </div>
+                {% else %}
+                    <div class="tournamentDetailAdminFooter">
+                        <span class="teamName">Slot liberi</span> <span class="teamNumber"><span>{{ tournament.team_members * tournament.n_teams - tournament.joined }} </span></span>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+ <img src="/assets/images/profilo.png" alt="Dettaglio torneo">
+                

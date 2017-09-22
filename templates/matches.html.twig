@@ -1,0 +1,178 @@
+
+<main class="matches">
+    {% set roundFirstMatch = 0 %}
+    {% for i in 1..tournament.rounds %}
+        {% set roundMatches = tournament.n_teams / (2 ** i) %}
+        <ul class="round">
+            <li class="spacer">&nbsp;</li>
+            {% for match in matches|slice(roundFirstMatch,roundMatches) %}
+                <li>
+                    <table>
+                        <tr>
+                            <th>{{ match.player1.title ?? ' ' }}</th>
+                        </tr>
+                        {% for member in match.player1.members %}
+                            <tr>
+                                <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </li>
+                <li class="game-spacer">&nbsp;</li>
+                <li>
+                    <table>
+                        <tr>
+                            <th>{{ match.player2.title ?? ' ' }}</th>
+                        </tr>
+                        {% for member in match.player2.members %}
+                            <tr>
+                                <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                            </tr>
+                        {% endfor %}
+                  </table>
+                  {% if not loop.last %}
+                      <li class="game-spacer">&nbsp;</li>
+                  {% endif %}
+                </li>
+            {% endfor %}
+            <li class="spacer">&nbsp;</li>
+        </ul>
+        {% if not lopp.last %}
+            <ul class="branch">
+                {% for match in matches|slice(roundFirstMatch,roundMatches) %}
+                    {% if loop.first %}
+                        <li class="spacer">&nbsp;</li>
+                    {% endif %}
+                    <li class="spacer-2 upper">&nbsp;</li>
+                    <li class="spacer-2 lower">&nbsp;</li>
+                    {% if not loop.last %}
+                        <li class="left-spacer">&nbsp;</li>
+                    {% else %}
+                        <li class="spacer">&nbsp;</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <ul class="branch">
+                {% for match in matches|slice(roundFirstMatch,roundMatches) %}
+                    {% if loop.first %}
+                        <li class="spacer">&nbsp;</li>
+                    {% endif %}
+                    <li class="spacer-2 middle">&nbsp;</li>
+                    <li class="spacer-2">&nbsp;</li>
+                    {% if not loop.last %}
+                        <li class="right-spacer">&nbsp;</li>
+                    {% else %}
+                        <li class="spacer">&nbsp;</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% set roundFirstMatch = roundFirstMatch + roundMatches %}
+    {% endfor %}
+    <ul class="round">
+        <li class="spacer">&nbsp;</li>
+        <li>
+            <table>
+                {% if finalMatch.winner_id == finalMatch.player1_id %}
+                    <tr>
+                        <th>{{ finalMatch.player1.title }}</th>
+                    </tr>
+                    {% for member in finalMatch.player1.members %}
+                        <tr>
+                            <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                        </tr>
+                    {% endfor %}
+                {% elseif finalMatch.winner_id == finalMatch.player2_id %}
+                    <tr>
+                        <th>{{ finalMatch.player2.title }}</th>
+                    </tr>
+                    {% for member in finalMatch.player2.members %}
+                        <tr>
+                            <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </li>
+        <li class="spacer">&nbsp;</li>
+    </ul>
+</main>
+
+<div class="matches">
+    <ul class="round">
+        <li class="spacer">&nbsp;</li>
+        <li>
+            <table>
+                <tr>
+                    <th>{{ lastMatch.player1.title ?? ' ' }}</th>
+                </tr>
+                {% for member in lastMatch.player1.members %}
+                    <tr>
+                        <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </li>
+        <li class="game-spacer">&nbsp;</li>
+        <li>
+            <table>
+                <tr>
+                    <th>{{ lastMatch.player2.title ?? ' ' }}</th>
+                </tr>
+                {% for member in lastMatch.player2.members %}
+                    <tr>
+                        <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </li>
+        <li class="spacer">&nbsp;</li>
+    </ul>
+    <ul class="branch">
+        <li class="spacer">&nbsp;</li>
+        <li class="spacer-2 upper">&nbsp;</li>
+        <li class="spacer-2 lower">&nbsp;</li>
+        <li class="spacer">&nbsp;</li>
+    </ul>
+    <ul class="branch">
+        <li class="spacer">&nbsp;</li>
+        <li class="spacer-2 middle">&nbsp;</li>
+        <li class="spacer-2">&nbsp;</li>
+        <li class="spacer">&nbsp;</li>
+    </ul>
+    <ul class="round">
+        <li class="spacer">&nbsp;</li>
+        <li>
+            <table>
+                {% if lastMatch.winner_id == lastMatch.player1_id %}
+                    <tr>
+                        <th>{{ lastMatch.player1.title }}</th>
+                    </tr>
+                    {% for member in lastMatch.player1.members %}
+                        <tr>
+                            <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                        </tr>
+                    {% endfor %}
+                {% elseif lastMatch.winner_id == lastMatch.player2_id %}
+                    <tr>
+                        <th>{{ lastMatch.player2.title }}</th>
+                    </tr>
+                    {% for member in lastMatch.player2.members %}
+                        <tr>
+                            <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td>&nbsp;</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </li>
+        <li class="spacer">&nbsp;</li>
+    </ul>
+</div>

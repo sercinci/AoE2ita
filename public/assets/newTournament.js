@@ -44,10 +44,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
     noUiSlider.create(team_slider, {
-        start: [ 2 ],
-        step: 1,
+        start: [ 4 ],
+        //step: 4,
+        snap: true,
         range: {
-            'min': [ 2 ],
+            'min': [ 4 ],
+            '33%': [ 8 ],
+            '66%': [ 16 ],
             'max': [ 32 ]
         },
         format: {

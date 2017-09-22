@@ -112,6 +112,9 @@ class ViewCtrl extends BaseCtrl
         $member = User::whereHas('teams', function ($query) use ($arg) {
                 $query->where('tournament_id', $arg['id']);
             })
+            ->with(['teams' => function ($query) use ($arg) {
+                $query->where('tournament_id', $arg['id']);
+            }])
             ->where('id', $this->userData->id)
             ->get();
         
@@ -133,12 +136,25 @@ class ViewCtrl extends BaseCtrl
                 $teams[$team->id] = $team;
             }
             $matches = array();
+            $myMatch = null;
+            $myTeam = null;
+            $opponentTeam = null;
             if ($tournament->status == 'underway' || $tournament->status == 'complete') {
                 $apiMatches = TournamentCtrl::tournamentMatches($arg['id'], $this->challongeKey, $this->challongeApi);
                 foreach ($apiMatches as $key => $match) {
                     $matches[$key] = $match->match;
                     $matches[$key]->player1 = $teams[$matches[$key]->player1_id];
                     $matches[$key]->player2 = $teams[$matches[$key]->player2_id];
+                    if (($matches[$key]->player1_id == $member[0]->teams[0]->id || $matches[$key]->player2_id == $member[0]->teams[0]->id) && $matches[$key]->state == 'open') {
+                        $myMatch = $matches[$key];
+                        if ($matches[$key]->player1_id == $member[0]->teams[0]->id) {
+                            $myTeam = $matches[$key]->player1_id;
+                            $opponentTeam = $matches[$key]->player2_id;
+                        } else {
+                            $myTeam = $matches[$key]->player2_id;
+                            $opponentTeam = $matches[$key]->player1_id;
+                        }
+                    }
                 }
             }
             return $this->view->render($res, 'tournament.html.twig', [
@@ -147,7 +163,10 @@ class ViewCtrl extends BaseCtrl
                 'api' => $api,
                 'ready' => $ready,
                 'user' => $user,
-                'matches' => $matches
+                'matches' => $matches,
+                'myMatch' => $myMatch,
+                'myTeam' => $myTeam,
+                'opponentTeam' => $opponentTeam
             ]);
         } catch (ModelNotFoundException $ex) {
             $resData = array(

@@ -57,6 +57,7 @@ class TournamentCtrl extends BaseCtrl
         $tournament->rank_min = $body['rank_min'];
         $tournament->rank_max = $body['rank_max'];
         $tournament->random_team = $body['random'] ? true : false;
+        $tournament->rounds = (int)log($body['n_teams'], 2);
 
         $user = User::find($this->userData->id);
         $user->tournaments()->save($tournament);

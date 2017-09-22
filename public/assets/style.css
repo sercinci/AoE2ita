@@ -23,7 +23,7 @@ h1 {
     text-transform: uppercase;
 }
 
-h3, h2 {
+h3, h2, strong {
     color: #E8BA03;
 }
 
@@ -135,7 +135,11 @@ label {
     color: #95989A;
 }
 
-.modalTheme {
+#uglipop_overlay_wrapper, #uglipop_content_fixed {
+    z-index: 20;
+}
+
+.modalTheme, .descriptionModalTheme {
     border-radius: 10px;
     background-color:#232323;
     width:500px;
@@ -587,6 +591,7 @@ button.create {
     width: 98%;
     padding-right: 0px;
     padding-left: 2%;
+    z-index: 5;
 }
 
 .editBar > a {
@@ -612,7 +617,7 @@ button.create {
 }
 
 .tournamentDetail {
-    padding: 80px 0px 20px 70px;
+    padding: 80px 70px 20px 70px;
 }
 
 .teamName {
@@ -704,14 +709,118 @@ table.adminList tr {
 }
 
 .fullHeight {
-    position: absolute;
-    height: 100%;
+    position: relative;
+    min-height: 120vh;
+}
+
+.scrollTournament {
+    overflow-x: auto;
 }
 
 .alignBottom {
     position: absolute;
     bottom: 20px;
-    left: 70px;
+}
+
+table.topTournament {
+    margin-top: 0px;
+    width: auto;
+}
+
+.moveRight {
+    float: right;
+    /*margin-right: 70px;*/
+}
+
+.staffNotes {
+    border: 1px solid #95989A;
+    background-color: #545454;
+    padding: 10px 20px;
+    margin-top: 10px;
+    text-align: justify;
+    /*margin-right: 70px;*/
+    margin-bottom: 30px;
+}
+
+.teamMembersContainer {
+    width: 200px;
+    min-height: 50px;
+    text-align: center;
+}
+
+.teamMembersContainerLeft {
+    float: right;
+    margin-right: 30px;
+}
+
+.teamMembersContainerRight {
+    float: left;
+    margin-left: 30px;
+}
+
+.matchBrief {
+    min-height: 50px;
+    border-right: 1px solid #95989A;
+    border-left: 1px solid #95989A;
+    position: relative;
+}
+
+.matchBrief > div {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+}
+
+.matchButtonsContainer {
+    text-align: center;
+    padding: 10px 0;
+}
+
+.matchButtonsContainer:first-child {
+    border-top: 1px solid #95989A;
+    padding-top: 30px;
+}
+
+.matchButtonsContainer:last-child {
+    border-bottom: 1px solid #95989A;
+    padding-bottom: 30px;
+}
+
+.matchButton {
+    border: 1px solid #95989A;
+    text-transform: uppercase;
+    color: #95989A;
+    padding: 5px;
+    width: 100px;
+}
+
+.greenButton {
+    background-color: rgba(35, 107, 27, 0.47);
+}
+
+.redButton {
+    background-color: rgba(128, 1, 1, 0.47);
+}
+
+.refreshButton {
+    float: right;
+    margin-top: 20px;
+}
+
+.refreshButton > div {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    border: 1px solid #7A5040;
+    line-height: 32px;
+    font-size: 30px;
+    transform: rotateZ(90deg);
+    text-align: center;
+}
+
+table.adminList td.pointer {
+    cursor: url('aoe2hand_1_37x37.png'), pointer;
 }
 
 /*========== User card */
@@ -787,4 +896,97 @@ table.adminList tr {
 
 .steamStatus span[id^='light-'].on {
     color: #00B84C;
+}
+
+/*======== Matches */
+.matches{
+    display:flex;
+    flex-direction:row;
+    min-width: min-content;
+}
+.round, .branch {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    width:150px;
+    list-style:none;
+    padding:0;
+}
+
+.branch {
+    width: 35px;
+}
+
+.round .spacer {
+    flex-grow:1;
+}
+
+.branch .spacer {
+    flex-grow:0.5;
+} /* anche 0.25, verificare */
+
+.branch .spacer-2 {
+    flex-grow:0.25;
+}
+
+.branch .spacer:first-child,
+.branch .spacer:last-child {
+    flex-grow:0.25;
+}
+
+.round .spacer:first-child,
+.round .spacer:last-child{
+    flex-grow:.5;
+}
+
+.branch .spacer-2:first-child,
+.branch .spacer-2:last-child {
+    flex-grow:0.35;
+}
+
+.round .game-spacer{
+    flex-grow:1;
+ }
+
+.branch .left-spacer{
+    flex-grow:0.5;
+}
+
+.branch .right-spacer{
+    flex-grow:0.5;
+}
+
+.matches table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.matches table td, .matches table th {
+    border: 1px solid #95989A;
+}
+
+.matches table th {
+    text-align: center;
+}
+
+.matches table tr, .teamMembersContainer table tr {
+    cursor: default;
+}
+
+.matches table td > span, .teamMembersContainer table td > span {
+    cursor: url('aoe2hand_1_37x37.png'), pointer;
+}
+
+.branch .upper {
+    border-top: 1px solid #95989A;
+    border-right: 1px solid #95989A;
+}
+
+.branch .lower {
+    border-bottom: 1px solid #95989A;
+    border-right: 1px solid #95989A;
+}
+
+.branch .middle {
+    border-bottom: 1px solid #95989A;
 }

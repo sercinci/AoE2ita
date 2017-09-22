@@ -192,3 +192,15 @@ function steamStatus(el) {
 document.addEventListener('DOMContentLoaded', function() {
     var tooltip = new Drooltip({"element" : ".userTooltip"});
 });
+
+function reloadPage() {
+    location.reload();
+}
+
+function openDescriptionModal() {
+    uglipop({
+        class:'descriptionModalTheme',
+        source:'div',
+        content:'descriptionModal'
+    });
+}
