@@ -11,7 +11,11 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
         $container["jwt"] = $arg["decoded"];
     },
     "error" => function($req, $res, $arg) {
-        return $res->withRedirect('/?auth=false', 401);
+        if(strpos($_SERVER["HTTP_USER_AGENT"], "facebookexternalhit/") !== false || strpos($_SERVER["HTTP_USER_AGENT"], "Facebot") !== false) {
+             return $next($req, $res, $arg);
+        } else {
+            return $res->withRedirect('/?auth=false', 401);
+        }
         //return $res->withJson(array('message' => 'Token expired'));
     },
     /*"rules" => [

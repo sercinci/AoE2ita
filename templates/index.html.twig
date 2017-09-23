@@ -2,7 +2,11 @@
 
 {% block title %}AoE2ita{% endblock %}
 {% block meta %}
-
+    {{ parent() }}
+    <meta name="description" content="La piattaforma che raduna i giocatori di Age of Empires 2." />
+    <meta property="og:url"           content="https://aoe2ita.tk" />
+    <meta property="og:title"         content="AoE2ita" />
+    <meta property="og:description"   content="La piattaforma che raduna i giocatori di Age of Empires 2." />
 {% endblock %}
 {% block content %}
     {% include 'menu.html.twig' %}
@@ -28,7 +32,7 @@
 
             </div>
             <div class="headerTitle">
-                <h1>Cerca e crea tornei di Age of Empires</h1>
+                <h1>Cerca e crea tornei di Age of Empires 2</h1>
             </div>
         </div>
     </header>
@@ -39,22 +43,12 @@
                 <h2>Chi sarà il re?</h2>
                 <a class="pure-button" href="{{ path_for('tournaments') }}">Entra</a>
                 <div class="spacer"></div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <p>Se anche tu sei cresciuto a <i>modchin</i>, <i>chassëoir</i>, <i>jägere</i>, <i>firm</i>, allora sei nel posto giusto! Cerca o crea un torneo, vinci le partite e fatti conoscere dalla comunità. Finalmente giocare ad Age of Empires online sarà solo piacere e divertimento, con l'occasione di far nascere gruppi di gioco basati su stima ed amicizia.</p>
             </div>
         </div>
         <div class="pure-u-1 pure-u-md-1-3">
             <div class="text">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            Questa piattaforma nasce con lo scopo di radunare i giocatori di Age of Empires 2, nuovi e nostalgici, che vogliono trovare altre persone desiderose di giocare insieme, con lo scopo di conoscersi, comunicare e divertirsi. Qui è possibile cercare o creare tornei, in modo da potersi iscrivere e far sapere agli altri che si vuole giocare, creando nuovi team e invogliando i partecipanti ad esporsi come compagni di gioco anziché come casual gamer nelle partite pubbliche. Grafica e codice sono stati realizzati nel tempo libero per mano di alcuni giocatori appassionati che, coincidenza, fanno questo per mestiere. Tutto è un <i>work in progress</i>, ogni aggiunta e modifica è possibile nel momento in cui effettivamente si potrà constatare partecipazione e utilizzo continuo. Tutto quello che vedete è offerto ovviamente in maniera gratuita (il gioco dovete comprarvelo eh), non vi sarà alcuna pubblicità e nessuna raccolta di dati per rivenderli a terzi. L'unica condizione di utilizzo e nostra espressa richiesta è la seguente: siate giocatori seri e responsabili, qui siamo tutti amici e questo è un luogo di divertimento intorno ad un gioco.<br>Per qualsiasi dubbio, richiesta, parere, consiglio, saluto, potete scriverci attraverso il link <a onclick="feedbackModal()">Feedback</a> che trovate in fondo ad ogni pagina del sito.<br><i>14. Comincia la partita</i><small style="display: block; text-align: right;">- lo staff di AoE2ita</small>
             </div>
         </div>
     </section>

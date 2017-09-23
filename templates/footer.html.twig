@@ -1,9 +1,19 @@
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/it_IT/sdk.js#xfbml=1&version=v2.10&appId=1856279628021486";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <footer>
-    <div>Footer</div>
+    <div class="socialFooter">
+        <div class="fb-like" data-href="https://www.facebook.com/aoe2ita" data-layout="button" data-action="like" data-size="small" data-show-faces="false" data-share="true"></div>
+    </div>
     <a onclick="feedbackModal()">Feedback</a>
     <div id="feedbackModal" style="display: none;">
         <form id="feedbackForm" name="feedbackForm" autofocus>
-            <p>Il tuo feedback ci aiuta a migliorare la piattaforma e ad offrire un'esperienza sempre più soddisfacente.</p>
+            <p>Siamo nella fase di lancio e qualsiasi cosa è implementabile, sia lato tecnico sia lato grafico. Il tuo feedback ci aiuta a migliorare la piattaforma e ad offrire un'esperienza sempre più soddisfacente.</p>
             <div class="spacer"></div>
             <textarea id="feedbackText" name="feedbackText"></textarea>
             <div class="feedbackModalFooter">
