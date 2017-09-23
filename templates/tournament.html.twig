@@ -172,6 +172,8 @@
                         </div>
                     {% endif %}
                     {% if tournament.status == 'complete' %}
+                        {% set lastMatch = matches|last %}
+                        {% set finalMatch = matches[matches|length - 2] %}
                         <div class="tournamentDetail fullHeight scrollTournament">
                             <div class="pure-u-1 pure-u-md-1-2">
                                 <table class="adminList topTournament">
@@ -188,9 +190,109 @@
                                     </tr>
                                 </table>
                             </div>
+                            <div class="podiumContainer">
+                                <div class="pure-u-1 pure-u-md-1-2">
+                                    <div class="points">
+                                        {% if finalMatch.winner_id == finalMatch.player1_id %}
+                                            <h4>{{ finalMatch.player1.title }} vince il torneo!</h4>
+                                            <table>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/gold.png"></div></td>    
+                                                <td>
+                                                        {% for member in finalMatch.player1.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+3 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/silver.png"></div></td>
+                                                    <td>
+                                                        {% for member in finalMatch.player2.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+2 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/bronze.png"></div></td>
+                                                    <td>
+                                                        {% if lastMatch.winner_id == lastMatch.player1_id %}
+                                                            {% for member in lastMatch.player1.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% for member in lastMatch.player2.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td><div class="score">+1 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                            </table>
+                                        {% else %}
+                                            <h4>{{ finalMatch.player2.title }} vince il torneo!</h4>
+                                            <table>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/gold.png"></div></td>
+                                                    <td>
+                                                        {% for member in finalMatch.player2.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+3 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/silver.png"></div></td>
+                                                    <td>
+                                                        {% for member in finalMatch.player1.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+2 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/bronze.png"></div></td>
+                                                    <td>
+                                                        {% if lastMatch.winner_id == lastMatch.player1_id %}
+                                                            {% for member in lastMatch.player1.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% for member in lastMatch.player2.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td><div class="score">+1 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                            </table>
+                                        {% endif %}
+                                    </div>
+                                </div><!--
+                                --><div class="pure-u-1 pure-u-md-1-2">
+                                    <div class="podium">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <h4>{{ finalMatch.winner_id == finalMatch.player1_id ? finalMatch.player2.title : finalMatch.player1.title }}</h4>
+                                                    <div style="height: 80px"></div>
+                                                </td>
+                                                <td>
+                                                    <img width="80px;" src="/assets/images/bigcup.png">
+                                                    <h3>{{ finalMatch.winner_id == finalMatch.player1_id ? finalMatch.player1.title : finalMatch.player2.title }}</h3>
+                                                    <div style="height: 120px"></div>
+                                                </td>
+                                                <td>
+                                                    <h4>{{ lastMatch.winner_id == lastMatch.player1_id ? lastMatch.player1.title : lastMatch.player2.title }}</h4>
+                                                    <div style="height: 40px"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                             <!--<pre>{{ matches | json_encode() }}</pre>-->
-                            {% set lastMatch = matches|last %}
-                            {% set finalMatch = matches[matches|length - 2] %}
                             {% include 'matches.html.twig' %}
                         </div>
                     {% endif %}

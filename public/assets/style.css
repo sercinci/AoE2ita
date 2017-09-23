@@ -753,8 +753,11 @@ table.topTournament {
     margin-right: 30px;
 }
 
+.teamMembersContainerLeft > table {
+    float: right;
+}
+
 .teamMembersContainerRight {
-    float: left;
     margin-left: 30px;
 }
 
@@ -819,8 +822,73 @@ table.topTournament {
     text-align: center;
 }
 
-table.adminList td.pointer {
+table.adminList td.pointer, .points table td > span{
     cursor: url('aoe2hand_1_37x37.png'), pointer;
+}
+
+.podiumContainer {
+    border-top: 1px solid #95989A;
+    border-bottom: 1px solid #95989A;
+    margin-top: 20px;
+    padding: 80px 40px;
+}
+
+.points h4 {
+    text-align: center;
+}
+
+.points table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+}
+
+.points table tr, .podium table tr {
+    cursor: default;
+}
+
+.points table td, .podium table td {
+    border: none;
+}
+
+.points .score, .crown {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.crown > img {
+    width: 50px;
+}
+
+.podium {
+    min-height: 250px;
+    border-left: 1px solid #95989A;
+    position: relative;
+}
+
+.podium table {
+    border-collapse: separate;
+    border-spacing: 0px 0px;
+    width: auto;
+    text-align: center;
+    margin-left: 70px;
+    position: absolute;
+    bottom: 0px;
+}
+
+.podium table td {
+    width: 100px;
+    vertical-align: bottom;
+}
+
+.podium table td h3 {
+    text-transform: uppercase;
+    margin-top: 0px;
+}
+
+.podium table td div {
+    background-color: #95989A;
 }
 
 /*========== User card */
