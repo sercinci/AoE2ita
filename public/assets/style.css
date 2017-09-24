@@ -315,10 +315,12 @@ nav #steamLogin {
 /*========== Footer */
 footer {
     padding: 20px;
+    text-align: center;
 }
 
 .socialFooter {
     text-align: center;
+    margin-bottom: 10px;
 }
 
 /*========== Success */
@@ -420,6 +422,7 @@ section.articles {
     padding: 0 25px;
     border: 1px solid #95989A;
     background-color: #232323;
+    height: 300px;
 }
 
 /*========== Tournaments */

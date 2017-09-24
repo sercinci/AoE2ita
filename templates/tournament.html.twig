@@ -2,11 +2,12 @@
 
 {% block title %}{{tournament.title}} - AoE2ita{% endblock %}
 {% block meta %}
-    {{ parent() }}
     <meta name="description" content="{{tournament.description}}" />
     <meta property="og:url"           content="https://aoe2ita.tk/tournaments/{{tournament.id}}" />
     <meta property="og:title"         content="{{tournament.title}} - AoE2ita" />
     <meta property="og:description"   content="{{tournament.description}}" />
+    <meta name="twitter:title" content="{{tournament.title}} - AoE2ita" />
+        <meta name="twitter:description" content="{{tournament.description}}" />
 {% endblock %}
 {% block content %}
     {% include 'menu.html.twig' %}
@@ -17,12 +18,7 @@
                     <a href="{{ path_for('new_tournament') }}">Crea torneo</a>
                 </div>
                 <div class="text">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Iscriviti al torneo e attendi che tutti i posti siano occupati. Nei tornei a squadre casuali conoscerai i tuoi compagni di squadra all'avvio degli incontri. Sulla card di ogni giocatore potrai vedere le sue statistiche di gioco e sulla piattaforma. Inoltre troverai lì il link per il suo profilo di Steam, dove potrai contattarlo per organizzarvi con le partite. Qualsiasi dubbio, suggerimento o richiesta di implementazione che desideri comunicarci scrivici attraverso il <i>Feedback</i> in fondo alla pagina.</p>
                 </div>
                 <div class="profile">
                     <div class="pure-u-3-5">

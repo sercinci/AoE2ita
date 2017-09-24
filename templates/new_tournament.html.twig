@@ -2,11 +2,12 @@
 
 {% block title %}Crea torneo - AoE2ita{% endblock %}
 {% block meta %}
-    {{ parent() }}
     <meta name="description" content="Crea il tuo torneo stabilendo numero di giocatori, squadre, classifica e regolamento." />
     <meta property="og:url"           content="https://aoe2ita.tk/tournaments/new" />
     <meta property="og:title"         content="Crea torneo - AoE2ita" />
     <meta property="og:description"   content="Crea il tuo torneo stabilendo numero di giocatori, squadre, classifica e regolamento." />
+    <meta name="twitter:title" content="Crea torneo - AoE2ita" />
+    <meta name="twitter:description" content="Crea il tuo torneo stabilendo numero di giocatori, squadre, classifica e regolamento." />
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
@@ -21,12 +22,7 @@
                     <a href="{{ path_for('new_tournament') }}">Crea torneo</a>
                 </div>
                 <div class="text">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Sei nella fase di creazione del torneo dove risiedono attualmente alcune opzioni per indicare la tipologia di partite che si vogliono svolgere. Ti consigliamo di sfruttare il campo descrizione per specificare tutte le impostazioni e regole di gioco che desideri vengano seguite per le partite. Una volta cliccato su <i>Crea</i> attendi che venga effettuata la ricarica automatica della pagina (potrebbe metterci qualche secondo). Qualsiasi dubbio, suggerimento o richiesta di implementazione che desideri comunicarci scrivici attraverso il <i>Feedback</i> in fondo alla pagina.</p>
                 </div>
                 <div class="profile">
                     <div class="pure-u-3-5">
@@ -143,12 +139,7 @@
                     </div><!--
                     --><div class="pure-u-1 pure-u-md-2-5">
                         <div class="formText">
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                            proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                            <p>Allo stato attuale solo gli amministratori della piattaforma possono modificare i tornei. Se ti accorgi di aver fatto un errore, elimina il torneo e ricrealo. Ricorda che sei il responsabile del torneo e dovrai occuparti di tutti gli aspetti organizzativi relativo ad esso, come il contattare i giocatori iscritti e comunicare agli amministratori della piattaforma eventuali problemi o irregolarità. Ricorda inoltre che la piattaforma è nella sua prima fase di test ed utilizzo, quindi se qualcosa non funziona o ritieni necessarie alcune funzioni aggiuntive non esitare a scriverci.</p>
                             <div class="spacer"></div>
                             <button id="createButton" onclick="submitForm()" type="button" class="pure-button create">Crea</button>
                         </div>
