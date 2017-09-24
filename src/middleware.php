@@ -11,8 +11,8 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
         $container["jwt"] = $arg["decoded"];
     },
     "error" => function($req, $res, $arg) {
-        if(strpos($_SERVER["HTTP_USER_AGENT"], "facebookexternalhit/") !== false || strpos($_SERVER["HTTP_USER_AGENT"], "Facebot") !== false) {
-             return $next($req, $res, $arg);
+        if(strpos($_SERVER["HTTP_USER_AGENT"], "facebookexternalhit/") !== false || strpos($_SERVER["HTTP_USER_AGENT"], "Facebot") !== false) { //da capire come fare
+            return $res->withRedirect('/fb' . $req->getPath(), 200);
         } else {
             return $res->withRedirect('/?auth=false', 401);
         }

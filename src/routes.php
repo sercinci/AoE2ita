@@ -104,7 +104,7 @@ $app->get('/login',
     ViewCtrl::class . ':showLogin')->setName('login');
 
 /**
- * GET /tournaments/{id}
+ * GET /tournaments
  */
 $app->get('/tournaments', 
     ViewCtrl::class . ':showTournaments')->setName('tournaments');
@@ -134,3 +134,23 @@ $app->get('/tournaments/{id}',
  */
 $app->post('/feedback', 
     FeedbackCtrl::class . ':feedbackText');
+
+//== SOCIAL PRIVATE ROUTES
+
+/**
+ * GET /fb/tournaments
+ */
+$app->get('/fb/tournaments', 
+    ViewCtrl::class . ':showFbTournaments');
+
+/**
+ * GET /tournaments/new
+ */
+$app->get('/fb/tournaments/new', 
+    ViewCtrl::class . ':showFbNewTournament');
+
+/**
+ * GET /tournaments/{id}
+ */
+$app->get('/fb/tournaments/{id}', 
+    ViewCtrl::class . ':showFbTournament');

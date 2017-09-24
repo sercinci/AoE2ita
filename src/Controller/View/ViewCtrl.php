@@ -175,4 +175,12 @@ class ViewCtrl extends BaseCtrl
             return $res->withJson($resData, 404); //pagina 404 da fare!
         }
     }
+
+    public function showFbTournament($req, $res, $arg)
+    {
+        $tournament = Tournament::find($arg['id']);
+        return $this->view->render($res, 'social.html.twig', [
+            'tournament' => $tournament
+        ]);
+    }
 }
