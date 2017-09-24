@@ -179,8 +179,32 @@ class ViewCtrl extends BaseCtrl
     public function showFbTournament($req, $res, $arg)
     {
         $tournament = Tournament::find($arg['id']);
-        return $this->view->render($res, 'social.html.twig', [
+        return $this->view->render($res, 'social_tournament.html.twig', [
             'tournament' => $tournament
+        ]);
+    }
+
+    public function showFbNewTournament($req, $res, $arg)
+    {
+        $title = 'Crea torneo';
+        $description = 'Crea il tuo torneo stabilendo numero di giocatori, squadre, classifica e regolamento.';
+        $path = 'tournaments/new';
+        return $this->view->render($res, 'social.html.twig', [
+            'title' => $title,
+            'description' => $description,
+            'path' => $path
+        ]);
+    }
+
+    public function showFbTournaments($req, $res, $arg)
+    {
+        $title = 'Tornei';
+        $description = 'Cerca un torneo a cui partecipare o controlla il progresso di quelli in cui stai giocando.';
+        $path = 'tournaments';
+        return $this->view->render($res, 'social.html.twig', [
+            'title' => $title,
+            'description' => $description,
+            'path' => $path
         ]);
     }
 }
