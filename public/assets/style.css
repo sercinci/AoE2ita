@@ -355,7 +355,7 @@ section.container {
 }
 
 .firstTile {
-    background-image: url("images/aoe1.png");
+    background-image: url("images/aoe1.jpg");
 }
 
 .secondTile {
@@ -375,7 +375,7 @@ section.container {
     background-image: url("images/header.jpg");
     background-repeat: no-repeat;
     background-size: cover;
-    background-position-y: -480px;
+    background-position-y: -150px;
     border-bottom: 1px solid #8a7522;
 }
 
@@ -672,7 +672,8 @@ button.create {
 }
 
 .tournamentDetail table td.fixLength {
-    width: 15px;
+    width: 20px;
+    padding: 5px 5px 0px 5px;
 }
 
 .tournamentTable tbody > tr.notClick, .tournamentTable tbody td.notClick {
@@ -719,6 +720,14 @@ table.adminList tr {
 
 .joinable {
     background-color: rgba(35, 107, 27, 0.47);
+}
+
+.leaveable {
+    background-color: rgba(107, 27, 27, 0.47);
+}
+
+.joinable > img, .leaveable > img {
+    width: 100%;
 }
 
 .fullHeight {
@@ -816,7 +825,7 @@ table.topTournament {
 }
 
 .redButton {
-    background-color: rgba(128, 1, 1, 0.47);
+    background-color: rgba(107, 27, 27, 0.47);
 }
 
 .refreshButton {
