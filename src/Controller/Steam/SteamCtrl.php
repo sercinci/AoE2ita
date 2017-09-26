@@ -108,9 +108,9 @@ class SteamCtrl extends BaseCtrl
         $user->avatar = $profile->photoURL;
         $user->steam_id = $profile->identifier;
         $stats = $this->stats($user->steam_id, $this->hybridConfig['Steam']['keys']['secret']);
-        $user->mmr_dm = $stats['mmr_dm'];
-        $user->mmr_rm = $stats['mmr_rm'];
-        $user->games = $stats['games'];
+        $user->mmr_dm = $stats['mmr_dm'] ? $stats['mmr_dm'] : 1600;
+        $user->mmr_rm = $stats['mmr_rm'] ? $stats['mmr_rm'] : 1600;
+        $user->games = $stats['games'] ? $stats['games'] : 0;
         if ($user->save()) {
             $this->logger->info('Social signup successful: ' . $user->username . ' - ' . $user->email);
             return $user;

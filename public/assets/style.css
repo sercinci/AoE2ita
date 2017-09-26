@@ -1,4 +1,15 @@
 /*====================== AoE2ita CSS */
+@font-face {
+    font-family: Spiegel;
+    src: url(/assets/fonts/Spiegel Regular.ttf);
+}
+@font-face {
+    font-family: Constantia;
+    src: url(/assets/fonts/Constantia.ttf);
+}
+html, body, .pure-g, .pure-g [class*=pure-u] {
+    font-family: Spiegel,Georgia,serif;
+}
 /*========== Global */
 html, body {
     background-color: #232323;
@@ -21,18 +32,22 @@ a:hover, button:hover, .tournamentTable tbody > tr, .noUi-handle:hover, select:h
 h1 {
     color: #FFFFFF;
     text-transform: uppercase;
+    font-family: Constantia,Georgia,serif;
 }
 
 h3, h2, strong {
     color: #E8BA03;
+    font-family: Constantia,Georgia,serif;
 }
 
 h4 {
     text-transform: uppercase;
+    font-family: Constantia,Georgia,serif;
 }
 
 thead {
     border: 1px solid #8a7522;
+    font-family: Constantia,Georgia,serif;
 }
 
 div.spacer {
@@ -46,6 +61,7 @@ div.spacer {
     border-radius: 8px;
     text-transform: uppercase;
     padding: 0.5em 1.5em;
+    font-family: Constantia,Georgia,serif;
 }
 
 table {
@@ -64,7 +80,7 @@ th {
 
 tbody > tr {
     background-color: #545454;
-    opacity: 0.44;
+    /*opacity: 0.44;*/
     /*border-bottom: 2px solid #232323;*/
 }
 
@@ -306,6 +322,7 @@ nav #steamLogin {
     text-transform: uppercase;
     font-size: 14pt;
     font-weight: bold;
+    font-family: Constantia,Georgia,serif;
 }
 
 .pure-menu-active>.pure-menu-link, .pure-menu-link:focus, .pure-menu-link:hover {
@@ -478,6 +495,7 @@ section.tournaments {
     text-align: center;
     color: #232323;
     text-decoration: none;
+    font-family: Constantia,Georgia,serif;
 }
 
 .sidebar .text, .details .content {

@@ -1,4 +1,25 @@
- document.addEventListener('DOMContentLoaded', function() {
+var wololo = `%c
+                                   ***                ***                
+                                   ***                ***               
+**                                  **                 **               
+**                                  **                 **               
+ **    ***    ****        ****      **       ****      **       ****    
+  **    ***     ***  *   * ***  *   **      * ***  *   **      * ***  * 
+  **     ***     ****   *   ****    **     *   ****    **     *   ****  
+  **      **      **   **    **     **    **    **     **    **    **   
+  **      **      **   **    **     **    **    **     **    **    **   
+  **      **      **   **    **     **    **    **     **    **    **   
+  **      **      **   **    **     **    **    **     **    **    **   
+  **      **      *    **    **     **    **    **     **    **    **   
+   ******* *******      ******      **     ******      **     ******    
+    *****   *****        ****       *** *   ****       *** *   ****     
+                                     ***                ***             
+`;
+console.log(wololo, "color:#0064FF;font-weight:bold;");
+console.log("Qui non sono ammessi Sabotatori!");
+console.log("Vuoi aiutarci a sviluppare codice e design? Contattaci attraverso il Feedback o su Facebook.")
+
+document.addEventListener('DOMContentLoaded', function() {
         var params = (new URL(document.location)).searchParams;
         if (params.get("auth") === 'false') {
             uglipop({
