@@ -76,6 +76,7 @@ th {
     border-bottom: none !important;
     padding-top: 15px !important;
     padding-bottom: 15px !important;
+    text-transform: uppercase;
 }
 
 tbody > tr {
