@@ -49,6 +49,7 @@ function submitFeedback() {
         alert('Non vorrai mandarci mica un testo vuoto?');
         return false;
     }
+    loading();
     var button = document.querySelector('#uglipop_popbox #feedbackModalButton');
     button.disabled = true;
     button.innerHTML = "Inviando...";
@@ -94,4 +95,9 @@ function closeModal(){
     document.getElementById('uglipop_overlay_wrapper').style.display = 'none';
     document.getElementById('uglipop_overlay').style.display = 'none';
     document.getElementById('uglipop_content_fixed').style.display = 'none';
+}
+
+function loading(){
+    document.getElementsByTagName('body')[0].style.cursor = 'progress';
+    return;
 }

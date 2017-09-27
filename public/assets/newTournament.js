@@ -111,6 +111,7 @@ function submitForm() {
     var button = document.getElementById('createButton');
     button.disabled = true;
     button.innerHTML = "Creando...";
+    loading();
     tinymce.get("desc").save();
     fetch('/tournaments/new', {
         method: 'POST',

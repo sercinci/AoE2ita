@@ -3,6 +3,7 @@ function joinTeam(tId, teamId) {
     for (var i = 0; i < buttons.length; i++) {
         buttons[i].disabled = true; //da vedere quando grafichiamo se rimane un button
     }
+    loading();
   fetch('/tournaments/'+tId+'/team/'+teamId, {
     method: 'PUT',
     //body: new FormData(form),
@@ -20,6 +21,7 @@ function joinTeam(tId, teamId) {
 }
 
 function joinRandomTeam(tId) {
+    loading();
   fetch('/tournaments/'+tId+'/randomteam', {
     method: 'PUT',
     //body: new FormData(form),
@@ -37,6 +39,7 @@ function joinRandomTeam(tId) {
 }
 
 function leaveTeam(tId, mmr) {
+    loading();
   fetch('/tournaments/leave/'+tId+'/'+mmr, {
     method: 'POST',
     //body: new FormData(form),
@@ -54,6 +57,7 @@ function leaveTeam(tId, mmr) {
 }
 
 function startTournament(tId) {
+    loading();
   fetch('/tournaments/'+tId+'/start', {
     method: 'POST',
     //body: new FormData(form),
@@ -71,6 +75,7 @@ function startTournament(tId) {
 }
 
 function matchScore(tId, matchId, winnerId, scoreOne, scoreTwo) {
+    loading();
     var data = new FormData();
     data.append('teamId', winnerId);
     data.append('one', scoreOne);
@@ -92,6 +97,7 @@ function matchScore(tId, matchId, winnerId, scoreOne, scoreTwo) {
 }
 
 function deleteTournament(tId) {
+    loading();
   fetch('/tournaments/'+tId+'/delete', {
     method: 'DELETE',
     //body: new FormData(form),
@@ -109,6 +115,7 @@ function deleteTournament(tId) {
 }
 
 function closeTournament(tId, firstId, secondId, thirdId) {
+    loading();
     var data = new FormData();
     data.append('first', firstId);
     data.append('second', secondId);

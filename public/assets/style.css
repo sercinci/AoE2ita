@@ -622,6 +622,7 @@ button.create {
     background-color: #232323;
     color: #95989A;
     position: relative;
+    overflow: hidden;
 }
 
 .editBar {
@@ -640,9 +641,11 @@ button.create {
 
 .description {
     background-color: #000000;
-    border: 1px solid #95989A;
+    border-right: 1px solid #95989A;
     border-bottom: none;
     padding: 20px 20px;
+    margin-bottom: -3000px;
+    padding-bottom: 3000px;
 }
 
 .description > h4 {
