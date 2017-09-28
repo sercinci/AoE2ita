@@ -32,7 +32,7 @@
                     <div class="spacer"></div>
                 </div>
             </div>
-            <div class="pure-u-1 pure-u-md-1-2">
+            <div class="randomPlayerList">
                 <table>
                     {% for team in tournament.teams %}
                         {% for member in team.members %}
@@ -48,7 +48,6 @@
                     {% endfor %}
                 </table>
             </div>
-            <div class="pure-u-1 pure-u-md-1-2"></div>
         {% else %}
             {% for team in tournament.teams %}<div class="pure-u-1 pure-u-md-1-2">
                 {% set teamTitle = team.title|split(' ') %}

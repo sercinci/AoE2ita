@@ -11,3 +11,15 @@
         </div>
     {% endif %}
 </nav>
+
+<nav class="mobileNav">
+    <a href="/" class="icon"><img src="/assets/images/logo.png" alt="aoe2ita"></a>
+    <button type="button" class="burger pure-button" onclick="toggleMenu()"><div></div></button>
+    <ul id="mobileMenu" class="pure-menu-list" style="display: none;">
+        <li class="pure-menu-item"><a href="#" class="pure-menu-link">Guide</a></li>
+        <li class="pure-menu-item"><a href="{{ path_for('tournaments') }}" class="pure-menu-link">Tornei</a></li>
+        {% if user == false %}
+            <li class="pure-menu-item"><a href="{{ path_for('registration') }}"><img src="/assets/images/steam.png" alt="login"></a></li>
+        {% endif %}
+    </ul>
+</nav>

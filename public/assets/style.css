@@ -336,6 +336,10 @@ nav #steamLogin {
     background-color: transparent;
 }
 
+nav.mobileNav {
+    display: none;
+}
+
 /*========== Footer */
 footer {
     padding: 20px;
@@ -941,6 +945,12 @@ table.adminList td.pointer, .points table td > span{
     background-color: #95989A;
 }
 
+.randomPlayerList > table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 200px;
+}
+
 /*========== User card */
 .userCard {
     color: #95989A;
@@ -1107,4 +1117,90 @@ table.adminList td.pointer, .points table td > span{
 
 .branch .middle {
     border-bottom: 1px solid #95989A;
+}
+
+
+/*========== MEDIA QUERY */
+@media screen and (max-width: 48em) {
+    h1 {
+        font-size: 1.5em;
+    }
+    .headerTiles {
+        display: none;
+    }
+
+    .headerImage {
+        height: 100px;
+        background-position: -40px 0;
+    }
+
+    section.main {
+        padding-top: 15px;
+    }
+
+    section.main .text {
+        display: none;
+    }
+
+    section.articles {
+        background-position: -300px 0px;
+    }
+
+    .articleTile {
+        height: auto;
+    }
+
+    .modalTheme, .descriptionModalTheme {
+        width: 270px;
+        padding: 10px;
+    }
+    
+    nav.mainNav {
+        display: none;
+    }
+
+    nav.mobileNav {
+        display: block;
+        text-align: center;
+        position: relative;
+        height: 60px;
+    }
+
+    nav.mobileNav .icon {
+        width: 100%;
+        height: 60px;
+        position: relative;
+        z-index: 5;
+    }
+
+    nav.mobileNav .icon > img {
+        height: 80px;
+    }
+
+    nav.mobileNav > ul {
+        top: -24px;
+        padding-top: 24px;
+        background-color: #232323;
+        border-bottom: 1px solid #8a7522;
+    }
+
+    nav.mobileNav > ul > li {
+        /*display: none;*/
+    }
+
+    nav.mobileNav > .burger {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        height: 40px;
+        padding: 8px 8px 0 8px;
+    }
+
+    nav.mobileNav > .burger > div {
+        background-image: url(/assets/images/menu.png);
+        width: 30px;
+        height: 26px;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
 }

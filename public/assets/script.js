@@ -101,3 +101,8 @@ function loading(){
     document.getElementsByTagName('body')[0].style.cursor = 'progress';
     return;
 }
+
+function toggleMenu(){
+    var menu = document.getElementById('mobileMenu');
+    menu.style.display == 'none' ? menu.style.display = 'block' : menu.style.display = 'none';
+}
