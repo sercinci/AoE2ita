@@ -146,20 +146,24 @@ class SteamCtrl extends BaseCtrl
 
     public function steamStatus($req, $res, $arg)
     {
-        $curl = curl_init();
-        curl_setopt_array($curl, array(
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_URL => 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $this->hybridConfig['Steam']['keys']['secret'] . '&steamids=' . $arg['id']
-        ));
-        $resp = json_decode(curl_exec($curl));
-        $err = curl_error($curl);
-        curl_close($curl);
-        if ($err) {
-            $this->logger->error($err);
-            return $res->withStatus(500);
+        $user = User::where('steam_id', $arg['id'])->first();
+        if ($user->updated_at < date('Y-m-d H:i:s',time()-150)) {
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_URL => 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $this->hybridConfig['Steam']['keys']['secret'] . '&steamids=' . $arg['id']
+            ));
+            $resp = json_decode(curl_exec($curl));
+            $err = curl_error($curl);
+            curl_close($curl);
+            if ($err) {
+                $this->logger->error($err);
+                return $res->withStatus(500);
+            }
+            $user->steam_state = $resp->response->players[0]->personastate;
+            $user->save;
+            $this->logger->info('State requested: ' . $user->steam_state);
         }
-        //implementare uno storage su db se ci sono richieste eccessive.
-        $this->logger->info('State requested: ' . $arg['id']);
-        return $res->withJson($resp->response->players[0]->personastate);
+        return $res->withJson($user->steam_state);
     }
 }
