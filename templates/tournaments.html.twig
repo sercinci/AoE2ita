@@ -51,7 +51,7 @@
                 </div>
                 <div class="details">
                     <div class="title">
-                        Tornei in corso
+                        Tornei avviati
                     </div>
                     <div class="content">
                         {% for ut in user.teams if ut.tournament %}
@@ -77,7 +77,6 @@
                         <th>Rank</th>
                         <th>Classifica</th>
                         <th>Host</th>
-                        <th>Squadre casuali</th>
                         <th>Partecipanti</th>
                     </thead>
                     <tbody>
@@ -88,8 +87,7 @@
                                 <td>{{ t.rank_min }} - {{ t.rank_max }}</td>
                                 <td>{{ t.rank }}</td>
                                 <td>{{ t.host }}</td>
-                                <td>{{ t.random_team }}</td>
-                                <td>{{ t.joined }}/{{ t.team_members * t.n_teams }} {% if t.subscribed %}&check;{% endif %}</td>
+                                <td style="position: relative; text-align: center;"><span style="position: {{ t.random_team == 1 ? 'absolute' : 'static' }}; left: 10px;">{{ t.joined }}/{{ t.team_members * t.n_teams }}</span> {{ t.random_team == 1 ? 'random' : '' }} {% if t.subscribed %}<!--<img style="width: 14px; float: right" src="/assets/images/tick.png" alt="subscribed">--><span style="position: absolute; right: 10px;">&check;</span>{% endif %}</td>
                             </tr>
                         {% endfor %}
                     </tbody>

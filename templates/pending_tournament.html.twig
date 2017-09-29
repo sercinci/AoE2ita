@@ -41,7 +41,7 @@
                                 {% if member.id == user.id %}
                                     <td class="fixLength leaveable" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? member.mmr_dm : member.mmr_rm }});"><img src="/assets/images/leave.png"></td>
                                 {% else %}
-                                    <td class="fixLength notClick"></td>
+                                    <td class="fixLength notClick steamStatus"><span id='light-{{ user.steam_id }}' class="{{user.steam_state != 0 ? 'on' : ''}}">&#9679;</span></td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
@@ -63,14 +63,14 @@
                                     {% if team.members[i].id == user.id %}
                                         <td class="fixLength leaveable" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? team.members[i].mmr_dm : team.members[i].mmr_rm }});"><img src="/assets/images/leave.png"></td>
                                     {% else %}
-                                        <td class="fixLength notClick"></td>
+                                        <td class="fixLength notClick steamStatus"><span id='light-{{ user.steam_id }}' class="{{user.steam_state != 0 ? 'on' : ''}}">&#9679;</span></td>
                                     {% endif %}
                                 </tr>
                             {% else %}
                                 {% if joined %}
                                     <tr class="notClick">
                                         <td>Slot libero</td>
-                                        <td class="fixLength"></td>
+                                        <td class="fixLength joinable"></td>
                                     </tr>
                                 {% else %}
                                     <tr onclick="joinTeam({{tournament.id}},{{team.id}});">
