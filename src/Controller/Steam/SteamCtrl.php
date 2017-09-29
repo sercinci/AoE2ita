@@ -161,7 +161,7 @@ class SteamCtrl extends BaseCtrl
                 return $res->withStatus(500);
             }
             $user->steam_state = $resp->response->players[0]->personastate;
-            $user->save;
+            $user->save();
             $this->logger->info('State requested: ' . $user->steam_state);
         }
         return $res->withJson($user->steam_state);
