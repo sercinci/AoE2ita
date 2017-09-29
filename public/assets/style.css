@@ -1017,12 +1017,12 @@ table.adminList td.pointer, .points table td > span{
     margin: 5px;
 }
 
-.steamStatus span[id^='light-'] {
+.steamStatus span[class^='light-'] {
     font-size: 14px;
     color: #4A4A4A;
 }
 
-.steamStatus span[id^='light-'].on {
+.steamStatus span[class^='light-'].on {
     color: #00B84C;
 }
 

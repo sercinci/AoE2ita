@@ -139,7 +139,10 @@ function closeTournament(tId, firstId, secondId, thirdId) {
 function renderSteamStatus(state, id) {
     if (state != 0) {
         document.getElementById('stText-'+id).innerHTML = 'online';
-        document.getElementById('light-'+id).classList.add('on');
+        var light = document.getElementsByClassName('light-'+id);
+        for (var i = 0; i < light.length; i++) {
+          light[i].classList.add('on');
+        }
     }
 }
 

@@ -41,7 +41,7 @@
                                 {% if member.id == user.id %}
                                     <td class="fixLength leaveable" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? member.mmr_dm : member.mmr_rm }});"><img src="/assets/images/leave.png"></td>
                                 {% else %}
-                                    <td class="fixLength notClick steamStatus"><span id='light-{{ member.steam_id }}' class="{{member.steam_state != 0 ? 'on' : ''}}" style="display: block; text-align: center; height: 19px;">&#9679;</span></td>
+                                    <td class="fixLength notClick steamStatus"><span class="light-{{ member.steam_id }} {{member.steam_state != 0 ? 'on' : ''}}" style="display: block; text-align: center; height: 19px;">&#9679;</span></td>
                                 {% endif %}
                             </tr>
                         {% endfor %}
@@ -63,7 +63,7 @@
                                     {% if team.members[i].id == user.id %}
                                         <td class="fixLength leaveable" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? team.members[i].mmr_dm : team.members[i].mmr_rm }});"><img src="/assets/images/leave.png"></td>
                                     {% else %}
-                                        <td class="fixLength notClick steamStatus"><span id='light-{{ member.steam_id }}' class="{{member.steam_state != 0 ? 'on' : ''}}" style="display: block; text-align: center; height: 19px;">&#9679;</span></td>
+                                        <td class="fixLength notClick steamStatus"><span class="light-{{ team.members[i].steam_id }} {{team.members[i].steam_state != 0 ? 'on' : ''}}" style="display: block; text-align: center; height: 19px;">&#9679;</span></td>
                                     {% endif %}
                                 </tr>
                             {% else %}
