@@ -54,13 +54,16 @@
                         Tornei avviati
                     </div>
                     <div class="content">
-                        {% for ut in user.teams if ut.tournament %}
-                            <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
-                                {{ ut.tournament.title }} 
-                                {% if ut.tournament.status == 'complete' %}
-                                    <span>&#128081;</span>
-                                {% endif %}
-                            </a><br>
+                        {% for ut in user.teams if ut['tournament'] is not null %}
+                            <div>
+                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
+                                    {{ ut.tournament.title }}
+                                    {% if ut.tournament.status == 'complete' %}
+                                        <img src="/assets/images/end.png">
+                                    {% endif %}
+                                </a>
+                                
+                            </div>
                         {% else %}
                             <span>Non hai tornei in corso</span>
                         {% endfor %}
@@ -76,9 +79,9 @@
                 <div class="tournamentDetailContainer">
                     {% if tournament.user_id == user.id or user.role == 'admin' %}
                         <div class="formHead editBar">
-                            <span>Amministra torneo</span>
+                            <span>Sei amministratore di questo torneo</span>
                             {% if tournament.status != 'complete' %}
-                                <a href="" onclick="deleteTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Eliminando...';">Elimina torneo</a>
+                                <a href="" onclick="deleteTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Eliminando...';"><img src="/assets/images/x.png">Elimina torneo</a>
                             {% endif %}
                         </div>
                     {% endif %}

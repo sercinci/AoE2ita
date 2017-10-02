@@ -54,13 +54,16 @@
                         Tornei avviati
                     </div>
                     <div class="content">
-                        {% for ut in user.teams if ut.tournament %}
-                            <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
-                                {{ ut.tournament.title }} 
-                                {% if ut.tournament.status == 'complete' %}
-                                    <span>&#128081;</span>
-                                {% endif %}
-                            </a><br>
+                        {% for ut in user.teams if ut['tournament'] is not null %}
+                            <div>
+                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
+                                    {{ ut.tournament.title }}
+                                    {% if ut.tournament.status == 'complete' %}
+                                        <img src="/assets/images/end.png">
+                                    {% endif %}
+                                </a>
+                                
+                            </div>
                         {% else %}
                             <span>Non hai tornei in corso</span>
                         {% endfor %}
@@ -80,16 +83,18 @@
                         <th>Partecipanti</th>
                     </thead>
                     <tbody>
+                        <tr class="tableSpacer"></tr>
                         {% for t in tournaments %}
-                            <tr onclick="loadTorunament({{ t.id }})">
+                            <tr class="separatorBorders" onclick="loadTorunament({{ t.id }})">
                                 <td>{{ t.title }}</td>
                                 <td>{{ t.type }}</td>
                                 <td>{{ t.rank_min }} - {{ t.rank_max }}</td>
                                 <td>{{ t.rank }}</td>
                                 <td>{{ t.host }}</td>
-                                <td style="position: relative; text-align: center;"><span style="position: {{ t.random_team == 1 ? 'absolute' : 'static' }}; left: 10px;">{{ t.joined }}/{{ t.team_members * t.n_teams }}</span> {{ t.random_team == 1 ? 'random' : '' }} {% if t.subscribed %}<!--<img style="width: 14px; float: right" src="/assets/images/tick.png" alt="subscribed">--><span style="position: absolute; right: 10px;">&check;</span>{% endif %}</td>
+                                <td style="position: relative; text-align: center;"><span style="position: {{ t.random_team == 1 ? 'absolute' : 'static' }}; left: 10px;">{{ t.joined }}/{{ t.team_members * t.n_teams }}</span> {{ t.random_team == 1 ? 'random' : '' }} {% if t.subscribed %}<!--<img style="width: 14px; float: right" src="/assets/images/tick.png" alt="subscribed">--><span style="position: absolute; right: 10px; color: #319026">&check;</span>{% endif %}</td>
                             </tr>
                         {% endfor %}
+                        <tr class="tableSpacer"></tr>
                     </tbody>
                 </table>
             </div>
