@@ -572,6 +572,10 @@ section.tournaments {
     justify-content: space-between;
 }
 
+.profile .rank > span > span {
+    color: #E8BA03;
+}
+
 .score > img {
     width: 18px;
     margin-left: 2px;
