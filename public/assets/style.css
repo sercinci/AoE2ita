@@ -8,7 +8,7 @@
     src: url(/assets/fonts/Constantia.ttf);
 }
 html, body, .pure-g, .pure-g [class*=pure-u] {
-    font-family: Spiegel,Georgia,serif;
+    font-family: Spiegel,Georgia,serif !important;
 }
 /*========== Global */
 html, body {
