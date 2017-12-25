@@ -84,6 +84,16 @@
                     </thead>
                     <tbody>
                         <tr class="tableSpacer"></tr>
+                        <!-- torneo FeL -->
+                        <tr class="separatorBorders" onclick="loadTorunament({{ fel.id }})">
+                            <td>{{ fel.title }} <img style="width: 18px; float: right;" src="/assets/images/fel.png"></td>
+                            <td>{{ fel.type }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>{{ fel.host }}</td>
+                            <td style="position: relative; text-align: center;"><span style="position: {{ fel.random_team == 1 ? 'absolute' : 'static' }}; left: 10px;">{{ fel.joined }}/{{ fel.team_members * fel.n_teams }}</span> {{ fel.random_team == 1 ? 'random' : '' }} {% if fel.subscribed %}<!--<img style="width: 14px; float: right" src="/assets/images/tick.png" alt="subscribed">--><span style="position: absolute; right: 10px; color: #319026">&check;</span>{% endif %}</td>
+                        </tr>
+                        <!-- fine torneo FeL -->
                         {% for t in tournaments %}
                             <tr class="separatorBorders" onclick="loadTorunament({{ t.id }})">
                                 <td>{{ t.title }}</td>

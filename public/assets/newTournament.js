@@ -51,7 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             'min': [ 4 ],
             '33%': [ 8 ],
             '66%': [ 16 ],
-            'max': [ 32 ]
+            '80%': [ 32 ],
+            'max': [ 128 ]
         },
         format: {
             to: function ( value ) {

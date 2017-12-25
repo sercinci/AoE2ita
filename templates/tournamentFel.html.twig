@@ -1,0 +1,430 @@
+{% extends "layout.html.twig" %}
+
+{% block title %}{{tournament.title}} - AoE2ita{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{tournament.description}}" />
+    <meta property="og:url"           content="https://aoe2ita.net/tournaments/{{ tournament.id }}" />
+    <meta property="og:title"         content="{{tournament.title}} - AoE2ita" />
+    <meta property="og:description"   content="{{tournament.description}}" />
+    <meta name="twitter:title" content="{{tournament.title}} - AoE2ita" />
+    <meta name="twitter:description" content="{{tournament.description}}" />
+{% endblock %}
+{% block content %}
+    {% include 'menu.html.twig' %}
+    <section class="pure-g tournaments">
+        <div class="pure-u-1 pure-u-md-1-5">
+            <div class="sidebar">
+                <div class="bigButton">
+                    <a href="{{ path_for('tournaments') }}">Tornei</a>
+                </div>
+                <div class="text">
+                    <p>Iscriviti al torneo e attendi che tutti i posti siano occupati. Nei tornei a squadre casuali conoscerai i tuoi compagni di squadra all'avvio degli incontri. Sulla card di ogni giocatore potrai vedere le sue statistiche di gioco e sulla piattaforma. Inoltre troverai lì il link per il suo profilo di Steam, dove potrai contattarlo per organizzarvi con le partite. Qualsiasi dubbio, suggerimento o richiesta di implementazione che desideri comunicarci scrivici attraverso il <i>Feedback</i> in fondo alla pagina.</p>
+                </div>
+                <div class="profile">
+                    <div class="pure-u-3-5">
+                        <div class="pure-u-2-5">
+                            <div class="avatar">
+                                <a class="username" href='{{ user.profileurl }}' target='_blank'>
+                                    <img src="{{ user.avatar }}" alt="{{user.username}}">
+                                </a>
+                            </div>
+                        </div><!--
+                        --><div class="pure-u-3-5">
+                                <div class="user">
+                                    <a class="username" href='{{ user.profileurl }}' target='_blank'>{{user.username}}</a><br>
+                                    <a class="logout" href="{{ path_for('logout') }}">disconnetti</a>
+                                </div>
+                        </div>
+                        <div class="pure-u-1">
+                            <div class="rank">
+                                <span><span>DM:</span> {{ user.mmr_dm }}</span>
+                                <span><span>RM:</span> {{ user.mmr_rm }}</span>
+                            </div>
+                        </div>
+                    </div><!--
+                    --><div class="pure-u-2-5">
+                        <div class="score">
+                            <span>{{ user.first_position * 3 + user.second_position * 2 + user.third_position * 1 }}</span>
+                            <img src="/assets/images/cup.png" alt="score">
+                        </div>
+                    </div>
+                </div>
+                <div class="details">
+                    <div class="title">
+                        Tornei avviati
+                    </div>
+                    <div class="content">
+                        {% for ut in user.teams if ut['tournament'] is not null %}
+                            <div>
+                                <a href="{{ path_for('tournament', { 'id': ut.tournament.id }) }}">
+                                    {{ ut.tournament.title }}
+                                    {% if ut.tournament.status == 'complete' %}
+                                        <img src="/assets/images/end.png">
+                                    {% endif %}
+                                </a>
+                                
+                            </div>
+                        {% else %}
+                            <span>Non hai tornei in corso</span>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="pure-u-1 pure-u-md-4-5">
+            <div class="tournamentTable">
+                <div class="tournamentDetailTitle">
+                    <h2>{{tournament.title}}</h2>
+                </div>
+                <div class="tournamentDetailContainer">
+                    {% if tournament.user_id == user.id or user.role == 'admin' %}
+                        <div class="formHead editBar">
+                            <span>Sei amministratore di questo torneo</span>
+                            {% if tournament.status != 'complete' %}
+                                <a href="" onclick="deleteTournament({{tournament.id}}); this.disabled=true; this.innerHTML='Eliminando...';"><img src="/assets/images/x.png">Elimina torneo</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    
+                    <div class="pure-u-1 pure-u-md-1-3">
+    <div class="description">
+        {% if tournament.user_id == user.id or user.role == 'admin' %}
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+        {% endif %}
+        <h4>Descrizione</h4>
+        <div class="descriptionText" style="height: 100vh; overflow-y: auto">
+            <h3>Regolamento</h3>
+<p style="text-align: right;">&nbsp;</p>
+<p style="text-align: left;"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details">Per celebrare lo 1217esimo anniversario dell'inconoratione di Carlo Magno Feudalesimo e Libert&agrave; patrocina codesto torneo videoludico in honore dello Imperatore. <br /> Linee generali del regolamento:<br /> <br /> Il torneo verr&agrave; interamente disputato sulla versione HD Edition di Steam.</span></p>
+<p style="text-align: left;"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details">Per comunicare con i vari giocatori/organizzatori de<span class="text_exposed_show">l torneo si utilizzer&agrave; la piattaforma Discord [Potete usarlo tramite web: <a href="https://discord.gg/ZxBdtYh" target="_blank" rel="nofollow noopener" data-lynx-mode="async" data-lynx-uri="https://l.facebook.com/l.php?u=https%3A%2F%2Fdiscord.gg%2FZxBdtYh&amp;h=ATPCCMgIL1mdKxgchALVRi5AGbphl1adKs-_TfsYtazedmC5D6xWcObVoSPPNifZbm4v0nelrBa37wzsTNYnpNZHCXDjRKoIBqK9Hgb_69k1TnxvNQGDSBhbVt0WgBDmxbZYGGLOtuyCKg9MX4SxAoqw0cFknFuC7galdSI">https://discord.gg/ZxBdtYh</a> oppure applicazione].<br /> Ogni partita deve essere registrata. La partita poi deve essere caricata su Discord, nel canale dedicato al torneo. [Istruzioni disponibili pi&ugrave; avanti].<br /> Si d&agrave; per scontato che i gareggianti siano piuttosto disponibili nelle giornate del Torneo (almeno 1 ora al giorno).<br /> Si prega di arrivare in orario alle partite che di devono disputare. Salvo altre indicazioni, il ritardo tollerato senza preavviso &egrave; di massimo 30 min, dopodich&eacute; si proceder&agrave; alla squalifica del giocatore in fallo.</span></span></span></p>
+<p style="text-align: left;"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details"><span class="text_exposed_show">Organizzazione Torneo:<br /> <br /> Il torneo avr&agrave; inizio il 26 Dicembre e terminer&agrave; il 30 Dicembre (inclusi).<br /> Ci si pu&ograve; iscrivere fino a mezzanotte del 25 Dicembre. Alle 10.00 del 26 Dicembre verranno comunicati i turni.<br /> [1&deg; turno - 26 Dicembre] In base al numero di partecipanti, verranno organizzati dei sanguinosi tutti contro tutti dove passer&agrave; il turno l&rsquo;ultimo giocatore rimasto in vita. In totale passeranno al turno successivo 16 giocatori.<br /> [2&deg; turno - 27 Dicembre] <br /> Scontri 1 vs 1 ad eliminazione diretta. Passeranno al turno successivo 8 giocatori.<br /> [3&deg; turno - 28 Dicembre]<br /> In questa fase entreranno 4 giocatori esperti di Lesto, definiti &ldquo;Campioni&rdquo;. Passeranno al turno successivo 6 giocatori. <br /> [4&deg; turno - 29 Dicembre]<br /> In questa fase parteciperanno 2 giocatori altamente competitivi della comunit&agrave; Lesto, definiti &ldquo;Paladini&rdquo; <br /> Passeranno al turno successivo 4 giocatori.<br /> [5&deg; turno - 30 Dicembre]<br /> Semifinali e Finalissima verranno commentate in diretta su Twitch.<br /> <br /> Impostazioni da usare:<br /> Tipo Mappa: Mappa Casuale, Posizione: Arabia, Popolazione: 200, Difficolt&agrave;: Semplice, Dimensione Mappa: Piccola (eccetto per FFA), <br /> Condizioni Vittoria: Conquista, NESSUN TRATTATO, Partite NON Classificate. La partita deve essere registrata e poi il replay caricato su Discord. In caso di mancato replay l&rsquo;incontro verr&agrave; considerato nullo ed entrambi i giocatori verranno squalificati.<br /></span></span></span></p>
+<p style="text-align: left;"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details"><span class="text_exposed_show"><span class="_4n-j _3cht fsl" data-testid="event-permalink-details"><span class="text_exposed_show">Note aggiuntive:<br /> <br /> Durante il 1&deg; turno verr&agrave; usato esclusivamente il set base di gioco. <br /> Durante gli altri turni i giocatori possono mettersi d&rsquo;accordo se utilizzare o meno le espansioni. Tuttavia &egrave; altamente consigliato usare il gioco base se per caso uno dei giocatori possieda solamente il gioco base.<br /> Se la stabilit&agrave; della partita fosse troppo scarsa per giocare, o se uno dei contendenti dovesse crashare entro il quinto minuto di gioco, si pu&ograve; chiedere che la partita venga ridisputata.<br /> &gt;La regola si applica anche in caso di particolari situazioni di mappe con risorse<br /> buggate. <br /> &gt;Un giocatore, in norma, dovrebbe richiedere un rematch solo una volta per turno e <br /> deve essere avallato dai moderatori del torneo. In alcuni casi speciali (es. rematch con <br /> bug), i moderatori potrebbero decidere di concedere un ulteriore tentativo, prima di <br /> concedere la vittoria a tavolino.<br /><br /> Consigli vari:<br /> Il gioco &egrave; in sconto, approfittatene!<br /> Sul <a href="https://www.youtube.com/channel/UCkSJqIyO8m1xNijRiwh5CsQ" target="_blank" rel="nofollow noopener">canale Youtube di LESTO</a> sono disponibili delle guide. Vi consigliamo di guardarle. <br /> Se per voi non c&rsquo;&egrave; nessun problema nel farlo, sarebbe incentivato l&rsquo;acquisto di tutte le espansioni, per scongiurare problemi di dataset e scelta delle civilt&agrave;.</span></span></span></span></span></p>
+        </div>
+    </div>
+</div><!--
+--><div class="pure-u-1 pure-u-md-2-3">
+    <div class="tournamentDetail fullHeight">
+        {% if tournament.user_id == user.id or user.role == 'admin' %}
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+            <div class="spacer"></div>
+        {% endif %}
+        
+        {% if tournament.random_team == 1 %}
+            <div class="pure-u-1">
+                <div class="randomTournamentHead">
+                    <!--<p>Le squadre di questo torneo saranno composte da <span class="teamNumber"><span>{{ tournament.team_members }}</span></span> giocatori casuali.</p>-->
+                    {% if joined %}
+                        <span>Sei iscritto a questo torneo, attendi l'inizio per conoscere i tuoi avversari.</span>
+                    {% else %}
+                        <div class="spacer"></div>
+                        <button onclick="joinRandomTeam({{tournament.id}}); this.disabled=true; this.innerHTML='Entrando...';" class="pure-button"><span>Partecipa</span></button>
+                    {% endif %}
+                    <div class="spacer"></div>
+                </div>
+            </div>
+            <div class="randomPlayerList">
+                <table>
+                    {% for team in tournament.teams %}
+                        {% for member in team.members %}
+                            <tr>
+                                <td class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}" data-options="callback:steamStatus;" data-steam="{{member.steam_id}}">{{ member.username }}</td>
+                                {% if member.id == user.id %}
+                                    <td class="fixLength leaveable" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? member.mmr_dm : member.mmr_rm }});"><img src="/assets/images/leave.png"></td>
+                                {% else %}
+                                    <td class="fixLength notClick steamStatus"><!--<span class="light-{{ member.steam_id }} {{member.steam_state != 0 ? 'on' : ''}}" style="display: block; text-align: center; height: 19px;">&#9679;</span>--><img width="100%" src="/assets/images/user.png"></td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                </table>
+            </div>
+        {% else %}
+            {% for team in tournament.teams %}<div class="pure-u-1 pure-u-md-1-2">
+                {% set teamTitle = team.title|split(' ') %}
+                <div class="pure-u-1-3">
+                    <span class="teamName">{{ teamTitle[0] }}</span> <span class="teamNumber"><span>{{ teamTitle[1] }}</span></span>
+                </div><!--
+                --><div class="pure-u-2-3">
+                    <table>
+                        {% for i in 0..tournament.team_members - 1 %}
+                            {% if team.members[i] %}
+                                <tr>
+                                    <td class="userTooltip" title="{% include 'user_card.html.twig' with {'user': team.members[i]} only %}" data-options="callback:steamStatus;" data-steam="{{team.members[i].steam_id}}">{{ team.members[i].username }}</td>
+                                    {% if team.members[i].id == user.id %}
+                                        <td class="fixLength leaveable" onclick="leaveTeam({{team.id}},{{ tournament.rank == 'DM' ? team.members[i].mmr_dm : team.members[i].mmr_rm }});"><img src="/assets/images/leave.png"></td>
+                                    {% else %}
+                                        <td class="fixLength notClick steamStatus"><!--span class="light-{{ team.members[i].steam_id }} {{team.members[i].steam_state != 0 ? 'on' : ''}}" style="display: block; text-align: center; height: 19px;">&#9679;</span>--><img width="100%" src="/assets/images/user.png"></td>
+                                    {% endif %}
+                                </tr>
+                            {% else %}
+                                {% if joined %}
+                                    <tr class="notClick">
+                                        <td>Slot libero</td>
+                                        <td class="fixLength joinable"></td>
+                                    </tr>
+                                {% else %}
+                                    <tr onclick="joinTeam({{tournament.id}},{{team.id}});">
+                                        <td>Slot libero</td>
+                                        <td class="fixLength joinable"><img src="/assets/images/join.png"></td>
+                                    </tr>
+                                {% endif %}
+                                
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                    <div class="spacer"></div>
+                </div>
+            </div>{% endfor %}
+        {% endif %}
+        <div class="spacer"></div>
+        <div class="spacer"></div>
+        <center>
+            <a href="https://www.facebook.com/events/368655213605260/" target="_blank" rel="nofollow noopener"><img src="/assets/images/fel.png" style="width: 120px;"></a>
+            <a href="https://discord.gg/ZxBdtYh" target="_blank" rel="nofollow noopener"><img src="/assets/images/discord.png" style="width: 275px;"></a>
+        </center>
+        <div class="spacer"></div>
+        <div class="pure-u-1 alignBottom">
+            <div class="pure-u-1">
+                <table class="adminList">
+                    <tr>
+                        <td>organizzatori</td>
+                        <td><a href="https://www.facebook.com/feudalesimoeliberta/" target="_blank" rel="nofollow noopener">Feudalesimo e Libertà</a>, <a href="https://www.facebook.com/groups/126142241301110/" target="_blank" rel="nofollow noopener">LESTO Community</a>, AoE2ita</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+ <img src="/assets/images/profilo.png" alt="Dettaglio torneo">
+                
+                    
+
+                    {% if tournament.status == 'underway' %}
+                        <div class="tournamentDetail fullHeight scrollTournament">
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <table class="adminList topTournament">
+                                    <tr>
+                                        <td class="pointer" onclick="openDescriptionModal()">Descrizione torneo</td>
+                                    </tr>
+                                </table>
+                            </div><!--
+                            --><div class="pure-u-1 pure-u-md-1-2">
+                                <table class="adminList topTournament moveRight">
+                                    <tr>
+                                        <td>Organizzatori</td>
+                                        <td class="userTooltip pointer" title="{% include 'user_card.html.twig' with {'user': tournament.user} only %}">{{ tournament.user.username }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="pure-u-1">
+                                <div class="staffNotes">
+                                    La piattaforma è pensata per agevolare lo svolgimento dei tornei, consentendo ai membri dei team giocanti di poter aggiornare l'esito della propria partita. Ovviamente questa libertà è subordinata alla veridicità della segnalazione e quindi alla serietà e correttezza dei giocatori. In caso di dubbi, errori o segnalazione scorretta dei risultati bisogna rivolgersi agli organizzatori del torneo (elencati sopra a destra).<br>Lo staff di AoE2ita potrà in qualsiasi momento ripristinare, cambiare o cancellare una partita o un torneo.
+                                </div>
+                            </div>
+                            {% if myMatch %}
+                                <div class="pure-u-1 pure-u-md-1-3">
+                                    <div class="teamMembersContainer teamMembersContainerLeft">
+                                        <table>
+                                            {% for member in myMatch.player1.members %}
+                                                <tr>
+                                                    <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div><!--
+                                --><div class="pure-u-1 pure-u-md-1-3">
+                                    <div class="matchBrief">
+                                        <div>
+                                            <span>{{ myMatch.player1.title }}</span> <strong>VS</strong> <span>{{ myMatch.player2.title }}</span>
+                                        </div>
+                                    </div>
+                                </div><!--
+                                --><div class="pure-u-1 pure-u-md-1-3">
+                                    <div class="teamMembersContainer teamMembersContainerRight">
+                                        <table>
+                                            {% for member in myMatch.player2.members %}
+                                                <tr>
+                                                    <td><span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span></td>
+                                                </tr>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="pure-u-1">
+                                    <div class="matchButtonsContainer">
+                                        <button onclick="matchScore({{myMatch.tournament_id}},{{myMatch.id}},{{myTeam}},1,0); this.disabled=true; this.innerHTML='Aggiornando...';" class="matchButton greenButton">Ho vinto</button>
+                                    </div>
+                                    <div class="matchButtonsContainer">
+                                        <button onclick="matchScore({{myMatch.tournament_id}},{{myMatch.id}},{{opponentTeam}},1,0); this.disabled=true; this.innerHTML='Aggiornando...';" class="matchButton redButton">Ho perso</button>
+                                    </div>
+                                </div>
+                            {% else %}
+                                <div class="pure-u-1">
+                                    Nessun tuo match in corso.
+                                </div>
+                            {% endif %}
+                            <div class="refreshButton">
+                                <div><a onclick="reloadPage()">&circlearrowright;</a></div>
+                            </div>
+                            
+                            {% set lastMatch = matches|last %}
+                            {% set finalMatch = matches[matches|length - 2] %}
+                            {% include 'matches.html.twig' %}
+
+                            {% if lastMatch.state == 'complete' and finalMatch.state == 'complete' %} <!-- valutare se spostare -->
+                                <div class="spacer"></div>
+                                <div class="spacer"></div>
+                                <div class="spacer"></div>
+                                <div class="alignBottom">
+                                    <div class="tournamentDetailAdminFooter">
+                                        <button onclick="closeTournament({{tournament.id}}, {{finalMatch.winner_id}}, {{finalMatch.loser_id}}, {{lastMatch.winner_id}}); this.disabled=true; this.innerHTML='Concludendo...';" class="tournamentButton">Concludi torneo</button>
+                                    </div>
+                                </div>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if tournament.status == 'complete' %}
+                        {% set lastMatch = matches|last %}
+                        {% set finalMatch = matches[matches|length - 2] %}
+                        <div class="tournamentDetail fullHeight scrollTournament">
+                            <div class="pure-u-1 pure-u-md-1-2">
+                                <table class="adminList topTournament">
+                                    <tr>
+                                        <td class="pointer" onclick="openDescriptionModal()">Descrizione torneo</td>
+                                    </tr>
+                                </table>
+                            </div><!--
+                            --><div class="pure-u-1 pure-u-md-1-2">
+                                <table class="adminList topTournament moveRight">
+                                    <tr>
+                                        <td>Organizzatori</td>
+                                        <td class="userTooltip pointer" title="{% include 'user_card.html.twig' with {'user': tournament.user} only %}">{{ tournament.user.username }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="podiumContainer">
+                                <div class="pure-u-1 pure-u-md-1-2">
+                                    <div class="points">
+                                        {% if finalMatch.winner_id == finalMatch.player1_id %}
+                                            <h4>{{ finalMatch.player1.title }} vince il torneo!</h4>
+                                            <table>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/gold.png"></div></td>    
+                                                <td>
+                                                        {% for member in finalMatch.player1.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+3 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/silver.png"></div></td>
+                                                    <td>
+                                                        {% for member in finalMatch.player2.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+2 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/bronze.png"></div></td>
+                                                    <td>
+                                                        {% if lastMatch.winner_id == lastMatch.player1_id %}
+                                                            {% for member in lastMatch.player1.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% for member in lastMatch.player2.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td><div class="score">+1 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                            </table>
+                                        {% else %}
+                                            <h4>{{ finalMatch.player2.title }} vince il torneo!</h4>
+                                            <table>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/gold.png"></div></td>
+                                                    <td>
+                                                        {% for member in finalMatch.player2.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+3 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/silver.png"></div></td>
+                                                    <td>
+                                                        {% for member in finalMatch.player1.members %}
+                                                            <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                        {% endfor %}
+                                                    </td>
+                                                    <td><div class="score">+2 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><div class="crown"><img src="/assets/images/bronze.png"></div></td>
+                                                    <td>
+                                                        {% if lastMatch.winner_id == lastMatch.player1_id %}
+                                                            {% for member in lastMatch.player1.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% else %}
+                                                            {% for member in lastMatch.player2.members %}
+                                                                <span class="userTooltip" title="{% include 'user_card.html.twig' with {'user': member} only %}">{{ member.username }}</span><br>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </td>
+                                                    <td><div class="score">+1 <img src="/assets/images/cup.png"></div></td>
+                                                </tr>
+                                            </table>
+                                        {% endif %}
+                                    </div>
+                                </div><!--
+                                --><div class="pure-u-1 pure-u-md-1-2">
+                                    <div class="podium">
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <h4>{{ finalMatch.winner_id == finalMatch.player1_id ? finalMatch.player2.title : finalMatch.player1.title }}</h4>
+                                                    <div style="height: 80px"></div>
+                                                </td>
+                                                <td>
+                                                    <img width="80px;" src="/assets/images/bigcup.png">
+                                                    <h3>{{ finalMatch.winner_id == finalMatch.player1_id ? finalMatch.player1.title : finalMatch.player2.title }}</h3>
+                                                    <div style="height: 120px"></div>
+                                                </td>
+                                                <td>
+                                                    <h4>{{ lastMatch.winner_id == lastMatch.player1_id ? lastMatch.player1.title : lastMatch.player2.title }}</h4>
+                                                    <div style="height: 40px"></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--<pre>{{ matches | json_encode() }}</pre>-->
+                            {% include 'matches.html.twig' %}
+                        </div>
+                    {% endif %}
+                </div>                       
+            </div>
+        </div>
+    </section>
+    <div id="descriptionModal" style="display: none;">
+        <h2>{{ tournament.title }}</h2>
+        {{ tournament.description | raw }}
+        <div class="spacer"></div>
+        <button onclick="closeModal()" class="pure-button">Bi bodhroy/-o</button>
+    </div>
+    {% include 'footer.html.twig' %}
+{% endblock %}
+{% block javascript %}
+    {{ parent() }}
+    <script type="text/javascript" src="/assets/tournament.js"></script>
+{% endblock %}

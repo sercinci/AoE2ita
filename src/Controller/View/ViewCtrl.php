@@ -71,9 +71,36 @@ class ViewCtrl extends BaseCtrl
                 $tournament->joined += $team->members_count;
             }
         }
+
+        /* Torneo FeL */
+        $fel = Tournament::with(['teams' => function($query) {
+                    $query->with(['members' => function($query) {
+                        $query->select('id', 'username', 'slug', 'avatar', 'profileurl', 'mmr_dm', 'mmr_rm', 'games');
+                    }]);
+                    $query->withCount('members');
+                }])
+                ->withCount('teams')
+                ->where('status', 'fel')
+                ->get();
+        foreach ($fel as $f) {
+            $f->joined = 0;
+            $f->subscribed = false;
+            foreach ($user->teams as $t) {
+                if ($t->tournament_id == $f->id) {
+                    $f->subscribed = true;
+                    break;
+                }
+            }
+            foreach ($f->teams as $team) {
+                $f->joined += $team->members_count;
+            }
+        }
+        /* fine torneo FeL */
+
         return $this->view->render($res, 'tournaments.html.twig', [
             'user' => $user,
-            'tournaments' => $tournaments
+            'tournaments' => $tournaments,
+            'fel' => $fel[0]
         ]);
     }
 
@@ -157,6 +184,20 @@ class ViewCtrl extends BaseCtrl
                     }
                 }
             }
+            /* fel */
+            if ($tournament->status == 'fel') {
+                return $this->view->render($res, 'tournamentFel.html.twig', [
+                    'tournament' => $tournament,
+                    'joined' => !!$member[0],
+                    'api' => $api,
+                    'ready' => $ready,
+                    'user' => $user,
+                    'matches' => $matches,
+                    'myMatch' => $myMatch,
+                    'myTeam' => $myTeam,
+                    'opponentTeam' => $opponentTeam
+                ]);
+            }
             return $this->view->render($res, 'tournament.html.twig', [
                 'tournament' => $tournament,
                 'joined' => !!$member[0],
@@ -178,6 +219,12 @@ class ViewCtrl extends BaseCtrl
 
     public function showFbTournament($req, $res, $arg)
     {
+        if ($arg['id'] == 'torneo-fel') {
+            $tournament = Tournament::where('status', 'fel')->get();
+            return $this->view->render($res, 'social_tournament.html.twig', [
+                'tournament' => $tournament
+            ]);
+        }
         $tournament = Tournament::find($arg['id']);
         return $this->view->render($res, 'social_tournament.html.twig', [
             'tournament' => $tournament
@@ -207,4 +254,25 @@ class ViewCtrl extends BaseCtrl
             'path' => $path
         ]);
     }
+
+    /*public function showFelTournament($req, $res, $arg)
+    {
+        $user = $this->getUserTournaments();
+        $tournament = Tournament::where('status', 'fel')->get();
+        $tId = $tournament[0]->id;
+        $member = User::whereHas('teams', function ($query) use ($tId) {
+                $query->where('tournament_id', $tId);
+            })
+            ->with(['teams' => function ($query) use ($tId) {
+                $query->where('tournament_id', $tId);
+            }])
+            ->where('id', $this->userData->id)
+            ->get();
+        
+        return $this->view->render($res, 'tournamentFel.html.twig', [
+            'tournament' => $tournament[0],
+            'joined' => !!$member[0],
+            'user' => $user
+        ]);
+    }*/
 }

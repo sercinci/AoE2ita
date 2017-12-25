@@ -690,6 +690,10 @@ button.create {
     margin-bottom: 500px;
 }
 
+.descriptionText a {
+    text-decoration: underline;
+}
+
 .tournamentDetail {
     padding: 80px 70px 20px 70px;
 }
