@@ -47,7 +47,7 @@ abstract class BaseCtrl
             //'steam_id' => $user->steam_id
         ); //solo dati da tenere in token
         
-        $tokenId    = base64_encode(mcrypt_create_iv(32));
+        $tokenId    = base64_encode(openssl_random_pseudo_bytes(32));
         $issuedAt   = time();
         $notBefore  = $issuedAt + 0;             // Adding 0 seconds
         $expire     = $notBefore + 86400 * 30;        // Adding 1 day

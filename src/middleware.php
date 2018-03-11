@@ -11,7 +11,7 @@ $app->add(new \Slim\Middleware\JwtAuthentication([
         $container["jwt"] = $arg["decoded"];
     },
     "error" => function($req, $res, $arg) {
-        if(strpos($_SERVER["HTTP_USER_AGENT"], "facebookexternalhit/") !== false || 
+        if(strpos($_SERVER["HTTP_USER_AGENT"], "facebookexternalhit/1.1") !== false || 
             strpos($_SERVER["HTTP_USER_AGENT"], "Facebot") !== false || 
             strpos($_SERVER["HTTP_USER_AGENT"], "Googlebot") !== false || 
             strpos($_SERVER["HTTP_USER_AGENT"], "Bingbot") !== false || 
